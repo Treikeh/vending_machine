@@ -59,7 +59,7 @@ var move_direction: Vector3 = Vector3.ZERO
 
 
 func _walking_enter() -> void:
-	gravity_scale = 0.1
+	gravity_scale = 0.0
 	# Give ground_check a buffer to improve the snapping when walking down ledges
 	ground_check.target_position.y = -1.0
 

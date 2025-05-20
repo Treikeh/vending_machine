@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://dickh50sq4kdu"]
+
+[ext_resource type="Script" uid="uid://dq2uj4dypqc6v" path="res://vending_machine_button.gd" id="1_4f7i2"]
+[ext_resource type="Script" uid="uid://k4r22ohcsxla" path="res://common/scripts/interact_area_3d.gd" id="2_8mcap"]
+[ext_resource type="AudioStream" uid="uid://sar5yfh2cmiy" path="res://entities/vending_machine/click-buttons-ui-menu-sounds-effects-button-13-205396.mp3" id="3_masv5"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_8mcap"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8mcap"]
+albedo_color = Color(0.21, 0.21, 0.21, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_masv5"]
+size = Vector3(0.11, 0.11, 0.11)
+
+[node name="VendingMachineButton" type="Node3D" node_paths=PackedStringArray("mesh", "number_label", "press_sound")]
+script = ExtResource("1_4f7i2")
+mesh = NodePath("MeshInstance3D")
+number_label = NodePath("MeshInstance3D/NumberLabel")
+press_sound = NodePath("PressSound")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_8mcap")
+surface_material_override/0 = SubResource("StandardMaterial3D_8mcap")
+
+[node name="NumberLabel" type="Label3D" parent="MeshInstance3D"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, -0.06)
+text = "3
+"
+
+[node name="InteractArea3D" type="Area3D" parent="."]
+script = ExtResource("2_8mcap")
+prompt = "Press"
+metadata/_custom_type_script = "uid://k4r22ohcsxla"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractArea3D"]
+shape = SubResource("BoxShape3D_masv5")
+debug_color = Color(0.652233, 0.518714, 3.85046e-07, 0.42)
+
+[node name="PressSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_masv5")
+
+[connection signal="interacted" from="InteractArea3D" to="." method="_on_interact_area_3d_interacted"]

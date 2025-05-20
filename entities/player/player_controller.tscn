@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://b62jt4e6safbv"]
+[gd_scene load_steps=8 format=3 uid="uid://b62jt4e6safbv"]
 
 [ext_resource type="PhysicsMaterial" uid="uid://yejgfo3avahu" path="res://entities/player/player_pm.tres" id="1_0fegy"]
 [ext_resource type="Script" uid="uid://bofm6404reau4" path="res://entities/player/player_input.gd" id="1_6imlu"]
 [ext_resource type="Script" uid="uid://xrl3l0lwjnxx" path="res://entities/player/player_controller.gd" id="1_y5f1h"]
 [ext_resource type="Script" uid="uid://cgg0h2q8fxt2x" path="res://entities/player/player_ground_check.gd" id="3_43phm"]
+[ext_resource type="Script" uid="uid://demk7ji008urj" path="res://entities/player/player_interact_ray.gd" id="3_rs2e6"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6tidu"]
 radius = 0.4
@@ -34,6 +35,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 [node name="Camera3D" type="Camera3D" parent="Orientation/Head"]
 fov = 90.0
 
+[node name="InteractRay" type="RayCast3D" parent="Orientation/Head"]
+target_position = Vector3(0, 0, -1.75)
+collision_mask = 17
+collide_with_areas = true
+script = ExtResource("3_rs2e6")
+
 [node name="GroundCheck" type="ShapeCast3D" parent="Orientation" node_paths=PackedStringArray("ray_cast_3d")]
 shape = SubResource("CapsuleShape3D_6imlu")
 margin = 0.1
@@ -44,12 +51,13 @@ ray_cast_3d = NodePath("RayCast3D")
 rest_height = 1.1
 
 [node name="RayCast3D" type="RayCast3D" parent="Orientation/GroundCheck"]
-target_position = Vector3(0, -2, 0)
+target_position = Vector3(0, -1.6, 0)
 debug_shape_custom_color = Color(1, 0, 0, 1)
 
 [node name="Input" type="Node" parent="."]
 script = ExtResource("1_6imlu")
 
+[connection signal="interacted" from="Input" to="Orientation/Head/InteractRay" method="_on_interacted"]
 [connection signal="jumped" from="Input" to="." method="_on_jumped"]
 [connection signal="looked" from="Input" to="." method="_on_looked"]
 [connection signal="moved" from="Input" to="." method="_on_moved"]
