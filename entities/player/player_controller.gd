@@ -18,6 +18,7 @@ func _physics_process(delta: float) -> void:
 @export_group("Input")
 @export var orientation: Node3D
 @export var head: Node3D
+@export var interact_ray: RayCast3D
 
 
 func _on_looked(vector: Vector2) -> void:
@@ -29,8 +30,21 @@ func _on_looked(vector: Vector2) -> void:
 func _on_moved(dir: Vector2) -> void:
 	move_direction = orientation.global_basis * Vector3(dir.x, 0.0, dir.y).normalized()
 
+
 func _on_jumped(pressed: bool) -> void:
 	is_jumping = pressed
+
+
+func _on_interacted() -> void:
+	interact_ray.interact_with_target(self)
+
+
+func _on_item_used() -> void:
+	_use_held_item()
+
+
+func _on_item_thrown() -> void:
+	_throw_held_item()
 
 #endregion
 
@@ -106,5 +120,47 @@ func _jumping_enter() -> void:
 	set_axis_velocity(-gravity_direction * jump_force)
 	# Jump audio
 	state_machine.switch(FALLING)
+
+#endregion
+
+
+#region Item
+
+@export_group("Item")
+@export var throw_force: float = 5.0
+@export var held_item_transfrom: RemoteTransform3D
+
+var held_item: RigidBody3D
+
+
+func pick_up_item(item: RigidBody3D) -> void:
+	# Don't pick up item when already holding an item
+	if held_item:
+		return
+	
+	held_item = item
+	
+	# Disable rigidbody
+	held_item.linear_velocity = Vector3.ZERO
+	held_item.process_mode = Node.PROCESS_MODE_DISABLED
+	
+	# Reset held_item_transfom so that it can pick up nodes with the same NodePath as the previous->
+	# <-held_item, if it was destoryed while using it.
+	held_item_transfrom.remote_path = ""
+	# Attach rigidbody to remote transfrom
+	held_item_transfrom.remote_path = item.get_path()
+
+
+func _use_held_item() -> void:
+	if held_item and held_item.has_method("use_item"):
+		held_item.use_item()
+
+
+func _throw_held_item() -> void:
+	if held_item:
+		held_item_transfrom.remote_path = ""
+		held_item.process_mode = Node.PROCESS_MODE_INHERIT
+		held_item.apply_central_impulse(-head.global_basis.z * throw_force * held_item.mass)
+		held_item = null
 
 #endregion

@@ -18,6 +18,6 @@ func _physics_process(_delta: float) -> void:
 	# Update UI
 
 
-func _on_interacted() -> void:
+func interact_with_target(instigator: Node3D) -> void:
 	if _interact_target:
-		_interact_target.interact()
+		_interact_target.interact(instigator)

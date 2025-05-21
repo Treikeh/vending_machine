@@ -16,6 +16,10 @@ var is_grounded: bool = false
 var ground_normal: Vector3 = Vector3.UP
 
 
+func _ready() -> void:
+	ray_cast_3d.collision_mask = collision_mask
+
+
 func _physics_process(_delta: float) -> void:
 	is_grounded = _is_on_walkable_slope()
 	if is_grounded and ray_cast_3d.is_colliding():

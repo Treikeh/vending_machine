@@ -16,7 +16,7 @@ func _ready() -> void:
 	number_label.text = button_number
 
 
-func _on_interact_area_3d_interacted() -> void:
+func _on_interact_area_3d_interacted(_instigator: Node3D) -> void:
 	# Only allow the button to be pressed when it's not animating
 	if not is_instance_valid(tween):
 		presssed.emit(button_number)

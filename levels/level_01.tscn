@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://b64kpf3puwh5f"]
+[gd_scene load_steps=7 format=3 uid="uid://b64kpf3puwh5f"]
 
 [ext_resource type="PackedScene" uid="uid://b62jt4e6safbv" path="res://entities/player/player_controller.tscn" id="1_ty3hu"]
 [ext_resource type="PackedScene" uid="uid://b6iud14yjg3ef" path="res://entities/vending_machine/vending_machine.tscn" id="2_mckh2"]
+[ext_resource type="PackedScene" uid="uid://dn8fbqjnlj0qw" path="res://entities/trash_can/trash_can.tscn" id="3_81a5f"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mckh2"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -34,3 +35,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 5)
 
 [node name="VendingMachine" parent="." instance=ExtResource("2_mckh2")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="TrashCan" parent="." instance=ExtResource("3_81a5f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 1.9)

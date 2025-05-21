@@ -14,7 +14,7 @@ height = 1.5
 radius = 0.25
 height = 1.0
 
-[node name="PlayerController" type="RigidBody3D" node_paths=PackedStringArray("orientation", "head", "ground_check")]
+[node name="PlayerController" type="RigidBody3D" node_paths=PackedStringArray("orientation", "head", "interact_ray", "ground_check", "held_item_transfrom") groups=["player"]]
 collision_layer = 2
 collision_mask = 3
 physics_material_override = ExtResource("1_0fegy")
@@ -22,7 +22,9 @@ lock_rotation = true
 script = ExtResource("1_y5f1h")
 orientation = NodePath("Orientation")
 head = NodePath("Orientation/Head")
+interact_ray = NodePath("Orientation/Head/InteractRay")
 ground_check = NodePath("Orientation/GroundCheck")
+held_item_transfrom = NodePath("Orientation/Head/HeldItemTransform")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_6tidu")
@@ -41,6 +43,9 @@ collision_mask = 17
 collide_with_areas = true
 script = ExtResource("3_rs2e6")
 
+[node name="HeldItemTransform" type="RemoteTransform3D" parent="Orientation/Head"]
+transform = Transform3D(0.992546, 0.121869, 0, -0.116851, 0.951673, 0.284015, 0.0346128, -0.281898, 0.95882, 0.345, -0.185, -0.31)
+
 [node name="GroundCheck" type="ShapeCast3D" parent="Orientation" node_paths=PackedStringArray("ray_cast_3d")]
 shape = SubResource("CapsuleShape3D_6imlu")
 margin = 0.1
@@ -57,7 +62,9 @@ debug_shape_custom_color = Color(1, 0, 0, 1)
 [node name="Input" type="Node" parent="."]
 script = ExtResource("1_6imlu")
 
-[connection signal="interacted" from="Input" to="Orientation/Head/InteractRay" method="_on_interacted"]
+[connection signal="interacted" from="Input" to="." method="_on_interacted"]
+[connection signal="item_thrown" from="Input" to="." method="_on_item_thrown"]
+[connection signal="item_used" from="Input" to="." method="_on_item_used"]
 [connection signal="jumped" from="Input" to="." method="_on_jumped"]
 [connection signal="looked" from="Input" to="." method="_on_looked"]
 [connection signal="moved" from="Input" to="." method="_on_moved"]

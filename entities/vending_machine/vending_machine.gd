@@ -61,4 +61,4 @@ func _spawn_bottle(scene: PackedScene) -> void:
 	var bottle: RigidBody3D = scene.instantiate()
 	add_child(bottle)
 	bottle.transform = item_spawn_point.transform
-	bottle.apply_central_impulse(-bottle.global_basis.z * 5.0)
+	bottle.apply_central_impulse(-bottle.global_basis.z * 5.0 * bottle.mass)
