@@ -1,7 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://b6iud14yjg3ef"]
+[gd_scene load_steps=9 format=3 uid="uid://b6iud14yjg3ef"]
 
 [ext_resource type="Script" uid="uid://x80psvvcpak" path="res://entities/vending_machine/vending_machine.gd" id="1_qauav"]
 [ext_resource type="PackedScene" uid="uid://dickh50sq4kdu" path="res://entities/vending_machine/vending_machine_button.tscn" id="2_qauav"]
+[ext_resource type="PackedScene" uid="uid://de6f4wfar7xkg" path="res://entities/items/soda_cans/art/soda_can_01_sm.glb" id="3_rx14y"]
+[ext_resource type="PackedScene" uid="uid://ce2ep2k60an0w" path="res://entities/items/soda_cans/art/soda_can_02_sm.glb" id="4_12vco"]
+[ext_resource type="PackedScene" uid="uid://b7ar70wfnf8a7" path="res://entities/items/soda_cans/art/soda_can_03_sm.glb" id="5_goder"]
+[ext_resource type="PackedScene" uid="uid://dfeui7j0qhegj" path="res://entities/items/soda_cans/art/soda_can_04_sm.glb" id="6_npqjt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rx14y"]
 albedo_color = Color(1, 0.22, 0.22, 1)
@@ -92,6 +96,18 @@ button_number = "N"
 
 [node name="ItemSpawnPoint" type="Marker3D" parent="."]
 transform = Transform3D(-4.37114e-08, 1, 0, -0.866025, -2.98023e-08, -0.5, -0.5, 0, 0.866025, 0, 0.5, -0.673205)
+
+[node name="soda_can_01_sm" parent="." instance=ExtResource("3_rx14y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.7, -0.3)
+
+[node name="soda_can_02_sm" parent="." instance=ExtResource("4_12vco")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 1.7, -0.3)
+
+[node name="soda_can_03_sm" parent="." instance=ExtResource("5_goder")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 1.7, -0.3)
+
+[node name="soda_can_04_sm" parent="." instance=ExtResource("6_npqjt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 1.7, -0.3)
 
 [connection signal="timeout" from="DisplayLabel/ResetLabelTimer" to="." method="_on_reset_label_timer_timeout"]
 [connection signal="presssed" from="Buttons/VendingMachineButton1" to="." method="_on_vending_machine_button_presssed"]
