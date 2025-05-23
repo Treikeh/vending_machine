@@ -4,12 +4,13 @@ extends Node3D
 @export var display_label: Label3D
 @export var reset_label_timer: Timer
 @export var item_spawn_point: Marker3D
-
-
-var red_soda_can_scene: PackedScene = preload("res://entities/items/soda_cans/red_soda_can.tscn")
-var blue_bottle_scene: PackedScene = preload("res://entities/items/soda_cans/blue_soda_can.tscn")
-var green_bottle_scene: PackedScene = preload("res://entities/items/soda_cans/green_soda_can.tscn")
-var yellow_bottle_scene: PackedScene = preload("res://entities/items/soda_cans/yellow_soda_can.tscn")
+# NOTE: I'm a bit worried that having every single item preloaded might cause a memory problem
+@export var items: Dictionary[String, PackedScene] = {
+	"1111": preload("res://entities/items/soda_cans/red_soda_can.tscn"),
+	"2222": preload("res://entities/items/soda_cans/blue_soda_can.tscn"),
+	"3333": preload("res://entities/items/soda_cans/green_soda_can.tscn"),
+	"4444": preload("res://entities/items/soda_cans/yellow_soda_can.tscn"),
+}
 
 
 func _ready() -> void:
@@ -29,23 +30,17 @@ func _on_vending_machine_button_presssed(button_number: String) -> void:
 
 
 func _on_vending_machine_confirm_button_presssed(_button_number: String) -> void:
-	match display_label.text:
-		"1111":
-			display_label.text = "Red"
-			_spawn_item(red_soda_can_scene)
-		"2222":
-			display_label.text = "Blue"
-			_spawn_item(blue_bottle_scene)
-		"3333":
-			display_label.text = "Green"
-			_spawn_item(green_bottle_scene)
-		"4444":
-			display_label.text = "Yellow"
-			_spawn_item(yellow_bottle_scene)
-		_:
-			display_label.text = "ERROR"
+	var code: String = display_label.text
 	
-	# Reset label after a short delay
+	if items.has(code):
+		_spawn_item(items[code])
+		display_label.text = "OK"
+		EventBus.vending_machine_code_submitted.emit(code, true)
+	else:
+		display_label.text = "ERROR"
+		EventBus.vending_machine_code_submitted.emit(code, false) 
+	
+	# Start timer to reset label
 	reset_label_timer.start(0.0)
 
 

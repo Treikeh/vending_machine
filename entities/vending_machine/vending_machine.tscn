@@ -94,20 +94,22 @@ button_number = "Y"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0.8, -0.5)
 button_number = "N"
 
-[node name="ItemSpawnPoint" type="Marker3D" parent="."]
-transform = Transform3D(-4.37114e-08, 1, 0, -0.866025, -2.98023e-08, -0.5, -0.5, 0, 0.866025, 0, 0.5, -0.673205)
+[node name="Items" type="Node3D" parent="."]
 
-[node name="soda_can_01_sm" parent="." instance=ExtResource("3_rx14y")]
+[node name="soda_can_01_sm" parent="Items" instance=ExtResource("3_rx14y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.7, -0.3)
 
-[node name="soda_can_02_sm" parent="." instance=ExtResource("4_12vco")]
+[node name="soda_can_02_sm" parent="Items" instance=ExtResource("4_12vco")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 1.7, -0.3)
 
-[node name="soda_can_03_sm" parent="." instance=ExtResource("5_goder")]
+[node name="soda_can_03_sm" parent="Items" instance=ExtResource("5_goder")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 1.7, -0.3)
 
-[node name="soda_can_04_sm" parent="." instance=ExtResource("6_npqjt")]
+[node name="soda_can_04_sm" parent="Items" instance=ExtResource("6_npqjt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 1.7, -0.3)
+
+[node name="ItemSpawnPoint" type="Marker3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 0, -0.866025, -2.98023e-08, -0.5, -0.5, 0, 0.866025, 0, 0.5, -0.673205)
 
 [connection signal="timeout" from="DisplayLabel/ResetLabelTimer" to="." method="_on_reset_label_timer_timeout"]
 [connection signal="presssed" from="Buttons/VendingMachineButton1" to="." method="_on_vending_machine_button_presssed"]

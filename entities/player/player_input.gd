@@ -10,15 +10,15 @@ signal item_used
 signal item_thrown
 
 
-var _camera_sensitivity: float = 0.1
+var camera_sensitivity: float = 0.1
 
 
 func _input(event: InputEvent) -> void:
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		# Look input
 		if event is InputEventMouseMotion:
-			var look_x: float = -deg_to_rad(event.relative.x * _camera_sensitivity)
-			var look_y: float = -deg_to_rad(event.relative.y * _camera_sensitivity)
+			var look_x: float = -deg_to_rad(event.relative.x * camera_sensitivity)
+			var look_y: float = -deg_to_rad(event.relative.y * camera_sensitivity)
 			looked.emit(Vector2(look_x, look_y))
 		
 		# Jump input
