@@ -1,25 +1,29 @@
-[gd_scene load_steps=6 format=3 uid="uid://bwmdyqpxrhydh"]
+[gd_scene load_steps=7 format=3 uid="uid://bwmdyqpxrhydh"]
 
-[ext_resource type="Script" uid="uid://bmq7avs8vtf6a" path="res://entities/items/base_item.gd" id="1_sk7t5"]
+[ext_resource type="Script" uid="uid://3g3bc2n312tr" path="res://entities/items/soda_cans/blue_soda_can.gd" id="1_74b1s"]
 [ext_resource type="PackedScene" uid="uid://ce2ep2k60an0w" path="res://entities/items/soda_cans/art/soda_can_02_sm.glb" id="2_74b1s"]
+[ext_resource type="Shape3D" uid="uid://ictrfw4onncu" path="res://entities/items/soda_cans/soda_cans_collision.tres" id="2_j5nfj"]
 [ext_resource type="Script" uid="uid://k4r22ohcsxla" path="res://common/scripts/interact_area_3d.gd" id="3_oenbu"]
+[ext_resource type="Shape3D" uid="uid://d1ycbhtwgtq72" path="res://entities/items/soda_cans/soda_cans_collision_interact.tres" id="4_vgnn0"]
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_6jo4a"]
-height = 0.22
-radius = 0.075
+[sub_resource type="BoxMesh" id="BoxMesh_74b1s"]
+size = Vector3(0.1, 0.2, 0.1)
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_gy61i"]
-height = 0.24
-radius = 0.1
-
-[node name="BlueSodaCan" type="RigidBody3D" groups=["bottle"]]
+[node name="BlueSodaCan" type="RigidBody3D" node_paths=PackedStringArray("normal_mesh", "empty_mesh") groups=["item"]]
 mass = 0.1
-script = ExtResource("1_sk7t5")
+script = ExtResource("1_74b1s")
+normal_mesh = NodePath("soda_can_02_sm")
+empty_mesh = NodePath("EmptyMesh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("CylinderShape3D_6jo4a")
+shape = ExtResource("2_j5nfj")
 
 [node name="soda_can_02_sm" parent="." instance=ExtResource("2_74b1s")]
+
+[node name="EmptyMesh" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("BoxMesh_74b1s")
+skeleton = NodePath("../soda_can_02_sm")
 
 [node name="PickUpArea" type="Area3D" parent="."]
 script = ExtResource("3_oenbu")
@@ -27,7 +31,7 @@ prompt = "Pick up"
 metadata/_custom_type_script = "uid://k4r22ohcsxla"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PickUpArea"]
-shape = SubResource("CylinderShape3D_gy61i")
+shape = ExtResource("4_vgnn0")
 debug_color = Color(0.652233, 0.518714, 3.85046e-07, 0.42)
 
-[connection signal="interacted" from="PickUpArea" to="." method="_on_pick_up_area_interacted"]
+[connection signal="interacted" from="PickUpArea" to="." method="pick_up_item"]
