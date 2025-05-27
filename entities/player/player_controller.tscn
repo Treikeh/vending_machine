@@ -62,7 +62,10 @@ debug_shape_custom_color = Color(1, 0, 0, 1)
 [node name="Input" type="Node" parent="."]
 script = ExtResource("1_6imlu")
 
-[connection signal="interacted" from="Input" to="." method="_on_interacted"]
+[node name="InteractWindow" type="Timer" parent="Input"]
+wait_time = 0.5
+one_shot = true
+
 [connection signal="item_thrown" from="Input" to="." method="_on_item_thrown"]
 [connection signal="item_used" from="Input" to="." method="_on_item_used"]
 [connection signal="jumped" from="Input" to="." method="_on_jumped"]

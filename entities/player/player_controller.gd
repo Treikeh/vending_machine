@@ -8,6 +8,13 @@ func _ready() -> void:
 	state_machine.switch(FALLING)
 
 
+func _process(delta: float) -> void:
+	if rmb_pressed:
+		rmb_held_time += delta
+		if held_item:
+			EventBus.throw_charge_bar_updated.emit(rmb_held_time)
+
+
 func _physics_process(delta: float) -> void:
 	# Process phycics callback on the state state machine
 	state_machine.physics(delta)
@@ -16,9 +23,13 @@ func _physics_process(delta: float) -> void:
 #region Input
 
 @export_group("Input")
+@export var interact_window: float = 0.5
 @export var orientation: Node3D
 @export var head: Node3D
 @export var interact_ray: RayCast3D
+
+var rmb_pressed: bool = false
+var rmb_held_time: float = 0.0
 
 
 func _on_looked(vector: Vector2) -> void:
@@ -35,16 +46,21 @@ func _on_jumped(pressed: bool) -> void:
 	is_jumping = pressed
 
 
-func _on_interacted() -> void:
-	interact_ray.interact_with_target(self)
-
-
 func _on_item_used() -> void:
 	_use_held_item()
 
 
-func _on_item_thrown() -> void:
-	_throw_held_item()
+func _on_item_thrown(pressed: bool) -> void:
+	rmb_pressed = pressed
+	if pressed:
+		# Reset rmb_held_time. Subtract interact_window to do something smart, i guess....
+		rmb_held_time = 0.0 - interact_window
+	# Interact with target if rmb hasn't been held down for longer that the interact window
+	elif rmb_held_time < 0.0:
+		interact_ray.interact_with_target(self)
+	# Throw item when rmb is released and the rmb_held_time is greater than 0.0
+	else:
+		_throw_held_item()
 
 #endregion
 
@@ -127,40 +143,43 @@ func _jumping_enter() -> void:
 #region Item
 
 @export_group("Item")
-@export var throw_force: float = 5.0
+@export var min_throw_force: float = 3.0
+@export var max_throw_force: float = 8.0
 @export var held_item_transfrom: RemoteTransform3D
 
-var held_item: RigidBody3D
+var held_item: BaseItem
 
 
 func pick_up_item(item: RigidBody3D) -> void:
-	# Don't pick up item when already holding an item
+	# 落とす　held_item いつ　拾う　新しい　もの
 	if held_item:
-		return
+		held_item.drop_item()
+		#return
 	
 	held_item = item
-	
-	# Disable rigidbody
-	held_item.linear_velocity = Vector3.ZERO
-	held_item.process_mode = Node.PROCESS_MODE_DISABLED
-	
 	# Reset held_item_transfom so that it can pick up nodes with the same NodePath as the previous->
-	# <-held_item, if it was destoryed while using it.
+	# <-held_item, if that item was destoryed while using it.
 	held_item_transfrom.remote_path = ""
-	# Attach rigidbody to remote transfrom
+	# Attach item to remote transfrom
 	held_item_transfrom.remote_path = item.get_path()
 
 
 func _use_held_item() -> void:
-	if held_item and held_item.has_method("use_item"):
+	if held_item:
 		held_item.use_item()
 
 
 func _throw_held_item() -> void:
+	var force: float = _get_throw_force()
 	if held_item:
+		held_item.drop_item()
 		held_item_transfrom.remote_path = ""
-		held_item.process_mode = Node.PROCESS_MODE_INHERIT
-		held_item.apply_central_impulse(-head.global_basis.z * throw_force * held_item.mass)
+		held_item.apply_central_impulse(-head.global_basis.z * force * held_item.mass)
 		held_item = null
+
+
+# TODO: Make exponential or use a curve
+func _get_throw_force() -> float:
+	return remap(rmb_held_time, 0.0, 2.0, min_throw_force, max_throw_force)
 
 #endregion
