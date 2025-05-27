@@ -2,18 +2,31 @@ extends Node3D
 
 
 ## How many items the player needs to buy before the trash can can become visible
-@export var become_visible_buy_count: int = 5
-@export var static_body: StaticBody3D
+@export_range(1, 99) var become_visible_buy_count: int = 5
+@export_range(1, 99) var trash_capacity: int = 5
+@export var mesh: Node3D
 
+var items_trashed: int = 0
 var buy_count: int = 0
 
 
 func _ready() -> void:
-	# Hide and disable static body when the game starts
-	static_body.hide()
-	static_body.process_mode = Node.PROCESS_MODE_DISABLED
-	# Connect event
+	# Hide and disable mesh when the game starts
+	_disable_mesh()
+	# Connect event from vending machine
 	EventBus.vending_machine_code_submitted.connect(_on_vending_machine_code_submitted)
+
+
+func _enable_mesh() -> void:
+	mesh.show()
+	mesh.process_mode = Node.PROCESS_MODE_INHERIT
+	$Mesh/CSGCylinder3D.use_collision = true
+
+
+func _disable_mesh() -> void:
+	mesh.hide()
+	mesh.process_mode = Node.PROCESS_MODE_DISABLED
+	$Mesh/CSGCylinder3D.use_collision = false
 
 
 func _on_vending_machine_code_submitted(_code: String, is_valid: bool) -> void:
@@ -22,11 +35,11 @@ func _on_vending_machine_code_submitted(_code: String, is_valid: bool) -> void:
 
 
 func _on_visible_on_screen_notifier_3d_screen_exited() -> void:
-	if not static_body.visible and buy_count >= become_visible_buy_count:
-		static_body.show()
-		static_body.process_mode = Node.PROCESS_MODE_INHERIT
+	if not mesh.visible and buy_count >= become_visible_buy_count:
+		_enable_mesh()
 
 
 func _on_destroy_area_body_entered(body: Node3D) -> void:
-	if body.is_in_group("bottle"):
+	if body.is_in_group("item") and items_trashed < trash_capacity:
+		items_trashed += 1
 		body.queue_free()
