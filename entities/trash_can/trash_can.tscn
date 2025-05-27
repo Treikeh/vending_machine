@@ -27,6 +27,9 @@ height = 0.95
 sides = 16
 
 [node name="DestroyArea" type="Area3D" parent="Mesh"]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Mesh/DestroyArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)

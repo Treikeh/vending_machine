@@ -1,8 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://hlc7ccg56ek2"]
+[gd_scene load_steps=7 format=3 uid="uid://hlc7ccg56ek2"]
 
 [ext_resource type="Script" uid="uid://cjl5togjm6k0w" path="res://main.gd" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://b64kpf3puwh5f" path="res://levels/level_01.tscn" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://dv5ohond7iuk0" path="res://gui/gui.gd" id="3_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://b8r5euboee60y" path="res://gui/hud/default_interact_icon_02.png" id="3_h2yge"]
+
+[sub_resource type="Gradient" id="Gradient_1bvp3"]
+offsets = PackedFloat32Array(0.376984, 0.436508, 0.472222)
+colors = PackedColorArray(1, 1, 1, 0, 0.59, 0.59, 0.59, 0.882353, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lquwl"]
+gradient = SubResource("Gradient_1bvp3")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [node name="Main" type="Node"]
 script = ExtResource("1_ig7tw")
@@ -11,13 +21,18 @@ script = ExtResource("1_ig7tw")
 
 [node name="Level01" parent="World3D" instance=ExtResource("2_0xm2m")]
 
-[node name="GUI" type="Control" parent="."]
+[node name="GUI" type="Control" parent="." node_paths=PackedStringArray("fps_label", "corsshair_texture", "throw_charge_bar", "throw_charge_bar_fade_delay")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("3_1bvp3")
+fps_label = NodePath("FpsLabel")
+corsshair_texture = NodePath("Crosshair/CrosshairTextureRect")
+throw_charge_bar = NodePath("ThrowChargeBar")
+throw_charge_bar_fade_delay = NodePath("ThrowChargeBar/FadeDelay")
 
 [node name="FpsLabel" type="Label" parent="GUI"]
 layout_mode = 0
@@ -39,16 +54,27 @@ custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("3_h2yge")
 
-[node name="ThrowChargeBar" type="ProgressBar" parent="GUI"]
+[node name="ThrowChargeBar" type="TextureProgressBar" parent="GUI"]
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -27.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
 grow_horizontal = 2
-grow_vertical = 0
-max_value = 2.0
+grow_vertical = 2
+max_value = 1.0
 step = 0.0
-value = 1.0
-show_percentage = false
+value = 0.3
+fill_mode = 4
+texture_progress = SubResource("GradientTexture2D_lquwl")
+
+[node name="FadeDelay" type="Timer" parent="GUI/ThrowChargeBar"]
+wait_time = 1.5
+one_shot = true
+
+[connection signal="timeout" from="GUI/ThrowChargeBar/FadeDelay" to="GUI" method="_on_throw_charge_bar_fade_delay_timeout"]

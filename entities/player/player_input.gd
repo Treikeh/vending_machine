@@ -5,6 +5,7 @@ extends Node
 signal looked(vector: Vector2)
 signal moved(dir: Vector2)
 signal jumped(pressed: bool)
+signal interacted
 signal item_used
 signal item_thrown(pressed: bool)
 
@@ -25,6 +26,9 @@ func _input(event: InputEvent) -> void:
 			jumped.emit(true)
 		elif event.is_action_released("jump"):
 			jumped.emit(false)
+		
+		if event.is_action_pressed("interact"):
+			interacted.emit()
 		
 		# Use item input
 		if event.is_action_pressed("use_item"):

@@ -10,6 +10,7 @@
 size = Vector3(0.1, 0.2, 0.1)
 
 [node name="BlueSodaCan" type="RigidBody3D" node_paths=PackedStringArray("normal_mesh", "empty_mesh") groups=["item"]]
+collision_layer = 4
 mass = 0.1
 script = ExtResource("1_74b1s")
 normal_mesh = NodePath("soda_can_02_sm")
@@ -26,6 +27,9 @@ mesh = SubResource("BoxMesh_74b1s")
 skeleton = NodePath("../soda_can_02_sm")
 
 [node name="PickUpArea" type="Area3D" parent="."]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
 script = ExtResource("3_oenbu")
 prompt = "Pick up"
 metadata/_custom_type_script = "uid://k4r22ohcsxla"

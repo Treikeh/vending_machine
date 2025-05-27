@@ -3,7 +3,8 @@ extends Node
 
 
 signal interact_icon_updated(prompt: String)
-signal throw_charge_bar_updated(value: float)
+signal throw_charge_updated(value: float)
+signal throw_charge_stopped
 
 
 signal vending_machine_code_submitted(code: String, is_valid: bool)
