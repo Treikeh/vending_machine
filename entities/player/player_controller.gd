@@ -172,6 +172,7 @@ func _throw_held_item() -> void:
 	if held_item:
 		held_item.drop_item()
 		held_item_transfrom.remote_path = ""
+		held_item.global_transform = head.global_transform
 		held_item.apply_central_impulse(-head.global_basis.z * force * held_item.mass)
 		held_item = null
 		EventBus.throw_charge_stopped.emit()
