@@ -1,15 +1,16 @@
 extends Node3D
 
 
+@export var max_code_length: int = 3
 @export var display_label: Label3D
 @export var reset_label_timer: Timer
 @export var item_spawn_point: Marker3D
 # NOTE: I'm a bit worried that having every single item preloaded might cause a memory problem
 @export var items: Dictionary[String, PackedScene] = {
-	"1111": preload("res://entities/items/soda_cans/red_soda_can.tscn"),
-	"2222": preload("res://entities/items/soda_cans/blue_soda_can.tscn"),
-	"3333": preload("res://entities/items/soda_cans/green_soda_can.tscn"),
-	"4444": preload("res://entities/items/soda_cans/yellow_soda_can.tscn"),
+	"111": preload("res://entities/items/soda_cans/red_soda_can.tscn"),
+	"222": preload("res://entities/items/soda_cans/blue_soda_can.tscn"),
+	"333": preload("res://entities/items/soda_cans/green_soda_can.tscn"),
+	"444": preload("res://entities/items/soda_cans/yellow_soda_can.tscn"),
 }
 
 
@@ -22,7 +23,7 @@ func _reset_display_label() -> void:
 
 
 func _on_vending_machine_button_presssed(button_number: String) -> void:
-	if reset_label_timer.is_stopped() and display_label.text.length() < 4:
+	if reset_label_timer.is_stopped() and display_label.text.length() < max_code_length:
 		display_label.text += button_number
 	elif !reset_label_timer.is_stopped():
 		reset_label_timer.stop()
@@ -37,7 +38,7 @@ func _on_vending_machine_confirm_button_presssed(_button_number: String) -> void
 		display_label.text = "OK"
 		EventBus.vending_machine_code_submitted.emit(code, true)
 	else:
-		display_label.text = "ERROR"
+		display_label.text = "ERR"
 		EventBus.vending_machine_code_submitted.emit(code, false) 
 	
 	# Start timer to reset label

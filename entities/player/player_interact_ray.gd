@@ -6,16 +6,16 @@ var _interact_target: InteractArea3D
 
 func _physics_process(_delta: float) -> void:
 	var target: InteractArea3D
-	var prompt: String = ""
+	var prompt: int = 0
 	# Check for interactable
 	if is_colliding():
 		var collider: Object = get_collider()
 		if collider is InteractArea3D:
 			target = collider
 			prompt = collider.prompt
-			# Update UI
-			EventBus.interact_icon_updated.emit(prompt)
+	
 	_interact_target = target
+	EventBus.interact_icon_updated.emit(prompt)
 
 
 func interact_with_target(instigator: Node3D) -> void:

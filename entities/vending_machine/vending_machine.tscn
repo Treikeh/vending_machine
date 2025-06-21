@@ -6,12 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://ce2ep2k60an0w" path="res://entities/items/soda_cans/art/soda_can_02_sm.glb" id="4_12vco"]
 [ext_resource type="PackedScene" uid="uid://b7ar70wfnf8a7" path="res://entities/items/soda_cans/art/soda_can_03_sm.glb" id="5_goder"]
 [ext_resource type="PackedScene" uid="uid://dfeui7j0qhegj" path="res://entities/items/soda_cans/art/soda_can_04_sm.glb" id="6_npqjt"]
+[ext_resource type="PackedScene" uid="uid://b2h0g1n7qbgi0" path="res://entities/vending_machine/art/vending_machine_01_sm.glb" id="7_goder"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rx14y"]
-albedo_color = Color(1, 0.22, 0.22, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qauav"]
-albedo_color = Color(0.615686, 1, 1, 1)
+[sub_resource type="BoxShape3D" id="BoxShape3D_goder"]
+size = Vector3(1.5, 2, 0.9)
 
 [node name="VendingMachine" type="Node3D" node_paths=PackedStringArray("display_label", "reset_label_timer", "item_spawn_point")]
 script = ExtResource("1_qauav")
@@ -19,27 +17,17 @@ display_label = NodePath("DisplayLabel")
 reset_label_timer = NodePath("DisplayLabel/ResetLabelTimer")
 item_spawn_point = NodePath("ItemSpawnPoint")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-use_collision = true
-size = Vector3(1.6, 2, 1)
-material = SubResource("StandardMaterial3D_rx14y")
+[node name="vending_machine_01_sm" parent="." instance=ExtResource("7_goder")]
 
-[node name="CSGBox3D" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.35, -0.35)
-operation = 2
-size = Vector3(0.9, 1.1, 0.3)
-material = SubResource("StandardMaterial3D_qauav")
+[node name="StaticBody3D" type="StaticBody3D" parent="vending_machine_01_sm"]
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.98023e-08, -0.55, -0.35)
-operation = 2
-size = Vector3(1.4, 0.3, 0.3)
-material = SubResource("StandardMaterial3D_qauav")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="vending_machine_01_sm/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.96046e-08, 1, 0)
+shape = SubResource("BoxShape3D_goder")
 
 [node name="DisplayLabel" type="Label3D" parent="."]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.5, 1.6, -0.52)
-text = "1234"
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.510342, 1.63804, -0.43)
+text = "123"
 
 [node name="ResetLabelTimer" type="Timer" parent="DisplayLabel"]
 wait_time = 2.0
@@ -48,68 +36,68 @@ one_shot = true
 [node name="Buttons" type="Node3D" parent="."]
 
 [node name="VendingMachineButton1" parent="Buttons" instance=ExtResource("2_qauav")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 1.4, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.405, 1.4, -0.417)
 button_number = "1"
 
 [node name="VendingMachineButton2" parent="Buttons" instance=ExtResource("2_qauav")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.4, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.512, 1.4, -0.417)
 button_number = "2"
 
 [node name="VendingMachineButton3" parent="Buttons" instance=ExtResource("2_qauav")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 1.4, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.619, 1.4, -0.417)
 button_number = "3"
 
 [node name="VendingMachineButton4" parent="Buttons" instance=ExtResource("2_qauav")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 1.2, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.405, 1.295, -0.417)
 button_number = "4"
 
 [node name="VendingMachineButton5" parent="Buttons" instance=ExtResource("2_qauav")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.2, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.512, 1.29543, -0.417)
 button_number = "5"
 
 [node name="VendingMachineButton6" parent="Buttons" instance=ExtResource("2_qauav")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 1.2, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.619, 1.295, -0.417)
 button_number = "6"
 
 [node name="VendingMachineButton7" parent="Buttons" instance=ExtResource("2_qauav")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 1, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.405, 1.19, -0.417)
 button_number = "7"
 
 [node name="VendingMachineButton8" parent="Buttons" instance=ExtResource("2_qauav")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.512, 1.19, -0.417)
 button_number = "8"
 
 [node name="VendingMachineButton9" parent="Buttons" instance=ExtResource("2_qauav")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 1, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.619, 1.19, -0.417)
 button_number = "9"
 
 [node name="VendingMachineButton0" parent="Buttons" instance=ExtResource("2_qauav")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.8, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.512, 1.08353, -0.417)
 
 [node name="VendingMachineConfirmButton" parent="Buttons" instance=ExtResource("2_qauav")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 0.8, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.619, 1.08353, -0.417)
 button_number = "Y"
 
 [node name="VendingMachineCancelButton" parent="Buttons" instance=ExtResource("2_qauav")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0.8, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.405, 1.08353, -0.417)
 button_number = "N"
 
 [node name="Items" type="Node3D" parent="."]
 
 [node name="soda_can_01_sm" parent="Items" instance=ExtResource("3_rx14y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.7, -0.3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.73605, -0.3)
 
 [node name="soda_can_02_sm" parent="Items" instance=ExtResource("4_12vco")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 1.7, -0.3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 1.73605, -0.3)
 
 [node name="soda_can_03_sm" parent="Items" instance=ExtResource("5_goder")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 1.7, -0.3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 1.73605, -0.3)
 
 [node name="soda_can_04_sm" parent="Items" instance=ExtResource("6_npqjt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 1.7, -0.3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 1.73605, -0.3)
 
 [node name="ItemSpawnPoint" type="Marker3D" parent="."]
-transform = Transform3D(-4.37114e-08, 1, 0, -0.866025, -2.98023e-08, -0.5, -0.5, 0, 0.866025, 0, 0.5, -0.673205)
+transform = Transform3D(-4.24407e-08, 1, -1.04629e-08, -0.97093, -4.37114e-08, -0.239364, -0.239364, 0, 0.97093, 0.176314, 0.31306, -0.447846)
 
 [connection signal="timeout" from="DisplayLabel/ResetLabelTimer" to="." method="_on_reset_label_timer_timeout"]
 [connection signal="presssed" from="Buttons/VendingMachineButton1" to="." method="_on_vending_machine_button_presssed"]

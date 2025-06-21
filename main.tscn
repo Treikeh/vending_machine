@@ -4,15 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://b64kpf3puwh5f" path="res://levels/level_01.tscn" id="2_0xm2m"]
 [ext_resource type="Script" uid="uid://dv5ohond7iuk0" path="res://gui/gui.gd" id="3_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://b8r5euboee60y" path="res://gui/hud/default_interact_icon_02.png" id="3_h2yge"]
-
-[sub_resource type="Gradient" id="Gradient_1bvp3"]
-offsets = PackedFloat32Array(0.376984, 0.436508, 0.472222)
-colors = PackedColorArray(1, 1, 1, 0, 0.59, 0.59, 0.59, 0.882353, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_lquwl"]
-gradient = SubResource("Gradient_1bvp3")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
+[ext_resource type="SpriteFrames" uid="uid://d2bf31nmigc00" path="res://gui/hud/interact_icon_sprite_frames.tres" id="4_lquwl"]
+[ext_resource type="Texture2D" uid="uid://b8pwq7o23y1ih" path="res://gui/hud/throw_progress_bar_texture.tres" id="6_7mycd"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_ig7tw")
@@ -21,7 +14,7 @@ script = ExtResource("1_ig7tw")
 
 [node name="Level01" parent="World3D" instance=ExtResource("2_0xm2m")]
 
-[node name="GUI" type="Control" parent="." node_paths=PackedStringArray("fps_label", "corsshair_texture", "throw_charge_bar", "throw_charge_bar_fade_delay")]
+[node name="GUI" type="Control" parent="." node_paths=PackedStringArray("fps_label", "crosshair_texture", "throw_charge_bar", "throw_charge_bar_fade_delay")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -30,7 +23,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_1bvp3")
 fps_label = NodePath("FpsLabel")
-corsshair_texture = NodePath("Crosshair/CrosshairTextureRect")
+crosshair_texture = NodePath("Crosshair/CrosshairTextureRect")
+interact_icon_sprite_frames = ExtResource("4_lquwl")
 throw_charge_bar = NodePath("ThrowChargeBar")
 throw_charge_bar_fade_delay = NodePath("ThrowChargeBar/FadeDelay")
 
@@ -50,7 +44,7 @@ grow_vertical = 2
 
 [node name="CrosshairTextureRect" type="TextureRect" parent="GUI/Crosshair"]
 texture_filter = 3
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture = ExtResource("3_h2yge")
 
@@ -69,9 +63,10 @@ grow_horizontal = 2
 grow_vertical = 2
 max_value = 1.0
 step = 0.0
-value = 0.3
+value = 0.445
 fill_mode = 4
-texture_progress = SubResource("GradientTexture2D_lquwl")
+texture_progress = ExtResource("6_7mycd")
+tint_progress = Color(0.776269, 0.831229, 0.884064, 1)
 
 [node name="FadeDelay" type="Timer" parent="GUI/ThrowChargeBar"]
 wait_time = 1.5
