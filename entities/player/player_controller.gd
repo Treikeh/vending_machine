@@ -71,7 +71,7 @@ enum {WALKING, FALLING, JUMPING}
 @export var max_speed: float = 6.0
 @export var ground_accel: float = 500.0
 @export var air_accel: float = 200.0
-@export var jump_force: float = 5.0
+@export var jump_force: float = 3.0
 @export var ground_check: ShapeCast3D
 
 var is_jumping: bool = false
@@ -131,7 +131,10 @@ func _falling_physics(delta: float) -> void:
 
 
 func _jumping_enter() -> void:
-	set_axis_velocity(-gravity_direction * jump_force)
+	apply_central_impulse(-gravity_direction * jump_force)
+	# This is actually a better choice causes a small "hitch" when jumping, which is distracting
+	# NOTE: The cause of the "hitch" might be in another script
+	#set_axis_velocity(-gravity_direction * jump_force)
 	# Jump audio
 	state_machine.switch(FALLING)
 
@@ -151,7 +154,7 @@ var held_item: BaseItem
 func pick_up_item(item: RigidBody3D) -> void:
 	# 落とす　held_item いつ　拾う　新しい　もの
 	if held_item:
-		held_item.drop_item()
+		held_item.drop_item(self)
 		#return
 	
 	held_item = item
@@ -164,13 +167,13 @@ func pick_up_item(item: RigidBody3D) -> void:
 
 func _use_held_item() -> void:
 	if held_item:
-		held_item.use_item()
+		held_item.use_item(self)
 
 
 func _throw_held_item() -> void:
 	var force: float = throw_force_curve.sample(throw_charge)
 	if held_item:
-		held_item.drop_item()
+		held_item.drop_item(self)
 		held_item_transfrom.remote_path = ""
 		held_item.global_transform = head.global_transform
 		held_item.apply_central_impulse(-head.global_basis.z * force * held_item.mass)

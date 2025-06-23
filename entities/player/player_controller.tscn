@@ -46,7 +46,7 @@ collide_with_areas = true
 script = ExtResource("3_rs2e6")
 
 [node name="HeldItemTransform" type="RemoteTransform3D" parent="Orientation/Head"]
-transform = Transform3D(0.992546, 0.121869, 0, -0.116851, 0.951673, 0.284015, 0.0346128, -0.281898, 0.95882, 0.345, -0.185, -0.31)
+transform = Transform3D(0.85957, 0.121869, -0.496273, 0.0408115, 0.951673, 0.304389, 0.509386, -0.281898, 0.813056, 0.345, -0.185, -0.31)
 
 [node name="GroundCheck" type="ShapeCast3D" parent="Orientation" node_paths=PackedStringArray("ray_cast_3d")]
 shape = SubResource("CapsuleShape3D_6imlu")

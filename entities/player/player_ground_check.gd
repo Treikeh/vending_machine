@@ -29,6 +29,7 @@ func _physics_process(_delta: float) -> void:
 func _is_on_walkable_slope() -> bool:
 	# Leave the ground if too much upwards force is applied
 	if player.linear_velocity.dot(-player.gravity_direction) >= leave_floor_force:
+	#if player.linear_velocity.y >= leave_floor_force:
 		return false
 	
 	if is_colliding():
