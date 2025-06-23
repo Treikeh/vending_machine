@@ -20,13 +20,11 @@ func _ready() -> void:
 func _enable_mesh() -> void:
 	mesh.show()
 	mesh.process_mode = Node.PROCESS_MODE_INHERIT
-	$Mesh/CSGCylinder3D.use_collision = true
 
 
 func _disable_mesh() -> void:
 	mesh.hide()
 	mesh.process_mode = Node.PROCESS_MODE_DISABLED
-	$Mesh/CSGCylinder3D.use_collision = false
 
 
 func _on_vending_machine_code_submitted(_code: String, is_valid: bool) -> void:

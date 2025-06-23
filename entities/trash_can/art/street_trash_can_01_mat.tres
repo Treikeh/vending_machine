@@ -1,0 +1,9 @@
+[gd_resource type="ORMMaterial3D" load_steps=3 format=3 uid="uid://2mtqhvlt8ji4"]
+
+[ext_resource type="Texture2D" uid="uid://b7yv3s8ik1ia8" path="res://entities/trash_can/art/street_trash_can_01_bc.png" id="1_l3wkl"]
+[ext_resource type="Texture2D" uid="uid://fsgjwo07b6q4" path="res://entities/trash_can/art/street_trash_can_01_orm.png" id="2_s65b4"]
+
+[resource]
+albedo_texture = ExtResource("1_l3wkl")
+orm_texture = ExtResource("2_s65b4")
+texture_filter = 2
