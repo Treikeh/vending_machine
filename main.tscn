@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://cjl5togjm6k0w" path="res://main.gd" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://b64kpf3puwh5f" path="res://levels/level_01.tscn" id="2_0xm2m"]
 [ext_resource type="Script" uid="uid://dv5ohond7iuk0" path="res://gui/gui.gd" id="3_1bvp3"]
-[ext_resource type="Texture2D" uid="uid://b8r5euboee60y" path="res://gui/hud/default_interact_icon_02.png" id="3_h2yge"]
 [ext_resource type="SpriteFrames" uid="uid://d2bf31nmigc00" path="res://gui/hud/interact_icon_sprite_frames.tres" id="4_lquwl"]
+[ext_resource type="Texture2D" uid="uid://dxgqo5xhl4tlo" path="res://gui/hud/default_interact_icon_01.png" id="5_7mycd"]
 [ext_resource type="Texture2D" uid="uid://b8pwq7o23y1ih" path="res://gui/hud/throw_progress_bar_texture.tres" id="6_7mycd"]
 
 [node name="Main" type="Node"]
@@ -46,7 +46,7 @@ grow_vertical = 2
 texture_filter = 3
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("3_h2yge")
+texture = ExtResource("5_7mycd")
 
 [node name="ThrowChargeBar" type="TextureProgressBar" parent="GUI"]
 layout_mode = 1
