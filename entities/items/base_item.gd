@@ -9,13 +9,13 @@ signal used
 
 ## Functions to call from other scripts
 
-func use_item() -> void:
-	_item_used()
+func use_item(instigator: Node3D) -> void:
+	_item_used(instigator)
 	used.emit()
 
 
 func pick_up_item(instigator: Node3D) -> void:
-	_item_picked_up()
+	_item_picked_up(instigator)
 	picked_up.emit()
 	linear_velocity = Vector3.ZERO
 	#freeze = true
@@ -24,8 +24,8 @@ func pick_up_item(instigator: Node3D) -> void:
 		instigator.pick_up_item(self)
 
 
-func drop_item() -> void:
-	_item_dropped()
+func drop_item(instigator: Node3D) -> void:
+	_item_dropped(instigator)
 	dropped.emit()
 	#freeze = false
 	process_mode = Node.PROCESS_MODE_INHERIT
@@ -33,13 +33,14 @@ func drop_item() -> void:
 
 ## Functions to override in child classes
 
-func _item_used() -> void:
+@warning_ignore_start("unused_parameter")
+func _item_used(instigator: Node3D) -> void:
 	pass
 
 
-func _item_picked_up() -> void:
+func _item_picked_up(instigator: Node3D) -> void:
 	pass
 
 
-func _item_dropped() -> void:
+func _item_dropped(instigator: Node3D) -> void:
 	pass
