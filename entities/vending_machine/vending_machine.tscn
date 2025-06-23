@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://b2h0g1n7qbgi0" path="res://entities/vending_machine/art/vending_machine_01_sm.glb" id="7_goder"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_goder"]
-size = Vector3(1.5, 2, 0.9)
+size = Vector3(1.5, 1.9, 0.9)
 
 [node name="VendingMachine" type="Node3D" node_paths=PackedStringArray("display_label", "reset_label_timer", "item_spawn_point")]
 script = ExtResource("1_qauav")
@@ -22,12 +22,13 @@ item_spawn_point = NodePath("ItemSpawnPoint")
 [node name="StaticBody3D" type="StaticBody3D" parent="vending_machine_01_sm"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="vending_machine_01_sm/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.96046e-08, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.96046e-08, 1.05, 0)
 shape = SubResource("BoxShape3D_goder")
 
 [node name="DisplayLabel" type="Label3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.510342, 1.63804, -0.43)
-text = "123"
+text = "1234"
+font_size = 25
 
 [node name="ResetLabelTimer" type="Timer" parent="DisplayLabel"]
 wait_time = 2.0

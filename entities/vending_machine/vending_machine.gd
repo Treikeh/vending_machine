@@ -1,16 +1,16 @@
 extends Node3D
 
 
-@export var max_code_length: int = 3
+@export var max_code_length: int = 4
 @export var display_label: Label3D
 @export var reset_label_timer: Timer
 @export var item_spawn_point: Marker3D
 # NOTE: I'm a bit worried that having every single item preloaded might cause a memory problem
 @export var items: Dictionary[String, PackedScene] = {
-	"111": preload("res://entities/items/soda_cans/red_soda_can.tscn"),
-	"222": preload("res://entities/items/soda_cans/blue_soda_can.tscn"),
-	"333": preload("res://entities/items/soda_cans/green_soda_can.tscn"),
-	"444": preload("res://entities/items/soda_cans/yellow_soda_can.tscn"),
+	"11": preload("res://entities/items/soda_cans/red_soda_can.tscn"),
+	"12": preload("res://entities/items/soda_cans/blue_soda_can.tscn"),
+	"13": preload("res://entities/items/soda_cans/green_soda_can.tscn"),
+	"14": preload("res://entities/items/soda_cans/yellow_soda_can.tscn"),
 }
 
 
