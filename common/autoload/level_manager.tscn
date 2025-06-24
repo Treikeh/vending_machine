@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://itxvei8mrflo"]
+
+[ext_resource type="Script" uid="uid://bhfdt8q2ipf22" path="res://common/autoload/level_manager.gd" id="1_hdiyf"]
+[ext_resource type="PackedScene" uid="uid://c54fq80lg0u1l" path="res://gui/loading_screen/loading_screen.tscn" id="2_fl0j1"]
+
+[node name="LevelManager" type="CanvasLayer" node_paths=PackedStringArray("loading_screen")]
+process_mode = 3
+layer = 100
+script = ExtResource("1_hdiyf")
+loading_screen = NodePath("LoadingScreen")
+
+[node name="LoadingScreen" parent="." instance=ExtResource("2_fl0j1")]

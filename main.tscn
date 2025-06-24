@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://hlc7ccg56ek2"]
 
 [ext_resource type="Script" uid="uid://cjl5togjm6k0w" path="res://main.gd" id="1_ig7tw"]
-[ext_resource type="PackedScene" uid="uid://b64kpf3puwh5f" path="res://levels/level_01/level_01.tscn" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://wwxe07fon8hy" path="res://levels/main_menu/main_menu.tscn" id="2_7mycd"]
 [ext_resource type="Script" uid="uid://dv5ohond7iuk0" path="res://gui/gui.gd" id="3_1bvp3"]
 [ext_resource type="SpriteFrames" uid="uid://d2bf31nmigc00" path="res://gui/hud/interact_icon_sprite_frames.tres" id="4_lquwl"]
 [ext_resource type="Texture2D" uid="uid://dxgqo5xhl4tlo" path="res://gui/hud/default_interact_icon_01.png" id="5_7mycd"]
@@ -12,7 +12,7 @@ script = ExtResource("1_ig7tw")
 
 [node name="World3D" type="Node3D" parent="."]
 
-[node name="Level01" parent="World3D" instance=ExtResource("2_0xm2m")]
+[node name="MainMenu" parent="World3D" instance=ExtResource("2_7mycd")]
 
 [node name="GUI" type="Control" parent="." node_paths=PackedStringArray("fps_label", "crosshair_texture", "throw_charge_bar", "throw_charge_bar_fade_delay")]
 layout_mode = 3
