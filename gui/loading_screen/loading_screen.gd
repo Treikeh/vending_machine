@@ -1,17 +1,18 @@
 class_name LoadingScreen
-extends PanelContainer
+extends CanvasLayer
 
 
 signal fully_visible
 signal fully_hidden
 
 @export var fade_duration: float = 1.0
+@export var panel: Control
 @export var progress_bar: ProgressBar
 
 
 func fade_inn() -> void:
 	show()
-	modulate = Color.TRANSPARENT
+	panel.modulate = Color.TRANSPARENT
 	
 	var fade_tween: Tween = create_tween()
 	fade_tween.tween_property(self, "modulate", Color.WHITE, fade_duration)
@@ -25,7 +26,7 @@ func update_progress(new_value: float) -> void:
 
 
 func fade_out() -> void:
-	modulate = Color.WHITE
+	panel.modulate = Color.WHITE
 	
 	var fade_tween: Tween = create_tween()
 	fade_tween.tween_property(self, "modulate", Color.TRANSPARENT, fade_duration)

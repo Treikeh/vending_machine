@@ -26,35 +26,38 @@ anti_aliasing = false
 bg_color = Color(1, 1, 1, 1)
 anti_aliasing = false
 
-[node name="LoadingScreen" type="PanelContainer" node_paths=PackedStringArray("progress_bar")]
+[node name="LoadingScreen" type="CanvasLayer" node_paths=PackedStringArray("panel", "progress_bar")]
+layer = 100
+script = ExtResource("1_mkdfe")
+panel = NodePath("PanelContainer")
+progress_bar = NodePath("PanelContainer/MarginContainer/VBoxContainer/ProgressBar")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_hdiyf")
-script = ExtResource("1_mkdfe")
-fade_duration = 0.5
-progress_bar = NodePath("MarginContainer/VBoxContainer/ProgressBar")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 25
 theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 25
 theme_override_constants/margin_bottom = 25
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10
 alignment = 2
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "Loading..."
 
-[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer"]
+[node name="ProgressBar" type="ProgressBar" parent="PanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 size_flags_vertical = 8

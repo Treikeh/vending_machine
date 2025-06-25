@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://hlc7ccg56ek2"]
+[gd_scene load_steps=8 format=3 uid="uid://hlc7ccg56ek2"]
 
 [ext_resource type="Script" uid="uid://cjl5togjm6k0w" path="res://main.gd" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://wwxe07fon8hy" path="res://levels/main_menu/main_menu.tscn" id="2_7mycd"]
@@ -6,15 +6,22 @@
 [ext_resource type="SpriteFrames" uid="uid://d2bf31nmigc00" path="res://gui/hud/interact_icon_sprite_frames.tres" id="4_lquwl"]
 [ext_resource type="Texture2D" uid="uid://dxgqo5xhl4tlo" path="res://gui/hud/default_interact_icon_01.png" id="5_7mycd"]
 [ext_resource type="Texture2D" uid="uid://b8pwq7o23y1ih" path="res://gui/hud/throw_progress_bar_texture.tres" id="6_7mycd"]
+[ext_resource type="PackedScene" uid="uid://c54fq80lg0u1l" path="res://gui/loading_screen/loading_screen.tscn" id="7_272bh"]
 
-[node name="Main" type="Node"]
+[node name="Main" type="Node" node_paths=PackedStringArray("world_3d", "gui", "loading_screen")]
+process_mode = 3
 script = ExtResource("1_ig7tw")
+world_3d = NodePath("World3D")
+gui = NodePath("GUI")
+loading_screen = NodePath("")
 
 [node name="World3D" type="Node3D" parent="."]
+process_mode = 1
 
 [node name="MainMenu" parent="World3D" instance=ExtResource("2_7mycd")]
 
 [node name="GUI" type="Control" parent="." node_paths=PackedStringArray("fps_label", "crosshair_texture", "throw_charge_bar", "throw_charge_bar_fade_delay")]
+process_mode = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -71,5 +78,7 @@ tint_progress = Color(0.776269, 0.831229, 0.884064, 1)
 [node name="FadeDelay" type="Timer" parent="GUI/ThrowChargeBar"]
 wait_time = 1.5
 one_shot = true
+
+[node name="LoadingScreen" parent="." instance=ExtResource("7_272bh")]
 
 [connection signal="timeout" from="GUI/ThrowChargeBar/FadeDelay" to="GUI" method="_on_throw_charge_bar_fade_delay_timeout"]
