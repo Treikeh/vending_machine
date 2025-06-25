@@ -13,7 +13,7 @@ process_mode = 3
 script = ExtResource("1_ig7tw")
 world_3d = NodePath("World3D")
 gui = NodePath("GUI")
-loading_screen = NodePath("")
+loading_screen = NodePath("LoadingScreen")
 
 [node name="World3D" type="Node3D" parent="."]
 process_mode = 1

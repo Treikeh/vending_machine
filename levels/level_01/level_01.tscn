@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b64kpf3puwh5f"]
+[gd_scene load_steps=10 format=3 uid="uid://b64kpf3puwh5f"]
 
 [ext_resource type="Script" uid="uid://bqvoejsdvjmuv" path="res://levels/level_01/level_01.gd" id="1_2fp4v"]
 [ext_resource type="PackedScene" uid="uid://b62jt4e6safbv" path="res://entities/player/player_controller.tscn" id="1_ty3hu"]
@@ -19,15 +19,8 @@ background_mode = 2
 sky = SubResource("Sky_81a5f")
 tonemap_mode = 2
 
-[sub_resource type="BoxMesh" id="BoxMesh_2fp4v"]
-size = Vector3(1.4, 2.6, 0.4)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_dm0pi"]
-size = Vector3(1.4, 2.6, 0.4)
-
-[node name="Level01" type="Node3D" node_paths=PackedStringArray("monument")]
+[node name="Level01" type="Node3D"]
 script = ExtResource("1_2fp4v")
-monument = NodePath("Monument")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_gg43x")
@@ -91,17 +84,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 1.9)
 
 [node name="Note" parent="." instance=ExtResource("5_dm0pi")]
 transform = Transform3D(-0.982375, -0.186918, 3.94743e-08, 5.54921e-08, -8.04615e-08, 1, -0.186918, 0.982375, 8.94159e-08, -0.485926, 0.0311298, -0.388673)
-
-[node name="Monument" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 14.2)
-mesh = SubResource("BoxMesh_2fp4v")
-
-[node name="Area3D" type="Area3D" parent="Monument"]
-collision_layer = 0
-collision_mask = 2
-monitorable = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Monument/Area3D"]
-shape = SubResource("BoxShape3D_dm0pi")
-
-[connection signal="body_entered" from="Monument/Area3D" to="." method="_on_monument_area_3d_body_entered"]

@@ -3,6 +3,7 @@ extends Node
 
 
 signal start_loading_level(level_path: String)
+signal start_loading_sene_async(scene_path: String, transform: Transform3D)
 
 
 signal interact_icon_updated(prompt: int)

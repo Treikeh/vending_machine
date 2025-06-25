@@ -10,12 +10,17 @@ signal fully_hidden
 @export var progress_bar: ProgressBar
 
 
+func _ready() -> void:
+	hide()
+	progress_bar.value = 0
+
+
 func fade_inn() -> void:
 	show()
 	panel.modulate = Color.TRANSPARENT
 	
 	var fade_tween: Tween = create_tween()
-	fade_tween.tween_property(self, "modulate", Color.WHITE, fade_duration)
+	fade_tween.tween_property(panel, "modulate", Color.WHITE, fade_duration)
 	
 	await fade_tween.finished
 	fully_visible.emit()
@@ -29,7 +34,7 @@ func fade_out() -> void:
 	panel.modulate = Color.WHITE
 	
 	var fade_tween: Tween = create_tween()
-	fade_tween.tween_property(self, "modulate", Color.TRANSPARENT, fade_duration)
+	fade_tween.tween_property(panel, "modulate", Color.TRANSPARENT, fade_duration)
 	
 	await fade_tween.finished
 	fully_hidden.emit()
