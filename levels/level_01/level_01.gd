@@ -9,4 +9,6 @@ func _ready() -> void:
 func _on_vending_machine_code_submitted(code: String, _valid: bool) -> void:
 	match code:
 		"1996":
-			pass
+			var scene_path: String = "res://levels/train_station/train_station.tscn"
+			var spawn_transform: Transform3D = $TrainStationSpawnPoint.global_transform
+			EventBus.load_level.emit(scene_path, spawn_transform)

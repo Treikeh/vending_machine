@@ -2,8 +2,8 @@ extends Node
 @warning_ignore_start("unused_signal")
 
 
-signal start_loading_level(level_path: String)
-signal start_loading_sene_async(scene_path: String, transform: Transform3D)
+signal load_level(level_path: String, transform: Transform3D)
+signal unload_level(level_path: String)
 
 
 signal interact_icon_updated(prompt: int)
