@@ -24,6 +24,12 @@ material_override = ExtResource("2_sgefo")
 use_collision = true
 size = Vector3(50, 1, 50)
 
+[node name="Roof" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.5, -2)
+material_override = ExtResource("1_cn4k8")
+use_collision = true
+size = Vector3(26, 1, 4)
+
 [node name="Track01" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.4, -5)
 material_override = ExtResource("2_b0eu5")

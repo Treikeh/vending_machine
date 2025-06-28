@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://d11y7b5nss2s5"]
+
+[ext_resource type="Script" uid="uid://cwgnweg2dqgef" path="res://common/scripts/level_load_trigger.gd" id="1_ecml7"]
+
+[node name="LevelLoadTrigger" type="Area3D"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("1_ecml7")

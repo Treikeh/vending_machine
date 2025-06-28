@@ -1,0 +1,74 @@
+[gd_scene load_steps=5 format=3 uid="uid://gqsmdnolrjqo"]
+
+[ext_resource type="Material" uid="uid://meiilmj55714" path="res://common/materials/simple_dev_grid_gray_01.tres" id="1_842wt"]
+[ext_resource type="PackedScene" uid="uid://d11y7b5nss2s5" path="res://common/scenes/level_load_trigger.tscn" id="2_xj2i1"]
+[ext_resource type="PackedScene" uid="uid://pgv43adw264g" path="res://common/scenes/level_unload_trigger.tscn" id="3_jqnph"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jqnph"]
+size = Vector3(2, 1, 1)
+
+[node name="TrainStationTunnel" type="Node3D"]
+
+[node name="Ground" type="CSGCombiner3D" parent="."]
+material_override = ExtResource("1_842wt")
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -0.5)
+size = Vector3(2, 1, 1)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, -2.95, -5.09711)
+size = Vector3(2, 1, 10)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.4, -14.5)
+size = Vector3(2, 1, 10)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, -7.85, -23.5971)
+size = Vector3(2, 1, 10)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10.4, -33.1)
+size = Vector3(2, 1, 10)
+
+[node name="TrainStationTriggers" type="Node3D" parent="."]
+
+[node name="TrainStationLoadTrigger" parent="TrainStationTriggers" node_paths=PackedStringArray("spawn_transform") instance=ExtResource("2_xj2i1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.4, -19)
+level_path = "uid://438mffbmqx1b"
+spawn_transform = NodePath("../TrainStationSpawnPoint")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrainStationTriggers/TrainStationLoadTrigger"]
+shape = SubResource("BoxShape3D_jqnph")
+
+[node name="TrainStationSpawnPoint" type="Marker3D" parent="TrainStationTriggers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.9, -38.1)
+
+[node name="TrainStationUnloadTrigger" parent="TrainStationTriggers" instance=ExtResource("3_jqnph")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.4, -10)
+level_path = "uid://438mffbmqx1b"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrainStationTriggers/TrainStationUnloadTrigger"]
+shape = SubResource("BoxShape3D_jqnph")
+
+[node name="Level01Triggers" type="Node3D" parent="."]
+
+[node name="Level01LoadTrigger" parent="Level01Triggers" node_paths=PackedStringArray("spawn_transform") instance=ExtResource("2_xj2i1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.4, -11)
+level_path = "uid://b64kpf3puwh5f"
+spawn_transform = NodePath("../Level01SpawnPoint")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level01Triggers/Level01LoadTrigger"]
+shape = SubResource("BoxShape3D_jqnph")
+
+[node name="Level01SpawnPoint" type="Marker3D" parent="Level01Triggers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.3)
+
+[node name="Level01UnloadTrigger" parent="Level01Triggers" instance=ExtResource("3_jqnph")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.4, -18)
+level_path = "uid://b64kpf3puwh5f"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level01Triggers/Level01UnloadTrigger"]
+shape = SubResource("BoxShape3D_jqnph")

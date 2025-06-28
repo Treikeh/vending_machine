@@ -1,8 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://b64kpf3puwh5f"]
+[gd_scene load_steps=8 format=3 uid="uid://b64kpf3puwh5f"]
 
 [ext_resource type="Script" uid="uid://bqvoejsdvjmuv" path="res://levels/level_01/level_01.gd" id="1_2fp4v"]
-[ext_resource type="PackedScene" uid="uid://b62jt4e6safbv" path="res://entities/player/player_controller.tscn" id="1_ty3hu"]
-[ext_resource type="Material" uid="uid://meiilmj55714" path="res://common/materials/simple_dev_grid_gray_01.tres" id="2_71kry"]
 [ext_resource type="PackedScene" uid="uid://b6iud14yjg3ef" path="res://entities/vending_machine/vending_machine.tscn" id="2_mckh2"]
 [ext_resource type="PackedScene" uid="uid://dn8fbqjnlj0qw" path="res://entities/trash_can/trash_can.tscn" id="3_81a5f"]
 [ext_resource type="PackedScene" uid="uid://gkdkiaeobysh" path="res://entities/items/note/note.tscn" id="5_dm0pi"]
@@ -11,16 +9,18 @@
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
 ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
 
-[sub_resource type="Sky" id="Sky_81a5f"]
+[sub_resource type="Sky" id="Sky_2fp4v"]
 sky_material = SubResource("ProceduralSkyMaterial_mckh2")
 
 [sub_resource type="Environment" id="Environment_gg43x"]
 background_mode = 2
-sky = SubResource("Sky_81a5f")
+sky = SubResource("Sky_2fp4v")
 tonemap_mode = 2
 
-[node name="Level01" type="Node3D"]
+[node name="Level01" type="Node3D" node_paths=PackedStringArray("player_spawn_point", "train_station_tunnel_spawn_point")]
 script = ExtResource("1_2fp4v")
+player_spawn_point = NodePath("PlayerSpawnPoint")
+train_station_tunnel_spawn_point = NodePath("TrainStationTunnelSpawnPoint")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_gg43x")
@@ -29,52 +29,22 @@ environment = SubResource("Environment_gg43x")
 transform = Transform3D(0.866024, 0.433016, -0.250002, 1.47562e-08, 0.499998, 0.866027, 0.500003, -0.749999, 0.433011, 0, 10, 0)
 shadow_enabled = true
 
-[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+[node name="Ground" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 use_collision = true
+size = Vector3(100, 1, 100)
 
-[node name="Ground" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
-use_collision = true
-size = Vector3(100, 20, 100)
-
-[node name="TunnelStairs01" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, -1.02417, -12.3625)
+[node name="CSGBox3D" type="CSGBox3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10.3)
+visible = false
 operation = 2
-size = Vector3(3, 10, 3)
-material = ExtResource("2_71kry")
+size = Vector3(2, 1, 10)
 
-[node name="TunnelStairs02" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, -5.59045, -36.9716)
-operation = 2
-size = Vector3(3, 10, 3)
-material = ExtResource("2_71kry")
+[node name="PlayerSpawnPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 8.1)
 
-[node name="TunnelHallway01" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 2.98023e-08, -1, 0, 1, 2.98023e-08, 0, -3.32417, -24.6125)
-operation = 2
-size = Vector3(3, 17.5, 3)
-material = ExtResource("2_71kry")
-
-[node name="TunnelHallway02" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 2.98023e-08, -1, 0, 1, 2.98023e-08, 0, -7.92417, -45.5625)
-operation = 2
-size = Vector3(3, 10, 3)
-material = ExtResource("2_71kry")
-
-[node name="TunnelRoom01" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 2.98023e-08, -1, 0, 1, 2.98023e-08, -5.2, -3.32417, -24.6125)
-operation = 2
-size = Vector3(7, 17.5, 3)
-material = ExtResource("2_71kry")
-
-[node name="TunnelRoomDoorway01" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 2.98023e-08, -1, 0, 1, 2.98023e-08, -1.6, -3.57417, -24.6125)
-operation = 2
-size = Vector3(0.4, 1.4, 2.5)
-material = ExtResource("2_71kry")
-
-[node name="PlayerController" parent="." instance=ExtResource("1_ty3hu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 5)
+[node name="TrainStationTunnelSpawnPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.3)
 
 [node name="VendingMachine" parent="." instance=ExtResource("2_mckh2")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
@@ -84,6 +54,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 1.9)
 
 [node name="Note" parent="." instance=ExtResource("5_dm0pi")]
 transform = Transform3D(-0.982375, -0.186918, 3.94743e-08, 5.54921e-08, -8.04615e-08, 1, -0.186918, 0.982375, 8.94159e-08, -0.485926, 0.0311298, -0.388673)
-
-[node name="TrainStationSpawnPoint" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.4, -50)
