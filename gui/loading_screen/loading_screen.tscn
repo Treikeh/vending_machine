@@ -29,6 +29,7 @@ anti_aliasing = false
 [node name="LoadingScreen" type="CanvasLayer" node_paths=PackedStringArray("panel", "progress_bar")]
 layer = 100
 script = ExtResource("1_mkdfe")
+fade_duration = 0.5
 panel = NodePath("PanelContainer")
 progress_bar = NodePath("PanelContainer/MarginContainer/VBoxContainer/ProgressBar")
 

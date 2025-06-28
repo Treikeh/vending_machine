@@ -1,6 +1,5 @@
 extends Control
 
-
 @export var fps_label: Label
 @export var crosshair_texture: TextureRect
 @export var interact_icon_sprite_frames: SpriteFrames

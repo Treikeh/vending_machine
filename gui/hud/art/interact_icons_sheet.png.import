@@ -2,22 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dxgqo5xhl4tlo"
-path.bptc="res://.godot/imported/default_interact_icon_01.png-0bdf5b7e07b05eb1e7e38f4b22d8a57c.bptc.ctex"
+uid="uid://dull1g3hv67u3"
+path="res://.godot/imported/interact_icons_sheet.png-e4ca0b7e1cbd270608cdb5d77906edd8.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
-source_file="res://gui/hud/default_interact_icon_01.png"
-dest_files=["res://.godot/imported/default_interact_icon_01.png-0bdf5b7e07b05eb1e7e38f4b22d8a57c.bptc.ctex"]
+source_file="res://gui/hud/art/interact_icons_sheet.png"
+dest_files=["res://.godot/imported/interact_icons_sheet.png-e4ca0b7e1cbd270608cdb5d77906edd8.ctex"]
 
 [params]
 
-compress/mode=2
-compress/high_quality=true
+compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
