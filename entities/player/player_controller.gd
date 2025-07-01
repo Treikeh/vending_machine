@@ -71,7 +71,7 @@ enum {WALKING, FALLING, JUMPING}
 @export var max_speed: float = 6.0
 @export var ground_accel: float = 500.0
 @export var air_accel: float = 200.0
-@export var jump_force: float = 3.0
+@export var jump_force: float = 5.0
 @export var ground_check: ShapeCast3D
 
 var is_jumping: bool = false
@@ -92,7 +92,7 @@ func _walking_enter() -> void:
 	ground_check.target_position.y = -1.0
 
 func _walking_physics(delta: float) -> void:
-	if not ground_check.is_grounded:
+	if not ground_check.is_on_walkable_slope():
 		state_machine.switch(FALLING)
 		return
 	
@@ -103,6 +103,7 @@ func _walking_physics(delta: float) -> void:
 	var target_vel: Vector3 = move_direction * max_speed
 	var needed_vel: Vector3 = target_vel - linear_velocity
 	apply_central_force(needed_vel * ground_accel * delta * mass)
+	ground_check.snap_to_ground()
 
 
 func _falling_enter() -> void:
@@ -111,7 +112,7 @@ func _falling_enter() -> void:
 	ground_check.target_position.y = -0.6
 
 func _falling_physics(delta: float) -> void:
-	if ground_check.is_grounded:
+	if ground_check.is_on_walkable_slope():
 		state_machine.switch(WALKING)
 		return
 	
@@ -131,10 +132,10 @@ func _falling_physics(delta: float) -> void:
 
 
 func _jumping_enter() -> void:
-	apply_central_impulse(-gravity_direction * jump_force)
+	#apply_central_impulse(-gravity_direction * jump_force)
 	# This is actually a better choice causes a small "hitch" when jumping, which is distracting
 	# NOTE: The cause of the "hitch" might be in another script
-	#set_axis_velocity(-gravity_direction * jump_force)
+	set_axis_velocity(-gravity_direction * jump_force)
 	# Jump audio
 	state_machine.switch(FALLING)
 

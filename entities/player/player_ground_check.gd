@@ -12,7 +12,6 @@ extends ShapeCast3D
 @export var spring_damping: float = 25.0
 
 var player: RigidBody3D
-var is_grounded: bool = false
 var ground_normal: Vector3 = Vector3.UP
 
 
@@ -20,13 +19,7 @@ func _ready() -> void:
 	ray_cast_3d.collision_mask = collision_mask
 
 
-func _physics_process(_delta: float) -> void:
-	is_grounded = _is_on_walkable_slope()
-	if is_grounded and ray_cast_3d.is_colliding():
-		_snap_to_ground()
-
-
-func _is_on_walkable_slope() -> bool:
+func is_on_walkable_slope() -> bool:
 	# Leave the ground if too much upwards force is applied
 	if player.linear_velocity.dot(-player.gravity_direction) >= leave_floor_force:
 	#if player.linear_velocity.y >= leave_floor_force:
@@ -47,7 +40,7 @@ func _is_on_walkable_slope() -> bool:
 
 
 # Apply a spring force that moves the palyer towards "rest_height"
-func _snap_to_ground() -> void:
+func snap_to_ground() -> void:
 	var hit_distance: float = (global_position - ray_cast_3d.get_collision_point()).length()
 	var normal_vel: float = -ground_normal.dot(player.linear_velocity)
 	var dispalcement: float = hit_distance - rest_height
