@@ -36,9 +36,8 @@ size = Vector3(100, 1, 100)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Ground"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10.3)
-visible = false
 operation = 2
-size = Vector3(2, 1, 10)
+size = Vector3(4, 1, 10)
 
 [node name="PlayerSpawnPoint" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 8.1)

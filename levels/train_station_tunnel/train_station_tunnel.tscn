@@ -1,17 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://gqsmdnolrjqo"]
+[gd_scene load_steps=6 format=3 uid="uid://gqsmdnolrjqo"]
 
 [ext_resource type="Material" uid="uid://meiilmj55714" path="res://common/materials/simple_dev_grid_gray_01.tres" id="1_842wt"]
 [ext_resource type="PackedScene" uid="uid://d11y7b5nss2s5" path="res://common/scenes/level_load_trigger.tscn" id="2_xj2i1"]
 [ext_resource type="PackedScene" uid="uid://pgv43adw264g" path="res://common/scenes/level_unload_trigger.tscn" id="3_jqnph"]
+[ext_resource type="MeshLibrary" uid="uid://brpna8n45mh5j" path="res://levels/train_station_tunnel/art/train_station_tunnel_01_gridmap.meshlib" id="4_kjm4n"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jqnph"]
-size = Vector3(2, 1, 1)
+size = Vector3(4, 2, 1)
 
 [node name="TrainStationTunnel" type="Node3D"]
 
 [node name="Ground" type="CSGCombiner3D" parent="."]
+visible = false
 material_override = ExtResource("1_842wt")
-use_collision = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Ground"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -0.5)
@@ -36,7 +37,7 @@ size = Vector3(2, 1, 10)
 [node name="TrainStationTriggers" type="Node3D" parent="."]
 
 [node name="TrainStationLoadTrigger" parent="TrainStationTriggers" node_paths=PackedStringArray("spawn_transform") instance=ExtResource("2_xj2i1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.4, -19)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -19)
 level_path = "uid://438mffbmqx1b"
 spawn_transform = NodePath("../TrainStationSpawnPoint")
 
@@ -44,19 +45,20 @@ spawn_transform = NodePath("../TrainStationSpawnPoint")
 shape = SubResource("BoxShape3D_jqnph")
 
 [node name="TrainStationSpawnPoint" type="Marker3D" parent="TrainStationTriggers"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.9, -38.1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8, -38)
 
 [node name="TrainStationUnloadTrigger" parent="TrainStationTriggers" instance=ExtResource("3_jqnph")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.4, -10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -10)
 level_path = "uid://438mffbmqx1b"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TrainStationTriggers/TrainStationUnloadTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.5)
 shape = SubResource("BoxShape3D_jqnph")
 
 [node name="Level01Triggers" type="Node3D" parent="."]
 
 [node name="Level01LoadTrigger" parent="Level01Triggers" node_paths=PackedStringArray("spawn_transform") instance=ExtResource("2_xj2i1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.4, -11)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -7.5)
 level_path = "uid://b64kpf3puwh5f"
 spawn_transform = NodePath("../Level01SpawnPoint")
 
@@ -67,8 +69,19 @@ shape = SubResource("BoxShape3D_jqnph")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.3)
 
 [node name="Level01UnloadTrigger" parent="Level01Triggers" instance=ExtResource("3_jqnph")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.4, -18)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -18)
 level_path = "uid://b64kpf3puwh5f"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Level01Triggers/Level01UnloadTrigger"]
 shape = SubResource("BoxShape3D_jqnph")
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource("4_kjm4n")
+cell_size = Vector3(1, 1, 1)
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+data = {
+"cells": PackedInt32Array(-131071, 65535, 655363, -65537, 65535, 655363, -131071, 65533, 655361, -65537, 65533, 655361, -262143, 65531, 655363, -196609, 65531, 655363, -196609, 65529, 655361, -262143, 65529, 655361, -262143, 65527, 655361, -262143, 65525, 655361, -196609, 65527, 655361, -196609, 65525, 655361, -196609, 65523, 655361, -262143, 65523, 655361, -196609, 65521, 655361, -262143, 65521, 655361, -262143, 65519, 655361, -262143, 65517, 655361, -196609, 65517, 655361, -196609, 65519, 655361, -327681, 65515, 655363, -393215, 65515, 655363, -327681, 65513, 655361, -393215, 65513, 655361, -458753, 65511, 655363, -524287, 65511, 655363, -458753, 65509, 655361, -524287, 65509, 655361, -524287, 65507, 655361, -458753, 65507, 655361, -458753, 65505, 655361, -524287, 65505, 655361, -524287, 65503, 655361, -458753, 65503, 655361, -458753, 65501, 655361, -524287, 65501, 655361, -524287, 65499, 655361, -458753, 65499, 655361, -196610, 65529, 1048576, -196610, 65527, 1048576, -196610, 65525, 1048576, -196610, 65523, 1048582, -196610, 65521, 1048576, -196610, 65519, 1048576, -196610, 65517, 1048576, -262142, 65529, 1048576, -262142, 65527, 1048576, -262142, 65525, 1048576, -262142, 65523, 1048576, -262142, 65521, 1048576, -262142, 65519, 1048576, -262142, 65517, 1048576, -196611, 65523, 1, -196611, 65525, 1, -196611, 65521, 1, -196611, 65519, 1, -196611, 65517, 1, -196613, 65517, 1, -196613, 65519, 1, -196613, 65521, 1, -196613, 65523, 1, -196613, 65525, 1, -196613, 65527, 1, -196611, 65527, 1, -196611, 65529, 1, -196613, 65529, 1, -196615, 65529, 1, -196615, 65527, 1, -196615, 65525, 1, -196615, 65523, 1, -196615, 65521, 1, -196615, 65519, 1, -196615, 65517, 1, -196611, 65516, 655360, -196613, 65516, 655360, -196615, 65516, 655360, -196617, 65516, 1048578, -196617, 65530, 655362, -196611, 65530, 655360, -196613, 65530, 655360, -196615, 65530, 655360, -196617, 65529, 655361, -196617, 65527, 655361, -196617, 65525, 655361, -196617, 65523, 655361, -196617, 65517, 655361, -196617, 65519, 655361, -196617, 65521, 655361, -196617, 65518, 1048576, -196617, 65520, 1048576, -196617, 65522, 1048576, -196617, 65524, 1048576, -196617, 65526, 1048576, -196617, 65528, 1048576)
+}
+metadata/_editor_floor_ = Vector3(0, -4, 0)

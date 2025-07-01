@@ -54,8 +54,8 @@ margin = 0.1
 max_results = 1
 debug_shape_custom_color = Color(1, 0, 0, 1)
 script = ExtResource("3_43phm")
+max_slope_angle = 50.0
 ray_cast_3d = NodePath("RayCast3D")
-rest_height = 1.1
 
 [node name="RayCast3D" type="RayCast3D" parent="Orientation/GroundCheck"]
 target_position = Vector3(0, -1.6, 0)

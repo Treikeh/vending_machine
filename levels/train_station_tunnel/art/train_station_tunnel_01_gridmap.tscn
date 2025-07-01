@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://bw64npdgeg0m5"]
+
+[ext_resource type="PackedScene" uid="uid://cg5xjrb3f11f8" path="res://levels/train_station_tunnel/art/train_station_tunnel_01_gridmap.glb" id="1_tthab"]
+
+[node name="train_station_tunnel_01_gridmap" instance=ExtResource("1_tthab")]

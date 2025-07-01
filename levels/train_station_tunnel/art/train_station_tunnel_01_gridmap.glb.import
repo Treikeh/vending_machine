@@ -1,0 +1,78 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://cg5xjrb3f11f8"
+path="res://.godot/imported/train_station_tunnel_01_gridmap.glb-39b8814c2ddacf0c9a82f6a198ac5ecb.scn"
+
+[deps]
+
+source_file="res://levels/train_station_tunnel/art/train_station_tunnel_01_gridmap.glb"
+dest_files=["res://.godot/imported/train_station_tunnel_01_gridmap.glb-39b8814c2ddacf0c9a82f6a198ac5ecb.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+nodes/use_node_type_suffixes=true
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
+import_script/path=""
+_subresources={
+"materials": {
+"train_station_tunnel_tileset_floor.001": {
+"use_external/enabled": true,
+"use_external/path": "uid://meiilmj55714"
+},
+"train_station_tunnel_tileset_walls.001": {
+"use_external/enabled": true,
+"use_external/path": "uid://meiilmj55714"
+}
+},
+"nodes": {
+"PATH:corner_air_001": {
+"generate/physics": true
+},
+"PATH:corner_air_short_001": {
+"generate/physics": true
+},
+"PATH:corner_floor_001": {
+"generate/physics": true
+},
+"PATH:doorway_001": {
+"generate/physics": true
+},
+"PATH:floor_001": {
+"generate/physics": true
+},
+"PATH:stairs_001": {
+"generate/physics": true,
+"physics/shape_type": 1
+},
+"PATH:wall_air_001": {
+"generate/physics": true
+},
+"PATH:wall_air_short_001": {
+"generate/physics": true
+},
+"PATH:wall_floor_001": {
+"generate/physics": true
+}
+}
+}
+gltf/naming_version=1
+gltf/embedded_image_handling=1
