@@ -63,6 +63,10 @@ _subresources={
 "generate/physics": true,
 "physics/shape_type": 1
 },
+"PATH:stairs_short_001": {
+"generate/physics": true,
+"physics/shape_type": 1
+},
 "PATH:wall_air_001": {
 "generate/physics": true
 },

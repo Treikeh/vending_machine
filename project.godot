@@ -38,6 +38,10 @@ folder_colors={
 "res://levels/": "orange"
 }
 
+[filesystem]
+
+import/blender/enabled=false
+
 [global_group]
 
 player=""
