@@ -18,9 +18,10 @@ background_mode = 2
 sky = SubResource("Sky_2fp4v")
 tonemap_mode = 2
 
-[node name="Level01" type="Node3D" node_paths=PackedStringArray("train_station_tunnel_spawn_point")]
+[node name="Level01" type="Node3D" node_paths=PackedStringArray("train_station_tunnel_spawn_point", "trash_can")]
 script = ExtResource("1_2fp4v")
 train_station_tunnel_spawn_point = NodePath("TrainStationTunnelSpawnPoint")
+trash_can = NodePath("TrashCanVisibleOnScreenNotifier/TrashCan")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_gg43x")
@@ -46,11 +47,17 @@ size = Vector3(4, 1, 10)
 [node name="VendingMachine" parent="." instance=ExtResource("2_mckh2")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
-[node name="TrashCan" parent="." instance=ExtResource("3_81a5f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 1.9)
-
 [node name="Note" parent="." instance=ExtResource("5_dm0pi")]
 transform = Transform3D(-0.982375, -0.186918, 3.94743e-08, 5.54921e-08, -8.04615e-08, 1, -0.186918, 0.982375, 8.94159e-08, -0.485926, 0.0311298, -0.388673)
 
 [node name="TrainStationTunnelSpawnPoint" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.3)
+
+[node name="TrashCanVisibleOnScreenNotifier" type="VisibleOnScreenNotifier3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.5, 1.9)
+aabb = AABB(-0.4, -0.5, -0.4, 0.8, 1, 0.8)
+
+[node name="TrashCan" parent="TrashCanVisibleOnScreenNotifier" instance=ExtResource("3_81a5f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -1.19209e-07)
+
+[connection signal="screen_exited" from="TrashCanVisibleOnScreenNotifier" to="." method="_on_trash_can_visible_on_screen_notifier_screen_exited"]

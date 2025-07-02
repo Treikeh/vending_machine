@@ -10,30 +10,22 @@ data = PackedVector3Array(0, 0, -0.4, 0.2828, 1.0482, -0.2828, 0, 1.0482, -0.4, 
 height = 0.65
 radius = 0.3
 
-[node name="TrashCan" type="Node3D" node_paths=PackedStringArray("mesh")]
+[node name="TrashCan" type="StaticBody3D"]
 script = ExtResource("1_t1lj8")
-mesh = NodePath("Mesh")
 
-[node name="Mesh" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Mesh"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("ConcavePolygonShape3D_3xeg6")
 
-[node name="Street_trash_can_01_sm" parent="Mesh" instance=ExtResource("2_3xeg6")]
+[node name="Street_trash_can_01_sm" parent="." instance=ExtResource("2_3xeg6")]
 
-[node name="DestroyArea" type="Area3D" parent="Mesh"]
+[node name="DestroyArea" type="Area3D" parent="."]
 collision_layer = 0
 collision_mask = 4
 monitorable = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Mesh/DestroyArea"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DestroyArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.325, 0)
 shape = SubResource("CylinderShape3D_3xeg6")
 debug_color = Color(0.97, 0, 0.0161664, 1)
 
-[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-aabb = AABB(-0.4, -0.5, -0.4, 0.8, 1, 0.8)
-
-[connection signal="body_entered" from="Mesh/DestroyArea" to="." method="_on_destroy_area_body_entered"]
-[connection signal="screen_exited" from="VisibleOnScreenNotifier3D" to="." method="_on_visible_on_screen_notifier_3d_screen_exited"]
+[connection signal="body_entered" from="DestroyArea" to="." method="_on_destroy_area_body_entered"]
