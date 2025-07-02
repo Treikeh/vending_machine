@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://hlc7ccg56ek2"]
 
 [ext_resource type="Script" uid="uid://cjl5togjm6k0w" path="res://main.gd" id="1_ig7tw"]
-[ext_resource type="PackedScene" uid="uid://wwxe07fon8hy" path="res://gui/main_menu/main_menu.tscn" id="2_7mycd"]
+[ext_resource type="PackedScene" uid="uid://dol476noyi00q" path="res://gui/boot_screen/boot_screen.tscn" id="3_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://codyyu2jnkho5" path="res://gui/hud/hud.tscn" id="5_7mycd"]
 [ext_resource type="PackedScene" uid="uid://c54fq80lg0u1l" path="res://gui/loading_screen/loading_screen.tscn" id="7_272bh"]
 
@@ -27,7 +27,7 @@ layout_mode = 1
 [node name="World3D" type="Node3D" parent="."]
 process_mode = 1
 
-[node name="MainMenu" parent="World3D" instance=ExtResource("2_7mycd")]
+[node name="BootScreen" parent="World3D" instance=ExtResource("3_1bvp3")]
 
 [node name="LoadingScreen" parent="." instance=ExtResource("7_272bh")]
 visible = false
