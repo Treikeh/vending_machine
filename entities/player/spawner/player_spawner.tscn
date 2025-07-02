@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://gs83e0u3lu6s"]
+
+[ext_resource type="Material" uid="uid://bkolk08370gh2" path="res://common/materials/simple_dev_grid_green_01.tres" id="1_emajl"]
+[ext_resource type="Script" uid="uid://cgvp6kb0nueke" path="res://entities/player/spawner/player_spawner.gd" id="1_gdbh3"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_gdbh3"]
+radius = 0.4
+height = 1.75
+radial_segments = 16
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_tiqbt"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.3
+radial_segments = 8
+rings = 0
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_r7frq"]
+top_radius = 0.0
+bottom_radius = 0.2
+height = 0.3
+radial_segments = 8
+rings = 0
+
+[node name="PlayerSpawner" type="Node3D" node_paths=PackedStringArray("mesh")]
+script = ExtResource("1_gdbh3")
+mesh = NodePath("Mesh")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+material_override = ExtResource("1_emajl")
+mesh = SubResource("CapsuleMesh_gdbh3")
+
+[node name="ArrowBody" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -2.18557e-08, -0.5)
+material_override = ExtResource("1_emajl")
+mesh = SubResource("CylinderMesh_tiqbt")
+
+[node name="ArrowHead" type="MeshInstance3D" parent="Mesh/ArrowBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+material_override = ExtResource("1_emajl")
+mesh = SubResource("CylinderMesh_r7frq")

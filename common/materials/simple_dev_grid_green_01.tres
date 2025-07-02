@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://0ln6060gonm1" path="res://common/materials/simple_dev_grid_01_bc.png" id="1_jfebw"]
 
 [resource]
-albedo_color = Color(0, 1, 0.0833333, 1)
+albedo_color = Color(0, 0.5, 0.0416666, 1)
 albedo_texture = ExtResource("1_jfebw")
 uv1_triplanar = true
 texture_filter = 2
