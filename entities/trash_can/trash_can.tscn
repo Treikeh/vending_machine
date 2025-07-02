@@ -16,10 +16,10 @@ mesh = NodePath("Mesh")
 
 [node name="Mesh" type="StaticBody3D" parent="."]
 
-[node name="Street_trash_can_01_sm" parent="Mesh" instance=ExtResource("2_3xeg6")]
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Mesh"]
 shape = SubResource("ConcavePolygonShape3D_3xeg6")
+
+[node name="Street_trash_can_01_sm" parent="Mesh" instance=ExtResource("2_3xeg6")]
 
 [node name="DestroyArea" type="Area3D" parent="Mesh"]
 collision_layer = 0

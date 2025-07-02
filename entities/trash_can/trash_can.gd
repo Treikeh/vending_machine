@@ -38,6 +38,6 @@ func _on_visible_on_screen_notifier_3d_screen_exited() -> void:
 
 
 func _on_destroy_area_body_entered(body: Node3D) -> void:
-	if body.is_in_group("item") and items_trashed < trash_capacity:
+	if body.has_method("destroy_item") and items_trashed < trash_capacity:
 		items_trashed += 1
-		body.queue_free()
+		body.destroy_item(self)
