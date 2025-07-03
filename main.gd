@@ -10,6 +10,9 @@ func _ready() -> void:
 	# Connect signals
 	EventBus.load_level.connect(_on_load_level)
 	EventBus.unload_level.connect(_on_unload_level)
+	
+	EventBus.add_ui_scene.connect(_on_add_ui_scene)
+	EventBus.remove_all_ui_scenes.connect(_on_remove_all_ui_scenes)
 
 
 func _process(_delta: float) -> void:
@@ -19,7 +22,14 @@ func _process(_delta: float) -> void:
 
 #region Ui
 
-#
+func _on_add_ui_scene(scene: Node) -> void:
+	gui.add_child(scene)
+
+
+func _on_remove_all_ui_scenes() -> void:
+	for child: Node in gui.get_children():
+		gui.remove_child(child)
+		child.queue_free()
 
 #endregion
 
@@ -100,6 +110,7 @@ func _unload_all_levels() -> void:
 	for child: Node in world_3d.get_children():
 		world_3d.remove_child(child)
 		child.queue_free()
+		loaded_levels.clear()
 
 
 func _check_level_loading_queue() -> void:

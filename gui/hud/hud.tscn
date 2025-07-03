@@ -21,6 +21,7 @@ throw_charge_bar = NodePath("ThrowChargeBar")
 throw_charge_bar_fade_delay = NodePath("ThrowChargeBar/FadeDelay")
 
 [node name="FpsLabel" type="Label" parent="."]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 text = "FPS: 60.0"

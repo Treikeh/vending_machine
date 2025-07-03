@@ -13,6 +13,17 @@ signal item_thrown(pressed: bool)
 var camera_sensitivity: float = 0.1
 
 
+func _ready() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	_load_input_settings()
+	SettingsManager.input_settings_changed.connect(_load_input_settings)
+
+
+func _load_input_settings() -> void:
+	var input_settings: Dictionary = SettingsManager.load_input_settings()
+	camera_sensitivity = input_settings.camera_sensitivity
+
+
 func _input(event: InputEvent) -> void:
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		# Look input
@@ -44,9 +55,9 @@ func _input(event: InputEvent) -> void:
 		moved.emit(Input.get_vector("move_l", "move_r", "move_f", "move_b"))
 		
 		# Show mouse cursor
-		if event.is_action_pressed("ui_cancel"):
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		#if event.is_action_pressed("ui_cancel"):
+		#	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
 	# Hide mouse cursor when clicking on the game
-	elif Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE and event is InputEventMouseButton:
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	#elif Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE and event is InputEventMouseButton:
+	#	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)

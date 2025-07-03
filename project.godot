@@ -13,11 +13,19 @@ config_version=5
 config/name="Vending machine"
 run/main_scene="uid://hlc7ccg56ek2"
 config/features=PackedStringArray("4.4", "GL Compatibility")
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/show_image=false
 config/icon="res://icon.svg"
 
 [autoload]
 
 EventBus="*res://common/autoload/event_bus.gd"
+SettingsManager="*res://common/autoload/settings_manager.gd"
+
+[display]
+
+window/stretch/mode="viewport"
+window/stretch/aspect="keep_height"
 
 [editor]
 
@@ -33,6 +41,7 @@ enabled=PackedStringArray("res://addons/script-ide/plugin.cfg")
 folder_colors={
 "res://addons/": "pink",
 "res://common/": "gray",
+"res://debug/": "red",
 "res://entities/": "blue",
 "res://gui/": "green",
 "res://levels/": "orange"

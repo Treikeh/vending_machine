@@ -4,6 +4,8 @@ extends Control
 @export var crosshair_texture: TextureRect
 @export var interact_icon_sprite_frames: SpriteFrames
 
+var pause_menu: Control
+
 
 func _ready() -> void:
 	EventBus.interact_icon_updated.connect(_on_interact_icon_updated)
@@ -11,6 +13,22 @@ func _ready() -> void:
 	throw_charge_bar.modulate = Color.TRANSPARENT
 	EventBus.throw_charge_updated.connect(_on_throw_charge_updated)
 	EventBus.throw_charge_stopped.connect(_on_throw_charge_stopped)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	# Pause game and show pause menu when pressing esc
+	if event.is_action_pressed("ui_cancel") and !pause_menu:
+		hide()
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		# Spawn pause menu
+		pause_menu = load("uid://ca47ihv0ka8al").instantiate()
+		EventBus.add_ui_scene.emit(pause_menu)
+		pause_menu.tree_exiting.connect(_on_pause_menu_tree_exiting)
+
+
+func _on_pause_menu_tree_exiting() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	show()
 
 
 func _physics_process(_delta: float) -> void:
