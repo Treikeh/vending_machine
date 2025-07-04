@@ -1,10 +1,14 @@
 extends Control
 
+@onready var _confirm_pop_up: PanelContainer = %ConfirmPopUp
+
 
 func _ready() -> void:
 	_set_up_audio_settings()
 	_set_up_input_settings()
 	_set_up_video_settings()
+	
+	_confirm_pop_up.hide()
 	
 	# Connect signals
 	%VolumeSlider.value_changed.connect(_on_volume_slider_value_changed)
@@ -12,6 +16,10 @@ func _ready() -> void:
 	%DisplayModeOptionsButton.item_selected.connect(_on_display_mode_options_button_item_selected)
 	%ApplyButton.pressed.connect(_on_apply_button_pressed)
 	%BackButton.pressed.connect(_on_back_button_pressed)
+	
+	# Confirm pop up
+	%SaveButton.pressed.connect(_on_save_button_pressed)
+	%DiscardButton.pressed.connect(_on_discard_button_pressed)
 
 
 func _on_apply_button_pressed() -> void:
@@ -28,11 +36,11 @@ func _on_apply_button_pressed() -> void:
 
 
 func _on_back_button_pressed() -> void:
-	# Actually apply the settings when closing the menu. If the new settings aren't applied with ->
-	# <- the apply button then the new settings are discarded
-	SettingsManager.apply_audio_settings()
-	SettingsManager.apply_video_settings()
-	queue_free()
+	if !_are_new_and_old_settings_matching():
+		_confirm_pop_up.show()
+		return
+	
+	_close_settings_menu()
 
 
 func _are_new_and_old_settings_matching() -> bool:
@@ -40,6 +48,27 @@ func _are_new_and_old_settings_matching() -> bool:
 	var input: bool = new_input_settings == old_input_settings
 	var video: bool = new_video_settings == old_video_settings
 	return (video and input and audio)
+
+
+func _close_settings_menu() -> void:
+	# Actually apply the settings when closing the menu. If the new settings aren't applied with ->
+	# <- the apply button then the new settings are discarded
+	SettingsManager.apply_audio_settings()
+	SettingsManager.apply_video_settings()
+	queue_free()
+
+
+#region Confirm pop up
+
+func _on_save_button_pressed() -> void:
+	_on_apply_button_pressed()
+	_close_settings_menu()
+
+
+func _on_discard_button_pressed() -> void:
+	_close_settings_menu()
+
+#endregion
 
 
 #region Audio settings

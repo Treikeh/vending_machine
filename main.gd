@@ -81,7 +81,7 @@ func load_level(level_path: String, transform: Transform3D = Transform3D.FLIP_Y)
 	if transform == Transform3D.FLIP_Y:
 		# Stop levels from spawning/despawning wile the loading screen is fading inn
 		_can_spawn_levels = false
-		_loading_screen.fade_inn()
+		_loading_screen.fade_in()
 		await _loading_screen.fully_visible
 		# Unload all levels and allow the new level to spawn inn when the loading screen is fully visible
 		_unload_all_levels()

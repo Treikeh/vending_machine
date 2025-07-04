@@ -1,45 +1,48 @@
-[gd_scene load_steps=5 format=3 uid="uid://c54fq80lg0u1l"]
+[gd_scene load_steps=4 format=3 uid="uid://c54fq80lg0u1l"]
 
 [ext_resource type="Script" uid="uid://da36a3u5eqf2u" path="res://gui/loading_screen/loading_screen.gd" id="1_mkdfe"]
 [ext_resource type="StyleBox" uid="uid://xpq44oe2x0dy" path="res://gui/loading_screen/loading_screen_progress_bar_style_box_background.tres" id="2_sm2e5"]
 [ext_resource type="StyleBox" uid="uid://disry8f63qax4" path="res://gui/loading_screen/loading_screen_progress_bar_style_box_fill.tres" id="3_mrd8x"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hdiyf"]
-bg_color = Color(0, 0, 0, 1)
-
-[node name="LoadingScreen" type="CanvasLayer" node_paths=PackedStringArray("panel", "progress_bar")]
+[node name="LoadingScreen" type="CanvasLayer"]
 layer = 100
 script = ExtResource("1_mkdfe")
 fade_duration = 0.5
-panel = NodePath("PanelContainer")
-progress_bar = NodePath("PanelContainer/MarginContainer/VBoxContainer/ProgressBar")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="Ui" type="ColorRect" parent="."]
+unique_name_in_owner = true
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_hdiyf")
+color = Color(0, 0, 0, 1)
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
-layout_mode = 2
+[node name="ProgressContainer" type="MarginContainer" parent="Ui"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/margin_left = 25
 theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 25
 theme_override_constants/margin_bottom = 25
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Ui/ProgressContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10
 alignment = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="Ui/ProgressContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "Loading..."
 
-[node name="ProgressBar" type="ProgressBar" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="ProgressBar" type="ProgressBar" parent="Ui/ProgressContainer/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 size_flags_vertical = 8
@@ -49,3 +52,8 @@ max_value = 1.0
 step = 0.0
 value = 0.5
 show_percentage = false
+
+[node name="ShowProgressDelay" type="Timer" parent="Ui"]
+unique_name_in_owner = true
+wait_time = 3.0
+one_shot = true

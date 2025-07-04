@@ -2,44 +2,52 @@ class_name LoadingScreen
 extends CanvasLayer
 
 
-#TODO: Hide the progress bar and label until a few seconds has passed. I think it's ugly when ->
-# <- they're visible and the loading screen takes less than 1 second to load the scene
-
-
 signal fully_visible
 signal fully_hidden
 
 @export var fade_duration: float = 1.0
-@export var panel: Control
-@export var progress_bar: ProgressBar
+
+@onready var _ui: Control = %Ui
+@onready var _progress_container: Control = %ProgressContainer
+@onready var _progress_bar: ProgressBar = %ProgressBar
+@onready var _show_progress_delay: Timer = %ShowProgressDelay
 
 
 func _ready() -> void:
 	hide()
-	progress_bar.value = 0
+	_show_progress_delay.timeout.connect(_on_show_progress_delay_timeout)
 
 
-func fade_inn() -> void:
+func fade_in() -> void:
 	show()
-	panel.modulate = Color.TRANSPARENT
+	# Reset loading screen when starting to fade in
+	_ui.modulate = Color.TRANSPARENT
+	_progress_bar.value = 0
+	_progress_container.modulate = Color.TRANSPARENT
 	
 	var fade_tween: Tween = create_tween()
-	fade_tween.tween_property(panel, "modulate", Color.WHITE, fade_duration)
+	fade_tween.tween_property(_ui, "modulate", Color.WHITE, fade_duration)
 	
 	await fade_tween.finished
+	_show_progress_delay.start(0.0)
 	fully_visible.emit()
 
 
 func update_progress(new_value: float) -> void:
-	progress_bar.value = new_value
+	_progress_bar.value = new_value
 
 
 func fade_out() -> void:
-	panel.modulate = Color.WHITE
+	_ui.modulate = Color.WHITE
 	
 	var fade_tween: Tween = create_tween()
-	fade_tween.tween_property(panel, "modulate", Color.TRANSPARENT, fade_duration)
+	fade_tween.tween_property(_ui, "modulate", Color.TRANSPARENT, fade_duration)
 	
 	await fade_tween.finished
 	fully_hidden.emit()
 	hide()
+
+
+func _on_show_progress_delay_timeout() -> void:
+	var fade_tween: Tween = create_tween()
+	fade_tween.tween_property(_progress_container, "modulate", Color.WHITE, fade_duration)
