@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dol476noyi00q"]
 
-[ext_resource type="Script" uid="uid://cqgcss3jhlqmx" path="res://gui/boot_screen/boot_screen.gd" id="1_ibhsx"]
-[ext_resource type="Texture2D" uid="uid://8ecb1uwexrno" path="res://gui/boot_screen/art/Made_with_godot.png" id="1_xl105"]
+[ext_resource type="Script" uid="uid://cqgcss3jhlqmx" path="res://gui/splash_screen/splash_screen.gd" id="1_ibhsx"]
+[ext_resource type="Texture2D" uid="uid://8ecb1uwexrno" path="res://gui/splash_screen/art/Made_with_godot.png" id="1_xl105"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ibhsx"]
 bg_color = Color(0, 0, 0, 1)
@@ -43,7 +43,7 @@ _data = {
 &"animation": SubResource("Animation_xl105")
 }
 
-[node name="BootScreen" type="Control" node_paths=PackedStringArray("animation_player")]
+[node name="SplashScreen" type="Control" node_paths=PackedStringArray("animation_player")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
