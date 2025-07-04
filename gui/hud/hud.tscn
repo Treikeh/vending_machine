@@ -5,7 +5,7 @@
 [ext_resource type="SpriteFrames" uid="uid://d2bf31nmigc00" path="res://gui/hud/art/interact_icon_sprite_frames.tres" id="2_y7mac"]
 [ext_resource type="Texture2D" uid="uid://b8pwq7o23y1ih" path="res://gui/hud/art/throw_progress_bar_texture.tres" id="3_y7mac"]
 
-[node name="Hud" type="Control" node_paths=PackedStringArray("fps_label", "crosshair_texture", "throw_charge_bar", "throw_charge_bar_fade_delay")]
+[node name="Hud" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,19 +14,16 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_34rqw")
-fps_label = NodePath("FpsLabel")
-crosshair_texture = NodePath("Crosshair/CrosshairTextureRect")
-interact_icon_sprite_frames = ExtResource("2_y7mac")
-throw_charge_bar = NodePath("ThrowChargeBar")
-throw_charge_bar_fade_delay = NodePath("ThrowChargeBar/FadeDelay")
+_interact_icon_sprite_frames = ExtResource("2_y7mac")
 
 [node name="FpsLabel" type="Label" parent="."]
+unique_name_in_owner = true
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 text = "FPS: 60.0"
 
-[node name="Crosshair" type="CenterContainer" parent="."]
+[node name="CrosshairContainer" type="CenterContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,13 +31,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CrosshairTextureRect" type="TextureRect" parent="Crosshair"]
+[node name="CrosshairTexture" type="TextureRect" parent="CrosshairContainer"]
+unique_name_in_owner = true
 texture_filter = 3
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture = ExtResource("2_rllpj")
 
 [node name="ThrowChargeBar" type="TextureProgressBar" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -60,8 +59,7 @@ fill_mode = 4
 texture_progress = ExtResource("3_y7mac")
 tint_progress = Color(0.776269, 0.831229, 0.884064, 1)
 
-[node name="FadeDelay" type="Timer" parent="ThrowChargeBar"]
+[node name="ThrowChargeBarFadeDelay" type="Timer" parent="ThrowChargeBar"]
+unique_name_in_owner = true
 wait_time = 1.5
 one_shot = true
-
-[connection signal="timeout" from="ThrowChargeBar/FadeDelay" to="." method="_on_throw_charge_bar_fade_delay_timeout"]

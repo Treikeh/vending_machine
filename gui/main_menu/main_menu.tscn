@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://wwxe07fon8hy"]
+[gd_scene load_steps=7 format=3 uid="uid://wwxe07fon8hy"]
 
 [ext_resource type="Script" uid="uid://cf70rm8w8usqn" path="res://gui/main_menu/main_menu.gd" id="1_nt5r4"]
 [ext_resource type="PackedScene" uid="uid://b6iud14yjg3ef" path="res://entities/vending_machine/vending_machine.tscn" id="2_85nol"]
@@ -15,18 +15,27 @@ background_mode = 2
 sky = SubResource("Sky_81a5f")
 tonemap_mode = 2
 
-[node name="MainMenu" type="Node3D" node_paths=PackedStringArray("ui")]
-script = ExtResource("1_nt5r4")
-ui = NodePath("Ui")
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_85nol"]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="MainMenu" type="Node3D"]
+script = ExtResource("1_nt5r4")
+first_level_path = "uid://b64kpf3puwh5f"
+
+[node name="World3D" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="World3D"]
 environment = SubResource("Environment_qy2xc")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.866024, 0.433016, -0.25, 1.47562e-08, 0.499998, 0.866027, 0.500003, -0.75, 0.43301, 0, 10, 0)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World3D"]
+transform = Transform3D(-0.942642, -0.289085, 0.166903, 0, 0.5, 0.866025, -0.333807, 0.816352, -0.471321, 0, 10, 0)
 shadow_enabled = true
 
-[node name="VendingMachine" parent="." instance=ExtResource("2_85nol")]
+[node name="VendingMachine" parent="World3D" instance=ExtResource("2_85nol")]
+transform = Transform3D(0.985818, 0, -0.167818, 0, 1, 0, 0.167818, 0, 0.985818, 0, 0, 0)
+
+[node name="Ground" type="CSGBox3D" parent="World3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -0.5, 45)
+size = Vector3(100, 1, 100)
 
 [node name="3DWorldViewportContainer" type="SubViewportContainer" parent="."]
 anchors_preset = 15
@@ -40,12 +49,13 @@ stretch = true
 [node name="3DWorldViewport" type="SubViewport" parent="3DWorldViewportContainer"]
 handle_input_locally = false
 size = Vector2i(1152, 648)
-render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="3DWorldViewportContainer/3DWorldViewport"]
-transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 0.7, 1.4, -3.1)
+transform = Transform3D(-0.999657, 0, -0.0261769, 0, 1, 0, 0.0261769, 0, -0.999657, 1.13, 1.13, -2.97)
+fov = 62.0
 
 [node name="Ui" type="Control" parent="."]
+unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -53,25 +63,53 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="VersionLabel" type="Label" parent="Ui"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -59.0
+offset_bottom = 23.0
+grow_horizontal = 0
+text = "dev 1"
+horizontal_alignment = 2
+
 [node name="VBoxContainer" type="VBoxContainer" parent="Ui"]
 layout_mode = 0
-offset_left = 284.0
-offset_top = 295.0
-offset_right = 354.0
-offset_bottom = 396.0
+offset_left = 89.0
+offset_top = 126.0
+offset_right = 559.0
+offset_bottom = 465.0
+theme_override_constants/separation = 20
 alignment = 1
+
+[node name="Title" type="Label" parent="Ui/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "VENDING MACHINE"
+
+[node name="HSeparator" type="HSeparator" parent="Ui/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+theme_override_styles/separator = SubResource("StyleBoxEmpty_85nol")
 
 [node name="PlayButton" type="Button" parent="Ui/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 text = "Play"
+alignment = 0
 
 [node name="SettingsButton" type="Button" parent="Ui/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 text = "Settings"
+alignment = 0
 
 [node name="QuitButton" type="Button" parent="Ui/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 text = "Quit"
+alignment = 0

@@ -1,15 +1,17 @@
 extends Node3D
 
 
-@export var mesh: MeshInstance3D
+const PLAYER_SCENE: String = "uid://b62jt4e6safbv"
+const HUD_SCENE: String = "uid://codyyu2jnkho5"
 
-var player_scene: String = "uid://b62jt4e6safbv"
+@onready var _mesh: MeshInstance3D = %Mesh
 
 
 func _ready() -> void:
 	# Remove the mesh when the game starts
-	mesh.hide()
+	_mesh.hide()
 	
 	# Spawn player if there is no player in the scene
 	if get_tree().get_first_node_in_group("player") == null:
-		Globals.main.load_level(player_scene, global_transform)
+		Globals.main.load_level(PLAYER_SCENE, global_transform)
+		Globals.main.load_menu(HUD_SCENE)

@@ -2,19 +2,13 @@ class_name MainScene
 extends Node
 
 
-@export var _gui: Control
-@export var _world_3d: Node3D
-@export var _loading_screen: LoadingScreen
+@onready var _gui: Control = %GUI
+@onready var _world_3d: Node3D = %World3D
+@onready var _loading_screen: LoadingScreen = %LoadingScreen
 
 
 func _ready() -> void:
 	Globals.main = self
-	# Connect signals
-	#EventBus.load_level.connect(_on_load_level)
-	#EventBus.unload_level.connect(_on_unload_level)
-	
-	#EventBus.add_ui_scene.connect(_on_add_ui_scene)
-	#EventBus.remove_all_ui_scenes.connect(_on_remove_all_ui_scenes)
 
 
 func _process(_delta: float) -> void:
@@ -24,11 +18,19 @@ func _process(_delta: float) -> void:
 
 #region Ui
 
-func add_ui_scene(scene: Node) -> void:
-	_gui.add_child(scene)
+func load_menu(menu_path: String) -> Control:
+	# Check if scene exists
+	if !ResourceLoader.exists(menu_path):
+		print("ERROR!: Ui scene %s not found" % menu_path)
+		return null
+	
+	# Load new scene and add it to the scene tree
+	var new_scene: Control = load(menu_path).instantiate()
+	_gui.add_child(new_scene)
+	return new_scene
 
 
-func remove_all_ui_scenes() -> void:
+func unload_all_menus() -> void:
 	for child: Node in _gui.get_children():
 		_gui.remove_child(child)
 		child.queue_free()
@@ -66,7 +68,7 @@ func load_level(level_path: String, transform: Transform3D = Transform3D.FLIP_Y)
 	
 	# Check if level is already in the scene tree
 	if _loaded_levels.has(level_path):
-		print("ERROR!: Level %s is already loaded" % level_path)
+		print("NOTE!: Level %s is already loaded" % level_path)
 		return
 	
 	# Setup loding queue data
@@ -103,7 +105,7 @@ func unload_level(level_path: String) -> void:
 		# Remove level from loaded_levels dict
 		_loaded_levels.erase(level_path)
 	else:
-		print("ERROR!: Level %s is not active in the scene tree" % level_path)
+		print("NOTE!: Level %s is not active in the scene tree" % level_path)
 
 
 ## Unload all child nodes of World3D.

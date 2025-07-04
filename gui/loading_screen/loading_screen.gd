@@ -2,6 +2,10 @@ class_name LoadingScreen
 extends CanvasLayer
 
 
+#TODO: Hide the progress bar and label until a few seconds has passed. I think it's ugly when ->
+# <- they're visible and the loading screen takes less than 1 second to load the scene
+
+
 signal fully_visible
 signal fully_hidden
 

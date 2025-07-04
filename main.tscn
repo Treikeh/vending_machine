@@ -4,14 +4,18 @@
 [ext_resource type="PackedScene" uid="uid://dol476noyi00q" path="res://gui/splash_screen/splash_screen.tscn" id="3_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://c54fq80lg0u1l" path="res://gui/loading_screen/loading_screen.tscn" id="7_272bh"]
 
-[node name="Main" type="Node" node_paths=PackedStringArray("_gui", "_world_3d", "_loading_screen")]
+[node name="Main" type="Node"]
 process_mode = 3
 script = ExtResource("1_ig7tw")
-_gui = NodePath("GUI")
-_world_3d = NodePath("World3D")
-_loading_screen = NodePath("LoadingScreen")
+
+[node name="World3D" type="Node3D" parent="."]
+unique_name_in_owner = true
+process_mode = 1
+
+[node name="SplashScreen" parent="World3D" instance=ExtResource("3_1bvp3")]
 
 [node name="GUI" type="Control" parent="."]
+unique_name_in_owner = true
 process_mode = 1
 layout_mode = 3
 anchors_preset = 15
@@ -19,11 +23,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="World3D" type="Node3D" parent="."]
-process_mode = 1
-
-[node name="SplashScreen" parent="World3D" instance=ExtResource("3_1bvp3")]
+mouse_filter = 2
 
 [node name="LoadingScreen" parent="." instance=ExtResource("7_272bh")]
+unique_name_in_owner = true
 visible = false

@@ -1,49 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dol476noyi00q"]
+[gd_scene load_steps=3 format=3 uid="uid://dol476noyi00q"]
 
 [ext_resource type="Script" uid="uid://cqgcss3jhlqmx" path="res://gui/splash_screen/splash_screen.gd" id="1_ibhsx"]
 [ext_resource type="Texture2D" uid="uid://8ecb1uwexrno" path="res://gui/splash_screen/art/Made_with_godot.png" id="1_xl105"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ibhsx"]
-bg_color = Color(0, 0, 0, 1)
-
-[sub_resource type="Animation" id="Animation_ibhsx"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PanelContainer/CenterContainer/MadeWithGodotTrextureRect:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_xl105"]
-resource_name = "animation"
-length = 3.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PanelContainer/CenterContainer/MadeWithGodotTrextureRect:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.5, 1, 2, 2.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ibhsx"]
-_data = {
-&"RESET": SubResource("Animation_ibhsx"),
-&"animation": SubResource("Animation_xl105")
-}
-
-[node name="SplashScreen" type="Control" node_paths=PackedStringArray("animation_player")]
+[node name="SplashScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -51,26 +11,23 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ibhsx")
-animation_player = NodePath("AnimationPlayer")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ibhsx")
+color = Color(0, 0, 0, 1)
 
-[node name="CenterContainer" type="CenterContainer" parent="PanelContainer"]
+[node name="SplashScreenContainer" type="CenterContainer" parent="."]
+unique_name_in_owner = true
 layout_mode = 2
+offset_right = 1152.0
+offset_bottom = 648.0
 
-[node name="MadeWithGodotTrextureRect" type="TextureRect" parent="PanelContainer/CenterContainer"]
+[node name="MadeWithGodot" type="TextureRect" parent="SplashScreenContainer"]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 texture = ExtResource("1_xl105")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_ibhsx")
-}
-autoplay = "animation"

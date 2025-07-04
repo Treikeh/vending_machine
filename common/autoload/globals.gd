@@ -2,6 +2,10 @@ extends Node
 @warning_ignore_start("unused_signal")
 
 
+const MAIN_MENU_PATH: String = "uid://wwxe07fon8hy"
+const SETTINGS_MENU_PATH: String = "uid://t0lpsh2ot3se"
+
+
 ## System
 var main: MainScene
 
