@@ -16,4 +16,4 @@ func _on_body_entered(body: Node3D) -> void:
 	# Check if body is in group
 	if body.is_in_group(required_group.to_lower()):
 		# Unload level
-		EventBus.unload_level.emit(level_path)
+		Globals.main.unload_level(level_path)

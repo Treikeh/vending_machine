@@ -12,4 +12,4 @@ func _ready() -> void:
 	
 	# Spawn player if there is no player in the scene
 	if get_tree().get_first_node_in_group("player") == null:
-		EventBus.load_level.emit(player_scene, global_transform)
+		Globals.main.load_level(player_scene, global_transform)

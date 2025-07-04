@@ -13,7 +13,7 @@ func _ready() -> void:
 
 
 func _on_play_button_pressed() -> void:
-	EventBus.load_level.emit("uid://b64kpf3puwh5f")
+	Globals.main.load_level("uid://b64kpf3puwh5f")
 
 
 func _on_settings_button_pressed() -> void:
@@ -22,7 +22,7 @@ func _on_settings_button_pressed() -> void:
 	var settings_menu_scene: PackedScene = load("uid://t0lpsh2ot3se")
 	var settings_menu: Control = settings_menu_scene.instantiate()
 	add_child(settings_menu)
-	settings_menu.tree_exited.connect(_on_setting_menu_closed)
+	settings_menu.tree_exiting.connect(_on_setting_menu_closed)
 
 
 func _on_setting_menu_closed() -> void:

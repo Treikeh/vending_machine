@@ -11,10 +11,10 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		EventBus.load_level.emit("uid://wwxe07fon8hy")
+		Globals.main.load_level("uid://wwxe07fon8hy")
 		skipped = true
 
 
 func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
 	if !skipped:
-		EventBus.load_level.emit("uid://wwxe07fon8hy")
+		Globals.main.load_level("uid://wwxe07fon8hy")

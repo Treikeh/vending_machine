@@ -179,7 +179,7 @@ func _throw_held_item() -> void:
 		held_item.global_transform = head.global_transform
 		held_item.apply_central_impulse(-head.global_basis.z * force * held_item.mass)
 		held_item = null
-		EventBus.throw_charge_stopped.emit()
+		Globals.throw_charge_stopped.emit()
 
 
 func _update_ui_throw_bar(sample_offset: float) -> void:
@@ -188,6 +188,6 @@ func _update_ui_throw_bar(sample_offset: float) -> void:
 	var sample: float = throw_force_curve.sample(sample_offset)
 	# Remap sample to a range of 0.0 -> 1.0
 	var value: float = remap(sample, i_start, i_stop, 0.0, 1.0)
-	EventBus.throw_charge_updated.emit(value)
+	Globals.throw_charge_updated.emit(value)
 
 #endregion

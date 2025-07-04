@@ -5,12 +5,12 @@
 [ext_resource type="PackedScene" uid="uid://codyyu2jnkho5" path="res://gui/hud/hud.tscn" id="5_7mycd"]
 [ext_resource type="PackedScene" uid="uid://c54fq80lg0u1l" path="res://gui/loading_screen/loading_screen.tscn" id="7_272bh"]
 
-[node name="Main" type="Node" node_paths=PackedStringArray("gui", "world_3d", "loading_screen")]
+[node name="Main" type="Node" node_paths=PackedStringArray("_gui", "_world_3d", "_loading_screen")]
 process_mode = 3
 script = ExtResource("1_ig7tw")
-gui = NodePath("GUI")
-world_3d = NodePath("World3D")
-loading_screen = NodePath("LoadingScreen")
+_gui = NodePath("GUI")
+_world_3d = NodePath("World3D")
+_loading_screen = NodePath("LoadingScreen")
 
 [node name="GUI" type="Control" parent="."]
 process_mode = 1

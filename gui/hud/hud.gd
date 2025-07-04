@@ -8,11 +8,11 @@ var pause_menu: Control
 
 
 func _ready() -> void:
-	EventBus.interact_icon_updated.connect(_on_interact_icon_updated)
+	Globals.interact_icon_updated.connect(_on_interact_icon_updated)
 	# Throw charge bar
 	throw_charge_bar.modulate = Color.TRANSPARENT
-	EventBus.throw_charge_updated.connect(_on_throw_charge_updated)
-	EventBus.throw_charge_stopped.connect(_on_throw_charge_stopped)
+	Globals.throw_charge_updated.connect(_on_throw_charge_updated)
+	Globals.throw_charge_stopped.connect(_on_throw_charge_stopped)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -22,7 +22,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		# Spawn pause menu
 		pause_menu = load("uid://ca47ihv0ka8al").instantiate()
-		EventBus.add_ui_scene.emit(pause_menu)
+		Globals.main.add_ui_scene(pause_menu)
 		pause_menu.tree_exiting.connect(_on_pause_menu_tree_exiting)
 
 

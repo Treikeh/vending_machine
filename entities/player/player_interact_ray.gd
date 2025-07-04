@@ -15,7 +15,7 @@ func _physics_process(_delta: float) -> void:
 			prompt = collider.prompt
 	
 	_interact_target = target
-	EventBus.interact_icon_updated.emit(prompt)
+	Globals.interact_icon_updated.emit(prompt)
 
 
 func interact_with_target(instigator: Node3D) -> void:

@@ -20,18 +20,18 @@ func _on_settings_button_pressed() -> void:
 	hide()
 	# Spawn settings menu
 	var settings_menu: Control = load("uid://t0lpsh2ot3se").instantiate()
-	EventBus.add_ui_scene.emit(settings_menu)
-	settings_menu.tree_exiting.connect(_on_settings_menu_tree_exiting)
+	Globals.main.add_ui_scene(settings_menu)
+	settings_menu.tree_exiting.connect(_on_settings_menu_closed)
 
 
-func _on_settings_menu_tree_exiting() -> void:
+func _on_settings_menu_closed() -> void:
 	show()
 
 
 func _on_main_menu_button_pressed() -> void:
 	get_tree().paused = false
-	EventBus.load_level.emit("uid://wwxe07fon8hy")
-	EventBus.remove_all_ui_scenes.emit()
+	Globals.main.load_level("uid://wwxe07fon8hy")
+	Globals.main.remove_all_ui_scenes()
 
 
 

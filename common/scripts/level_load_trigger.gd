@@ -22,6 +22,6 @@ func _on_body_entered(body: Node3D) -> void:
 	if body.is_in_group(required_group.to_lower()):
 		# Is spawn transform is specified, load the level additively. If not, change the level
 		if spawn_transform != null:
-			EventBus.load_level.emit(level_path, spawn_transform.global_transform)
+			Globals.main.load_level(level_path, spawn_transform.global_transform)
 		else:
-			EventBus.load_level.emit(level_path)
+			Globals.main.load_level(level_path)

@@ -9,7 +9,7 @@ func _ready() -> void:
 	# Hide and disable trash can when the game starts
 	_disable_trash_can()
 	# Connect signals
-	EventBus.vending_machine_code_submitted.connect(_on_vending_machine_code_submitted)
+	Globals.vending_machine_code_submitted.connect(_on_vending_machine_code_submitted)
 
 
 func _on_vending_machine_code_submitted(code: String, valid: bool) -> void:
@@ -21,7 +21,7 @@ func _on_vending_machine_code_submitted(code: String, valid: bool) -> void:
 			# Spawn train station tunnel
 			var scene_path: String = "res://levels/train_station_tunnel/train_station_tunnel.tscn"
 			var spawn_transform: Transform3D = train_station_tunnel_spawn_point.global_transform
-			EventBus.load_level.emit(scene_path, spawn_transform)
+			Globals.main.load_level(scene_path, spawn_transform)
 			$Ground/CSGBox3D.show()
 
 
