@@ -18,8 +18,6 @@ func _physics_process(delta: float) -> void:
 	# Process phycics callback on the state state machine
 	_state_machine.physics(delta)
 	
-	# Apply head bobbing and camera tilt
-	_camera.apply_head_bobbing(linear_velocity, delta)
 	_camera.apply_camera_tilt(linear_velocity, _move_direction, delta)
 
 
@@ -110,6 +108,7 @@ func _walking_physics(delta: float) -> void:
 	var needed_vel: Vector3 = target_vel - linear_velocity
 	apply_central_force(needed_vel * _ground_accel * delta * mass)
 	_ground_check.snap_to_ground()
+	_camera.apply_head_bobbing(linear_velocity, delta)
 
 
 func _falling_enter() -> void:
