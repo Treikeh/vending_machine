@@ -1,6 +1,30 @@
-[gd_scene load_steps=2 format=3 uid="uid://t0lpsh2ot3se"]
+[gd_scene load_steps=11 format=3 uid="uid://t0lpsh2ot3se"]
 
 [ext_resource type="Script" uid="uid://by4l8mmigkwbj" path="res://gui/settings_menu/settings_menu.gd" id="1_rgsgl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fasm0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vbnwq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4geqv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cybwm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rgsgl"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rgsgl"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_cehoh"]
+sky_material = SubResource("ProceduralSkyMaterial_rgsgl")
+
+[sub_resource type="Environment" id="Environment_fasm0"]
+background_mode = 2
+sky = SubResource("Sky_cehoh")
+tonemap_mode = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_rgsgl"]
 
 [node name="SettingsMenu" type="Control"]
 process_mode = 3
@@ -12,6 +36,14 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_rgsgl")
 
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -19,18 +51,37 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 25
-theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 25
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Settings" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DisplaySettings" type="Label" parent="MarginContainer/HBoxContainer/Settings"]
+layout_mode = 2
+text = "Display"
+horizontal_alignment = 1
+
+[node name="DisplayMode" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Settings"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer"]
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Settings/DisplayMode"]
 layout_mode = 2
+text = "Display mode"
 
-[node name="DisplayModeOptionsButton" type="OptionButton" parent="MarginContainer/PanelContainer/VBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/HBoxContainer/Settings/DisplayMode"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxEmpty_fasm0")
+
+[node name="DisplayModeOptionsButton" type="OptionButton" parent="MarginContainer/HBoxContainer/Settings/DisplayMode"]
 unique_name_in_owner = true
 layout_mode = 2
 selected = 0
@@ -42,28 +93,152 @@ popup/item_1/id = 1
 popup/item_2/text = "Windowed"
 popup/item_2/id = 2
 
-[node name="SensitivitySlider" type="HSlider" parent="MarginContainer/PanelContainer/VBoxContainer"]
+[node name="InputSettings" type="Label" parent="MarginContainer/HBoxContainer/Settings"]
+layout_mode = 2
+text = "Input"
+horizontal_alignment = 1
+
+[node name="CameraSensitivity" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Settings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Settings/CameraSensitivity"]
+layout_mode = 2
+text = "Camera sensitivity"
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/HBoxContainer/Settings/CameraSensitivity"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxEmpty_vbnwq")
+
+[node name="SensitivitySlider" type="HSlider" parent="MarginContainer/HBoxContainer/Settings/CameraSensitivity"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(215, 0)
+layout_mode = 2
+min_value = 0.01
+max_value = 1.0
+step = 0.01
+value = 0.1
+
+[node name="SensitivitySpinBox" type="SpinBox" parent="MarginContainer/HBoxContainer/Settings/CameraSensitivity"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.01
+max_value = 1.0
+step = 0.01
+value = 0.1
+alignment = 2
+
+[node name="FieldOfView" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Settings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Settings/FieldOfView"]
+layout_mode = 2
+text = "Field of view"
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/HBoxContainer/Settings/FieldOfView"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxEmpty_4geqv")
+
+[node name="FovSlider" type="HSlider" parent="MarginContainer/HBoxContainer/Settings/FieldOfView"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(215, 0)
+layout_mode = 2
+min_value = 70.0
+max_value = 110.0
+value = 90.0
+
+[node name="FovSpinBox" type="SpinBox" parent="MarginContainer/HBoxContainer/Settings/FieldOfView"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 70.0
+max_value = 110.0
+value = 70.0
+alignment = 2
+
+[node name="AudioSettings" type="Label" parent="MarginContainer/HBoxContainer/Settings"]
+layout_mode = 2
+text = "Audio"
+horizontal_alignment = 1
+
+[node name="MasterVolume" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Settings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Settings/MasterVolume"]
+layout_mode = 2
+text = "Master volume"
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/HBoxContainer/Settings/MasterVolume"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxEmpty_cybwm")
+
+[node name="MasterVolumeSlider" type="HSlider" parent="MarginContainer/HBoxContainer/Settings/MasterVolume"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(215, 0)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.75
+
+[node name="MasterVolumeSpinBox" type="SpinBox" parent="MarginContainer/HBoxContainer/Settings/MasterVolume"]
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 1.0
 step = 0.01
+value = 0.75
+alignment = 2
 
-[node name="VolumeSlider" type="HSlider" parent="MarginContainer/PanelContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/Settings"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/separator = SubResource("StyleBoxEmpty_rgsgl")
+
+[node name="BottomButtons" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Settings"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 10
+
+[node name="BackButton" type="Button" parent="MarginContainer/HBoxContainer/Settings/BottomButtons"]
 unique_name_in_owner = true
 layout_mode = 2
-max_value = 1.0
-step = 0.01
+text = "Back"
 
-[node name="ApplyButton" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer"]
+[node name="ApplyButton" type="Button" parent="MarginContainer/HBoxContainer/Settings/BottomButtons"]
 unique_name_in_owner = true
 layout_mode = 2
 disabled = true
 text = "Apply"
 
-[node name="BackButton" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer"]
+[node name="DefaultsButton" type="Button" parent="MarginContainer/HBoxContainer/Settings/BottomButtons"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Back"
+text = "Defaults"
+
+[node name="Preview" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 25
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="MarginContainer/HBoxContainer/Preview"]
+layout_mode = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="MarginContainer/HBoxContainer/Preview/SubViewportContainer"]
+own_world_3d = true
+size = Vector2i(534, 618)
+render_target_update_mode = 4
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="MarginContainer/HBoxContainer/Preview/SubViewportContainer/SubViewport"]
+environment = SubResource("Environment_fasm0")
+
+[node name="Camera3D" type="Camera3D" parent="MarginContainer/HBoxContainer/Preview/SubViewportContainer/SubViewport"]
+unique_name_in_owner = true
+fov = 90.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MarginContainer/HBoxContainer/Preview/SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.8)
+mesh = SubResource("BoxMesh_rgsgl")
 
 [node name="ConfirmPopUp" type="PanelContainer" parent="."]
 unique_name_in_owner = true
@@ -80,23 +255,31 @@ offset_bottom = 29.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ConfirmPopUp"]
+[node name="MarginContainer" type="MarginContainer" parent="ConfirmPopUp"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConfirmPopUp/MarginContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="ConfirmPopUp/VBoxContainer"]
+[node name="Label" type="Label" parent="ConfirmPopUp/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Settings not saved!"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ConfirmPopUp/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="ConfirmPopUp/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 20
 alignment = 1
 
-[node name="SaveButton" type="Button" parent="ConfirmPopUp/VBoxContainer/HBoxContainer"]
+[node name="SaveButton" type="Button" parent="ConfirmPopUp/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Save"
 
-[node name="DiscardButton" type="Button" parent="ConfirmPopUp/VBoxContainer/HBoxContainer"]
+[node name="DiscardButton" type="Button" parent="ConfirmPopUp/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Discard"

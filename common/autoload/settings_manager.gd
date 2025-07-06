@@ -1,8 +1,4 @@
 extends Node
-## This scripts purpose is to save and load game settings from a file
-
-
-enum DISPLAY_MODE {FULLSCREEN, BORDERLESS_FULLSCREEN, WINDOWED, BORDERLESS_WINDOWED}
 
 
 signal input_settings_changed
@@ -10,8 +6,17 @@ signal video_settings_changed
 signal audio_settings_changed
 
 
+enum DISPLAY_MODE {
+	FULLSCREEN,
+	BORDERLESS_FULLSCREEN,
+	WINDOWED,
+	BORDERLESS_WINDOWED,
+}
+
+
 const USER_PATH: String = "user://settings.ini"
 const DEBUG_PATH: String = "res://debug/settings.ini"
+
 
 var config_path: String
 var config_file: ConfigFile = ConfigFile.new()
