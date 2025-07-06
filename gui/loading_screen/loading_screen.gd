@@ -39,6 +39,7 @@ func update_progress(new_value: float) -> void:
 
 func fade_out() -> void:
 	_ui.modulate = Color.WHITE
+	_show_progress_delay.stop()
 	
 	var fade_tween: Tween = create_tween()
 	fade_tween.tween_property(_ui, "modulate", Color.TRANSPARENT, fade_duration)

@@ -4,6 +4,7 @@ extends Node
 
 const MAIN_MENU_PATH: String = "uid://wwxe07fon8hy"
 const SETTINGS_MENU_PATH: String = "uid://t0lpsh2ot3se"
+const CREDITS_PATH: String = "uid://dkyrn54813ilp"
 
 
 ## System
@@ -18,3 +19,22 @@ signal throw_charge_stopped
 
 ## Vending machine
 signal vending_machine_code_submitted(code: String, is_valid: bool)
+
+
+## Utils
+func screen_to_world_3d_ray_cast(
+		camera: Camera3D,
+		ray_length: float,
+		collide_with_areas: bool = false,
+		collide_with_bodies: bool = true,
+) -> Dictionary:
+	var space: PhysicsDirectSpaceState3D = camera.get_world_3d().direct_space_state
+	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
+	var from: Vector3 = camera.project_ray_origin(mouse_pos)
+	var to: Vector3 = from + (camera.project_ray_normal(mouse_pos) * ray_length)
+	var ray_query: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
+	ray_query.from = from
+	ray_query.to = to
+	ray_query.collide_with_areas = collide_with_areas
+	ray_query.collide_with_bodies = collide_with_bodies
+	return space.intersect_ray(ray_query)

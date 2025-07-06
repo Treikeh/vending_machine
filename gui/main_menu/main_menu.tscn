@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://wwxe07fon8hy"]
+[gd_scene load_steps=8 format=3 uid="uid://wwxe07fon8hy"]
 
 [ext_resource type="Script" uid="uid://cf70rm8w8usqn" path="res://gui/main_menu/main_menu.gd" id="1_nt5r4"]
 [ext_resource type="PackedScene" uid="uid://b6iud14yjg3ef" path="res://entities/vending_machine/vending_machine.tscn" id="2_85nol"]
@@ -14,6 +14,9 @@ sky_material = SubResource("ProceduralSkyMaterial_85nol")
 background_mode = 2
 sky = SubResource("Sky_81a5f")
 tonemap_mode = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_85nol"]
+size = Vector3(10, 1, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_85nol"]
 
@@ -35,7 +38,19 @@ transform = Transform3D(0.985818, 0, -0.167818, 0, 1, 0, 0.167818, 0, 0.985818, 
 
 [node name="Ground" type="CSGBox3D" parent="World3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -0.5, 45)
+use_collision = true
 size = Vector3(100, 1, 100)
+
+[node name="DestoryItemArea" type="Area3D" parent="World3D"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -5)
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World3D/DestoryItemArea"]
+shape = SubResource("BoxShape3D_85nol")
+debug_color = Color(0.7, 0, 0.0116665, 0.419608)
 
 [node name="3DWorldViewportContainer" type="SubViewportContainer" parent="."]
 anchors_preset = 15
@@ -52,6 +67,7 @@ size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="3DWorldViewportContainer/3DWorldViewport"]
+unique_name_in_owner = true
 transform = Transform3D(-0.999657, 0, -0.0261769, 0, 1, 0, 0.0261769, 0, -0.999657, 1.155, 1.13, -2.97)
 fov = 62.0
 
@@ -77,11 +93,15 @@ text = "dev 1"
 horizontal_alignment = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Ui"]
-layout_mode = 0
-offset_left = 89.0
-offset_top = 126.0
-offset_right = 559.0
-offset_bottom = 465.0
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 100.0
+offset_top = -194.5
+offset_right = 570.0
+offset_bottom = 194.5
+grow_vertical = 2
 theme_override_constants/separation = 20
 alignment = 1
 
@@ -107,6 +127,13 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Settings"
+alignment = 0
+
+[node name="CreditsButton" type="Button" parent="Ui/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Credits"
 alignment = 0
 
 [node name="QuitButton" type="Button" parent="Ui/VBoxContainer"]
