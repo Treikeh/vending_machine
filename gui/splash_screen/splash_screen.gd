@@ -22,6 +22,7 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
+	# Skip splash screen when pressing ESC
 	if event.is_action_pressed("ui_cancel"):
 		_load_main_menu()
 

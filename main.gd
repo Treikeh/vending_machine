@@ -16,6 +16,7 @@ func _process(_delta: float) -> void:
 		_check_level_loading_queue()
 
 
+
 #region Ui
 
 func load_menu(menu_path: String) -> Control:
@@ -38,14 +39,8 @@ func unload_all_menus() -> void:
 #endregion
 
 
+
 #region Level laoding
-
-
-#NOTE: There might be a better name for this class
-## Data that is useful to keep track of when loading scenes async
-class LevelLoadingData:
-	var path: String
-	var transform: Transform3D
 
 ## Whether or not new levels are actually allowed to spawn into the scene tree
 ## Mainly used to stop levels from spawning inn when the loading screen is fading inn/out
@@ -147,5 +142,12 @@ func _check_level_loading_queue() -> void:
 				if _loading_screen.visible:
 					_loading_screen.fade_out()
 				return
+
+
+#NOTE: There might be a better name for this subclass
+## Data that is useful to keep track of when loading scenes async
+class LevelLoadingData:
+	var path: String
+	var transform: Transform3D
 
 #endregion
