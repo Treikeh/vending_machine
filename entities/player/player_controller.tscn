@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://demk7ji008urj" path="res://entities/player/player_interact_ray.gd" id="3_rs2e6"]
 [ext_resource type="Curve" uid="uid://c8xc2npflemcs" path="res://entities/player/player_throw_force_curve.tres" id="3_tpcj3"]
 [ext_resource type="Script" uid="uid://crgkv5i0iatqk" path="res://entities/player/player_camera.gd" id="4_1tq3d"]
-[ext_resource type="PackedScene" uid="uid://dptnrir1vmq1j" path="res://player_ground_check.tscn" id="6_1tq3d"]
+[ext_resource type="PackedScene" uid="uid://dptnrir1vmq1j" path="res://entities/player/player_ground_check.tscn" id="6_1tq3d"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6tidu"]
 radius = 0.4
