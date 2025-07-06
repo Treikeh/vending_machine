@@ -3,63 +3,51 @@
 [ext_resource type="PhysicsMaterial" uid="uid://yejgfo3avahu" path="res://entities/player/player_pm.tres" id="1_0fegy"]
 [ext_resource type="Script" uid="uid://bofm6404reau4" path="res://entities/player/player_input.gd" id="1_6imlu"]
 [ext_resource type="Script" uid="uid://xrl3l0lwjnxx" path="res://entities/player/player_controller.gd" id="1_y5f1h"]
-[ext_resource type="Script" uid="uid://cgg0h2q8fxt2x" path="res://entities/player/player_ground_check.gd" id="3_43phm"]
 [ext_resource type="Script" uid="uid://demk7ji008urj" path="res://entities/player/player_interact_ray.gd" id="3_rs2e6"]
 [ext_resource type="Curve" uid="uid://c8xc2npflemcs" path="res://entities/player/player_throw_force_curve.tres" id="3_tpcj3"]
+[ext_resource type="Script" uid="uid://crgkv5i0iatqk" path="res://entities/player/player_camera.gd" id="4_1tq3d"]
+[ext_resource type="PackedScene" uid="uid://dptnrir1vmq1j" path="res://player_ground_check.tscn" id="6_1tq3d"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6tidu"]
 radius = 0.4
 height = 1.5
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6imlu"]
-radius = 0.25
-height = 1.0
-
-[node name="PlayerController" type="RigidBody3D" node_paths=PackedStringArray("orientation", "head", "interact_ray", "ground_check", "held_item_transfrom") groups=["player"]]
+[node name="PlayerController" type="RigidBody3D" groups=["player"]]
 collision_layer = 2
 collision_mask = 3
 physics_material_override = ExtResource("1_0fegy")
 lock_rotation = true
 script = ExtResource("1_y5f1h")
-orientation = NodePath("Orientation")
-head = NodePath("Orientation/Head")
-interact_ray = NodePath("Orientation/Head/InteractRay")
-ground_check = NodePath("Orientation/GroundCheck")
-throw_force_curve = ExtResource("3_tpcj3")
-held_item_transfrom = NodePath("Orientation/Head/HeldItemTransform")
+_throw_force_curve = ExtResource("3_tpcj3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_6tidu")
 
 [node name="Orientation" type="Node3D" parent="."]
+unique_name_in_owner = true
 
 [node name="Head" type="Node3D" parent="Orientation"]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
-[node name="Camera3D" type="Camera3D" parent="Orientation/Head"]
+[node name="Camera" type="Camera3D" parent="Orientation/Head"]
+unique_name_in_owner = true
 fov = 90.0
+script = ExtResource("4_1tq3d")
 
-[node name="InteractRay" type="RayCast3D" parent="Orientation/Head"]
+[node name="InteractRay" type="RayCast3D" parent="Orientation/Head/Camera"]
+unique_name_in_owner = true
 target_position = Vector3(0, 0, -1.75)
 collision_mask = 17
 collide_with_areas = true
 script = ExtResource("3_rs2e6")
 
 [node name="HeldItemTransform" type="RemoteTransform3D" parent="Orientation/Head"]
+unique_name_in_owner = true
 transform = Transform3D(0.85957, 0.121869, -0.496273, 0.0408115, 0.951673, 0.304389, 0.509386, -0.281898, 0.813056, 0.345, -0.185, -0.31)
 
-[node name="GroundCheck" type="ShapeCast3D" parent="Orientation" node_paths=PackedStringArray("ray_cast_3d")]
-shape = SubResource("CapsuleShape3D_6imlu")
-margin = 0.1
-max_results = 1
-debug_shape_custom_color = Color(1, 0, 0, 1)
-script = ExtResource("3_43phm")
-max_slope_angle = 50.0
-ray_cast_3d = NodePath("RayCast3D")
-
-[node name="RayCast3D" type="RayCast3D" parent="Orientation/GroundCheck"]
-target_position = Vector3(0, -1.6, 0)
-debug_shape_custom_color = Color(1, 0, 0, 1)
+[node name="GroundCheck" parent="Orientation" instance=ExtResource("6_1tq3d")]
+unique_name_in_owner = true
 
 [node name="Input" type="Node" parent="."]
 script = ExtResource("1_6imlu")
