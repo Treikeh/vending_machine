@@ -20,7 +20,7 @@ func _ready() -> void:
 
 func fade_in() -> void:
 	show()
-	# Reset loading screen when starting to fade in
+	# Reset loading screen when starting the fade in
 	_ui.modulate = Color.TRANSPARENT
 	_progress_bar.value = 0
 	_progress_container.modulate = Color.TRANSPARENT

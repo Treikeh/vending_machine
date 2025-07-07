@@ -26,6 +26,15 @@ func _input(event: InputEvent) -> void:
 			hit.collider.interact(self)
 
 
+func _set_version_label() -> void:
+	_version_label.text = ProjectSettings.get_setting("application/config/version")
+
+
+func _on_destroy_item_area_body_entered(body: Node3D) -> void:
+	body.queue_free()
+
+
+
 #region Buttons
 
 func _on_play_button_pressed() -> void:
@@ -44,8 +53,8 @@ func _on_setting_menu_closed() -> void:
 
 
 func _on_credits_button_pressed() -> void:
-	#NOTE: I load the credits in as a level since i want there to be a fade to black and the only ->
-	#<- place i have added a fade to black is in the level loading script
+	# I load the credits in as a level since i want there to be a fade in/out when going to the credits
+	# and the easiest way to do this is to load it in as a level.
 	Globals.main.load_level(Globals.CREDITS_PATH)
 
 
@@ -53,12 +62,3 @@ func _on_quit_button_pressed() -> void:
 	get_tree().quit()
 
 #endregion
-
-
-
-func _set_version_label() -> void:
-	_version_label.text = ProjectSettings.get_setting("application/config/version")
-
-
-func _on_destroy_item_area_body_entered(body: Node3D) -> void:
-	body.queue_free()

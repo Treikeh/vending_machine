@@ -2,13 +2,27 @@ class_name MainScene
 extends Node
 
 
-@onready var _gui: Control = %GUI
-@onready var _world_3d: Node3D = %World3D
-@onready var _loading_screen: LoadingScreen = %LoadingScreen
+# The reason I use @export here and not @onready is because I need the references to be avalible
+# before _ready is called in child nodes and every node (except for autoloads) will be a child of
+# this node. It's also the reason why i'm setting the Globals.main reference in _init
+@export var _gui: Control
+@export var _world_3d: Node3D
+@export var _loading_screen: LoadingScreen
 
 
-func _ready() -> void:
+
+func _init() -> void:
+	# I'm setting the reference here and not in _ready because child nodes might need to use the reference
+	# in their own _ready functions and since child nodes call thier _ready functions before the parent
+	# there might be a situation where they try to acces the reference before it's set.
+	#NOTE: It's only necessary to do this when testing levels. When shipping the game the splash screen
+	# will be the frist and only scene that is loaded and it doesn't need a reference to the main scene
+	# so setting the reference in _ready would then work.
 	Globals.main = self
+
+
+#func _ready() -> void:
+#	Globals.main = self
 
 
 func _process(_delta: float) -> void:
@@ -43,17 +57,17 @@ func unload_all_menus() -> void:
 #region Level laoding
 
 ## Whether or not new levels are actually allowed to spawn into the scene tree
-## Mainly used to stop levels from spawning inn when the loading screen is fading inn/out
+## Mainly used to stop levels from spawning in when the loading screen is fading in/out
 var _can_spawn_levels: bool = true
 ## A list of all the level that are currently loaded and active in the scene tree
-## The key (String) is the uid or resource path (uid is prefered) to the level scene.
+## The key (String) is the UID or resource path (I prefer UID) to the level scene.
 var _loaded_levels: Dictionary[String, Node3D]
 ## A list of all the levels that are currently being loded in the background
 var _level_loading_queue: Array[LevelLoadingData] = []
 
 
 ## Start loading a new level. If a new trasform is given, the new level will be loaded asynchronously
-#NOTE: The level path should be the "uid" of the scene
+#NOTE: The level path should be the UID or of the scene
 #NOTE: The the default transform is Transform3D.FLIP_Y because I can't assign null as the default value
 func load_level(level_path: String, transform: Transform3D = Transform3D.FLIP_Y) -> void:
 	# Check if level exits
@@ -144,7 +158,7 @@ func _check_level_loading_queue() -> void:
 				return
 
 
-#NOTE: There might be a better name for this subclass
+# There might be a better name for this subclass
 ## Data that is useful to keep track of when loading scenes async
 class LevelLoadingData:
 	var path: String

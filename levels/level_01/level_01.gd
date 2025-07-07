@@ -10,6 +10,9 @@ func _ready() -> void:
 	_disable_trash_can()
 	# Connect signals
 	Globals.vending_machine_code_submitted.connect(_on_vending_machine_code_submitted)
+	
+	# Spawn world environment that is independent from level
+	Globals.main.load_level(Globals.WORLD_ENV_PATH, global_transform)
 
 
 func _on_vending_machine_code_submitted(code: String, valid: bool) -> void:
