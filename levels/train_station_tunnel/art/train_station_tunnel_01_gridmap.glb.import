@@ -36,11 +36,11 @@ _subresources={
 "materials": {
 "train_station_tunnel_tileset_floor.001": {
 "use_external/enabled": true,
-"use_external/path": "uid://meiilmj55714"
+"use_external/path": "uid://cgdbtkbufky83"
 },
 "train_station_tunnel_tileset_walls.001": {
 "use_external/enabled": true,
-"use_external/path": "uid://meiilmj55714"
+"use_external/path": "uid://cg88ps875g5do"
 }
 },
 "nodes": {

@@ -11,6 +11,7 @@ sky_material = SubResource("ProceduralSkyMaterial_tyqfe")
 background_mode = 2
 sky = SubResource("Sky_seltn")
 tonemap_mode = 2
+sdfgi_use_occlusion = true
 
 [node name="WorldEnvironment" type="Node3D"]
 
