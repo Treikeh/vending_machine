@@ -30,6 +30,11 @@ func _process(_delta: float) -> void:
 		_check_level_loading_queue()
 
 
+## This function reparents a node to become a child of world_3d.
+## Can be used to discconet an object form the level it spawned into.
+func attach_to_world_3d(node: Node, use_global_transform: bool = true) -> void:
+	node.reparent(_world_3d, use_global_transform)
+
 
 #region Ui
 

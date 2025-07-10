@@ -16,6 +16,7 @@ func use_item(instigator: Node3D) -> void:
 
 
 func pick_up_item(instigator: Node3D) -> void:
+	reparent(instigator, true)
 	_item_picked_up(instigator)
 	picked_up.emit()
 	linear_velocity = Vector3.ZERO
@@ -26,6 +27,7 @@ func pick_up_item(instigator: Node3D) -> void:
 
 
 func drop_item(instigator: Node3D) -> void:
+	Globals.main.attach_to_world_3d(self)
 	_item_dropped(instigator)
 	dropped.emit()
 	#freeze = false
