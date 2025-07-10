@@ -53,10 +53,12 @@ _subresources={
 "generate/physics": true
 },
 "PATH:FloorBlindGuide_001": {
-"generate/physics": true
+"generate/physics": true,
+"physics/shape_type": 1
 },
 "PATH:Floor_001": {
-"generate/physics": true
+"generate/physics": true,
+"physics/shape_type": 1
 },
 "PATH:StairsShort_001": {
 "generate/physics": true,
@@ -67,13 +69,16 @@ _subresources={
 "physics/shape_type": 1
 },
 "PATH:WallAirShort_001": {
-"generate/physics": true
+"generate/physics": true,
+"physics/shape_type": 1
 },
 "PATH:WallAir_001": {
-"generate/physics": true
+"generate/physics": true,
+"physics/shape_type": 1
 },
 "PATH:WallFloor_001": {
-"generate/physics": true
+"generate/physics": true,
+"physics/shape_type": 1
 }
 }
 }
