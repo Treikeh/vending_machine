@@ -1,6 +1,5 @@
-[gd_scene load_steps=6 format=3 uid="uid://gqsmdnolrjqo"]
+[gd_scene load_steps=5 format=3 uid="uid://gqsmdnolrjqo"]
 
-[ext_resource type="PackedScene" uid="uid://438mffbmqx1b" path="res://levels/train_station/train_station.tscn" id="2_kjm4n"]
 [ext_resource type="PackedScene" uid="uid://d11y7b5nss2s5" path="res://common/scenes/level_load_trigger.tscn" id="2_xj2i1"]
 [ext_resource type="PackedScene" uid="uid://pgv43adw264g" path="res://common/scenes/level_unload_trigger.tscn" id="3_jqnph"]
 [ext_resource type="MeshLibrary" uid="uid://dsxstkxlclsu2" path="res://levels/train_station_tunnel/art/train_station_tunnel_01_gridmap.meshlib" id="4_kjm4n"]
@@ -25,8 +24,6 @@ metadata/_editor_floor_ = Vector3(0, -1, 0)
 
 [node name="TrainStationSpawnPoint" type="Marker3D" parent="TrainStationTriggers"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8, -38)
-
-[node name="TrainStation" parent="TrainStationTriggers/TrainStationSpawnPoint" instance=ExtResource("2_kjm4n")]
 
 [node name="TrainStationLoadTrigger" parent="TrainStationTriggers" node_paths=PackedStringArray("spawn_transform") instance=ExtResource("2_xj2i1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -19)

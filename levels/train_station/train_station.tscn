@@ -1,7 +1,82 @@
-[gd_scene load_steps=2 format=3 uid="uid://438mffbmqx1b"]
+[gd_scene load_steps=11 format=3 uid="uid://438mffbmqx1b"]
 
+[ext_resource type="Script" uid="uid://bb00o1p43k44i" path="res://levels/train_station/train_station.gd" id="1_b0eu5"]
 [ext_resource type="PackedScene" uid="uid://cpkqvybvj5ikj" path="res://levels/train_station/art/train_station_mock_up.glb" id="1_cn4k8"]
+[ext_resource type="Script" uid="uid://k4r22ohcsxla" path="res://common/scripts/interact_area_3d.gd" id="3_sgefo"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sgefo"]
+size = Vector3(8, 0.8, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2rh3c"]
+size = Vector3(8, 0.8, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b0eu5"]
+size = Vector3(7, 2, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2rh3c"]
+size = Vector3(0.25, 1, 0.25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_irpxo"]
+size = Vector3(0.2, 1, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7vjbl"]
+size = Vector3(0.2, 1, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_irpxo"]
 
 [node name="TrainStation" type="Node3D"]
+script = ExtResource("1_b0eu5")
 
 [node name="train_station_mock_up" parent="." instance=ExtResource("1_cn4k8")]
+
+[node name="Train" type="CharacterBody3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -250, -0.2, -6)
+collision_layer = 129
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Train"]
+shape = SubResource("BoxShape3D_sgefo")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Train"]
+mesh = SubResource("BoxMesh_2rh3c")
+
+[node name="ReparentArea" type="Area3D" parent="Train"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Train/ReparentArea"]
+shape = SubResource("BoxShape3D_b0eu5")
+
+[node name="StartTrainArea" type="Area3D" parent="Train"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7, 0.9, 0)
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+script = ExtResource("3_sgefo")
+metadata/_custom_type_script = "uid://k4r22ohcsxla"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Train/StartTrainArea"]
+shape = SubResource("BoxShape3D_2rh3c")
+debug_color = Color(0.652233, 0.518714, 3.85046e-07, 0.42)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Train/StartTrainArea"]
+mesh = SubResource("BoxMesh_irpxo")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Train/StartTrainArea"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Train/StartTrainArea/StaticBody3D"]
+shape = SubResource("BoxShape3D_7vjbl")
+
+[node name="StopTrainArea" type="Area3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.9)
+collision_layer = 0
+collision_mask = 128
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StopTrainArea"]
+shape = SubResource("BoxShape3D_irpxo")
