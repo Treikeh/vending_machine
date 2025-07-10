@@ -4,11 +4,9 @@ extends Node3D
 @export_file("*.tscn") var first_level_path: String
 
 @onready var _ui: Control = %Ui
-@onready var _version_label: Label = %VersionLabel
 
 
 func _ready() -> void:
-	_set_version_label()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	# Connect signals
 	%PlayButton.pressed.connect(_on_play_button_pressed)
@@ -24,10 +22,6 @@ func _input(event: InputEvent) -> void:
 		var hit: Dictionary = Globals.screen_to_world_3d_ray_cast(%Camera3D, 100.0, true)
 		if hit and hit.collider is InteractArea3D:
 			hit.collider.interact(self)
-
-
-func _set_version_label() -> void:
-	_version_label.text = ProjectSettings.get_setting("application/config/version")
 
 
 func _on_destroy_item_area_body_entered(body: Node3D) -> void:

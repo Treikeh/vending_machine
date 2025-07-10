@@ -1,7 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://wwxe07fon8hy"]
+[gd_scene load_steps=13 format=3 uid="uid://wwxe07fon8hy"]
 
-[ext_resource type="Script" uid="uid://cf70rm8w8usqn" path="res://gui/main_menu/main_menu.gd" id="1_nt5r4"]
-[ext_resource type="PackedScene" uid="uid://b6iud14yjg3ef" path="res://entities/vending_machine/vending_machine.tscn" id="2_85nol"]
+[ext_resource type="Script" uid="uid://cf70rm8w8usqn" path="res://gui/main_menu/main_menu.gd" id="1_ctlfj"]
+[ext_resource type="PackedScene" uid="uid://b6iud14yjg3ef" path="res://entities/vending_machine/vending_machine.tscn" id="2_bvgim"]
+[ext_resource type="PackedScene" uid="uid://dn8fbqjnlj0qw" path="res://entities/trash_can/trash_can.tscn" id="3_1xgpt"]
+[ext_resource type="MeshLibrary" uid="uid://dsxstkxlclsu2" path="res://levels/train_station_tunnel/art/train_station_tunnel_01_gridmap.meshlib" id="3_bvgim"]
+[ext_resource type="Script" uid="uid://dqhfgqb124prw" path="res://gui/main_menu/main_menu_vending_machine.gd" id="4_ubcky"]
+[ext_resource type="PackedScene" uid="uid://bwmdyqpxrhydh" path="res://entities/items/soda_cans/blue_soda_can.tscn" id="5_vnwa6"]
+[ext_resource type="PackedScene" uid="uid://gh6w6ih0ohj2" path="res://entities/items/soda_cans/green_soda_can.tscn" id="6_bhc4r"]
+[ext_resource type="PackedScene" uid="uid://bfc21kdasxmpu" path="res://entities/items/soda_cans/yellow_soda_can.tscn" id="7_tiy0a"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_85nol"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -16,12 +22,10 @@ sky = SubResource("Sky_81a5f")
 tonemap_mode = 2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_85nol"]
-size = Vector3(10, 1, 1)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_85nol"]
+size = Vector3(8, 1, 1)
 
 [node name="MainMenu" type="Node3D"]
-script = ExtResource("1_nt5r4")
+script = ExtResource("1_ctlfj")
 first_level_path = "uid://b64kpf3puwh5f"
 
 [node name="World3D" type="Node3D" parent="."]
@@ -33,24 +37,44 @@ environment = SubResource("Environment_qy2xc")
 transform = Transform3D(-0.942642, -0.289085, 0.166903, 0, 0.5, 0.866025, -0.333807, 0.816352, -0.471321, 0, 10, 0)
 shadow_enabled = true
 
-[node name="VendingMachine" parent="World3D" instance=ExtResource("2_85nol")]
-transform = Transform3D(0.985818, 0, -0.167818, 0, 1, 0, 0.167818, 0, 0.985818, 0, 0, 0)
+[node name="GridMap" type="GridMap" parent="World3D"]
+mesh_library = ExtResource("3_bvgim")
+cell_size = Vector3(1, 1, 1)
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+collision_layer = 5
+collision_mask = 5
+data = {
+"cells": PackedInt32Array(65535, 0, 1048577, 1, 0, 1048577, 3, 0, 1048577, 65533, 0, 1048577, 65533, 1, 655360, 65535, 1, 655360, 1, 1, 655360, 3, 1, 655360, 196605, 1, 655364, 196607, 1, 655364, 131073, 1, 655364, 131075, 1, 655364, 3, 65534, 655370, 1, 65534, 655370, 65535, 65534, 655370, 65533, 65534, 655370)
+}
+metadata/_editor_floor_ = Vector3(0, 0, 0)
 
-[node name="Ground" type="CSGBox3D" parent="World3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -0.5, 45)
-use_collision = true
-size = Vector3(100, 1, 100)
+[node name="VendingMachine" parent="World3D" instance=ExtResource("2_bvgim")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.4)
+script = ExtResource("4_ubcky")
+items = Dictionary[String, PackedScene]({
+"12": ExtResource("5_vnwa6"),
+"13": ExtResource("6_bhc4r"),
+"14": ExtResource("7_tiy0a")
+})
+
+[node name="Items" parent="World3D/VendingMachine" index="3"]
+visible = false
 
 [node name="DestoryItemArea" type="Area3D" parent="World3D"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -2)
 collision_layer = 0
 collision_mask = 4
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="World3D/DestoryItemArea"]
 shape = SubResource("BoxShape3D_85nol")
-debug_color = Color(0.7, 0, 0.0116665, 0.419608)
+debug_color = Color(1, 0, 0.0166664, 0.419608)
+
+[node name="TrashCan" parent="World3D" instance=ExtResource("3_1xgpt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3, 0, 0.4)
 
 [node name="3DWorldViewportContainer" type="SubViewportContainer" parent="."]
 anchors_preset = 15
@@ -68,8 +92,8 @@ render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="3DWorldViewportContainer/3DWorldViewport"]
 unique_name_in_owner = true
-transform = Transform3D(-0.999657, 0, -0.0261769, 0, 1, 0, 0.0261769, 0, -0.999657, 1.155, 1.13, -2.97)
-fov = 62.0
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 1.29, -5.5)
+fov = 30.0
 
 [node name="Ui" type="Control" parent="."]
 unique_name_in_owner = true
@@ -80,40 +104,36 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VersionLabel" type="Label" parent="Ui"]
-unique_name_in_owner = true
+[node name="Title" type="Label" parent="Ui"]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -59.0
-offset_bottom = 23.0
-grow_horizontal = 0
-text = "dev 1"
-horizontal_alignment = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Ui"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 100.0
-offset_top = -194.5
-offset_right = 570.0
-offset_bottom = 194.5
-grow_vertical = 2
-theme_override_constants/separation = 20
-alignment = 1
-
-[node name="Title" type="Label" parent="Ui/VBoxContainer"]
-layout_mode = 2
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -235.0
+offset_top = 55.0
+offset_right = 235.0
+offset_bottom = 124.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 4
 theme_override_font_sizes/font_size = 50
 text = "VENDING MACHINE"
 
-[node name="HSeparator" type="HSeparator" parent="Ui/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 20
-theme_override_styles/separator = SubResource("StyleBoxEmpty_85nol")
+[node name="VBoxContainer" type="VBoxContainer" parent="Ui"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -139.0
+offset_top = -130.0
+offset_right = 58.0
+offset_bottom = 142.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 25
 
 [node name="PlayButton" type="Button" parent="Ui/VBoxContainer"]
 unique_name_in_owner = true
@@ -142,3 +162,5 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Quit"
 alignment = 0
+
+[editable path="World3D/VendingMachine"]

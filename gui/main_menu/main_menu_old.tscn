@@ -1,0 +1,210 @@
+[gd_scene load_steps=8 format=3 uid="uid://mo0n6cm17pvx"]
+
+[ext_resource type="PackedScene" uid="uid://b6iud14yjg3ef" path="res://entities/vending_machine/vending_machine.tscn" id="2_85nol"]
+
+[sub_resource type="GDScript" id="GDScript_0vsie"]
+script/source = "extends Node3D
+
+
+@export_file(\"*.tscn\") var first_level_path: String
+
+@onready var _ui: Control = %Ui
+@onready var _version_label: Label = %VersionLabel
+
+
+func _ready() -> void:
+	_set_version_label()
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	# Connect signals
+	%PlayButton.pressed.connect(_on_play_button_pressed)
+	%SettingsButton.pressed.connect(_on_settings_button_pressed)
+	%CreditsButton.pressed.connect(_on_credits_button_pressed)
+	%QuitButton.pressed.connect(_on_quit_button_pressed)
+	%DestoryItemArea.body_entered.connect(_on_destroy_item_area_body_entered)
+
+
+func _input(event: InputEvent) -> void:
+	# Cast a ray into the world to interact with objects
+	if event.is_action_pressed(\"use_item\"):
+		var hit: Dictionary = Globals.screen_to_world_3d_ray_cast(%Camera3D, 100.0, true)
+		if hit and hit.collider is InteractArea3D:
+			hit.collider.interact(self)
+
+
+func _set_version_label() -> void:
+	_version_label.text = ProjectSettings.get_setting(\"application/config/version\")
+
+
+func _on_destroy_item_area_body_entered(body: Node3D) -> void:
+	body.queue_free()
+
+
+
+#region Buttons
+
+func _on_play_button_pressed() -> void:
+	Globals.main.load_level(first_level_path)
+
+
+func _on_settings_button_pressed() -> void:
+	_ui.hide()
+	# Spawn settings menu
+	var settings_menu: Control = Globals.main.load_menu(Globals.SETTINGS_MENU_PATH)
+	settings_menu.tree_exiting.connect(_on_setting_menu_closed)
+
+
+func _on_setting_menu_closed() -> void:
+	_ui.show()
+
+
+func _on_credits_button_pressed() -> void:
+	# I load the credits in as a level since i want there to be a fade in/out when going to the credits
+	# and the easiest way to do this is to load it in as a level.
+	Globals.main.load_level(Globals.CREDITS_PATH)
+
+
+func _on_quit_button_pressed() -> void:
+	get_tree().quit()
+
+#endregion
+"
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_85nol"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_81a5f"]
+sky_material = SubResource("ProceduralSkyMaterial_85nol")
+
+[sub_resource type="Environment" id="Environment_qy2xc"]
+background_mode = 2
+sky = SubResource("Sky_81a5f")
+tonemap_mode = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_85nol"]
+size = Vector3(10, 1, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_85nol"]
+
+[node name="MainMenu" type="Node3D"]
+script = SubResource("GDScript_0vsie")
+first_level_path = "uid://b64kpf3puwh5f"
+
+[node name="World3D" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="World3D"]
+environment = SubResource("Environment_qy2xc")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World3D"]
+transform = Transform3D(-0.942642, -0.289085, 0.166903, 0, 0.5, 0.866025, -0.333807, 0.816352, -0.471321, 0, 10, 0)
+shadow_enabled = true
+
+[node name="VendingMachine" parent="World3D" instance=ExtResource("2_85nol")]
+transform = Transform3D(0.985818, 0, -0.167818, 0, 1, 0, 0.167818, 0, 0.985818, 0, 0, 0)
+
+[node name="Ground" type="CSGBox3D" parent="World3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, -0.5, 45)
+use_collision = true
+size = Vector3(100, 1, 100)
+
+[node name="DestoryItemArea" type="Area3D" parent="World3D"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -5)
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World3D/DestoryItemArea"]
+shape = SubResource("BoxShape3D_85nol")
+debug_color = Color(0.7, 0, 0.0116665, 0.419608)
+
+[node name="3DWorldViewportContainer" type="SubViewportContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch = true
+
+[node name="3DWorldViewport" type="SubViewport" parent="3DWorldViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="3DWorldViewportContainer/3DWorldViewport"]
+unique_name_in_owner = true
+transform = Transform3D(-0.999657, 0, -0.0261769, 0, 1, 0, 0.0261769, 0, -0.999657, 1.155, 1.13, -2.97)
+fov = 62.0
+
+[node name="Ui" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VersionLabel" type="Label" parent="Ui"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -59.0
+offset_bottom = 23.0
+grow_horizontal = 0
+text = "dev 1"
+horizontal_alignment = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Ui"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 100.0
+offset_top = -194.5
+offset_right = 570.0
+offset_bottom = 194.5
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Title" type="Label" parent="Ui/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "VENDING MACHINE"
+
+[node name="HSeparator" type="HSeparator" parent="Ui/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+theme_override_styles/separator = SubResource("StyleBoxEmpty_85nol")
+
+[node name="PlayButton" type="Button" parent="Ui/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Play"
+alignment = 0
+
+[node name="SettingsButton" type="Button" parent="Ui/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Settings"
+alignment = 0
+
+[node name="CreditsButton" type="Button" parent="Ui/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Credits"
+alignment = 0
+
+[node name="QuitButton" type="Button" parent="Ui/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Quit"
+alignment = 0
