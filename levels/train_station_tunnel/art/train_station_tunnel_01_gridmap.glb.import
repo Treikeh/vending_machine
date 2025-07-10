@@ -38,6 +38,10 @@ _subresources={
 "use_external/enabled": true,
 "use_external/path": "uid://cgdbtkbufky83"
 },
+"train_station_tunnel_tileset_floor_blind_guide.001": {
+"use_external/enabled": true,
+"use_external/path": "uid://b80qsn4vifjss"
+},
 "train_station_tunnel_tileset_walls.001": {
 "use_external/enabled": true,
 "use_external/path": "uid://cg88ps875g5do"
@@ -57,6 +61,9 @@ _subresources={
 "generate/physics": true
 },
 "PATH:floor_001": {
+"generate/physics": true
+},
+"PATH:floor_blind_guide_001": {
 "generate/physics": true
 },
 "PATH:stairs_001": {
