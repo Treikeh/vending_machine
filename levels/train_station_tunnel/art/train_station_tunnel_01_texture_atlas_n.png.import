@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://1cenjwvgiamh"
-path.s3tc="res://.godot/imported/train_station_tunnel_wall_tiles_01_n.png-7a88e52f3550caa51e1ee82736fa201e.s3tc.ctex"
+uid="uid://droxqfmcec56a"
+path.s3tc="res://.godot/imported/train_station_tunnel_01_texture_atlas_n.png-fc805ef7e6980ad17ee77e0a97f98463.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://levels/train_station_tunnel/art/textures/train_station_tunnel_wall_tiles_01_n.png"
-dest_files=["res://.godot/imported/train_station_tunnel_wall_tiles_01_n.png-7a88e52f3550caa51e1ee82736fa201e.s3tc.ctex"]
+source_file="res://levels/train_station_tunnel/art/train_station_tunnel_01_texture_atlas_n.png"
+dest_files=["res://.godot/imported/train_station_tunnel_01_texture_atlas_n.png-fc805ef7e6980ad17ee77e0a97f98463.s3tc.ctex"]
 
 [params]
 
@@ -25,7 +25,7 @@ compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=1
-roughness/src_normal="res://levels/train_station_tunnel/art/train_station_tunnel_wall_tiles_01_n.png"
+roughness/src_normal="res://levels/train_station_tunnel/art/train_station_tunnel_01_texture_atlas_n.png"
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false

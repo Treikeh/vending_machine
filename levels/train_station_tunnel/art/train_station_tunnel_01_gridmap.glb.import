@@ -34,53 +34,45 @@ animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={
 "materials": {
-"train_station_tunnel_tileset_floor.001": {
+"train_station_tunnel_mat.001": {
 "use_external/enabled": true,
-"use_external/path": "uid://cgdbtkbufky83"
-},
-"train_station_tunnel_tileset_floor_blind_guide.001": {
-"use_external/enabled": true,
-"use_external/path": "uid://b80qsn4vifjss"
-},
-"train_station_tunnel_tileset_walls.001": {
-"use_external/enabled": true,
-"use_external/path": "uid://cg88ps875g5do"
+"use_external/path": "uid://byada0lhfojxq"
 }
 },
 "nodes": {
-"PATH:corner_air_001": {
+"PATH:CornerAirShort_001": {
 "generate/physics": true
 },
-"PATH:corner_air_short_001": {
+"PATH:CornerAir_001": {
 "generate/physics": true
 },
-"PATH:corner_floor_001": {
+"PATH:CornerFloor_001": {
 "generate/physics": true
 },
-"PATH:doorway_001": {
+"PATH:Doorway_001": {
 "generate/physics": true
 },
-"PATH:floor_001": {
+"PATH:FloorBlindGuide_001": {
 "generate/physics": true
 },
-"PATH:floor_blind_guide_001": {
+"PATH:Floor_001": {
 "generate/physics": true
 },
-"PATH:stairs_001": {
+"PATH:StairsShort_001": {
 "generate/physics": true,
 "physics/shape_type": 1
 },
-"PATH:stairs_short_001": {
+"PATH:Stairs_001": {
 "generate/physics": true,
 "physics/shape_type": 1
 },
-"PATH:wall_air_001": {
+"PATH:WallAirShort_001": {
 "generate/physics": true
 },
-"PATH:wall_air_short_001": {
+"PATH:WallAir_001": {
 "generate/physics": true
 },
-"PATH:wall_floor_001": {
+"PATH:WallFloor_001": {
 "generate/physics": true
 }
 }

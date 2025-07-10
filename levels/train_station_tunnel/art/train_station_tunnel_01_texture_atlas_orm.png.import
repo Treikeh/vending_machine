@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ccq1foneohg07"
-path.s3tc="res://.godot/imported/train_station_tunnel_floor_tiles_blind_guide_01_orm.png-818b25851c42f99f43c4c16e719d791d.s3tc.ctex"
+uid="uid://s0q1ggp8i4wd"
+path.s3tc="res://.godot/imported/train_station_tunnel_01_texture_atlas_orm.png-23e3182ec44b27302461115b7235febb.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://levels/train_station_tunnel/art/textures/train_station_tunnel_floor_tiles_blind_guide_01_orm.png"
-dest_files=["res://.godot/imported/train_station_tunnel_floor_tiles_blind_guide_01_orm.png-818b25851c42f99f43c4c16e719d791d.s3tc.ctex"]
+source_file="res://levels/train_station_tunnel/art/train_station_tunnel_01_texture_atlas_orm.png"
+dest_files=["res://.godot/imported/train_station_tunnel_01_texture_atlas_orm.png-23e3182ec44b27302461115b7235febb.s3tc.ctex"]
 
 [params]
 
