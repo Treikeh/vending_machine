@@ -71,12 +71,12 @@ func _save_data() -> void:
 		},
 	}
 	
-	Globals.level_save_data[scene_file_path] = data
+	SaveManager.add_save_data(scene_file_path, data)
 
 
 func _load_data() -> void:
-	if Globals.level_save_data.has(scene_file_path):
-		var data: Dictionary = Globals.level_save_data[scene_file_path]
+	var data: Dictionary = SaveManager.get_save_data(scene_file_path)
+	if not data.is_empty():
 		buy_count = data.buy_count
 		
 		_set_trash_can_state(data.trash_can.visible)

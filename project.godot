@@ -21,6 +21,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Globals="*res://common/autoload/globals.gd"
+SaveManager="*res://common/autoload/save_manager.gd"
 SettingsManager="*res://common/autoload/settings_manager.gd"
 
 [display]

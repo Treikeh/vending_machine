@@ -21,21 +21,13 @@ func _init() -> void:
 	Globals.main = self
 
 
-func _ready() -> void:
+#func _ready() -> void:
 	#Globals.main = self
-	# Load level data when starting the game
-	Globals.load_level_data_from_file()
-	tree_exiting.connect(_on_tree_exiting)
 
 
 func _process(_delta: float) -> void:
 	if _can_spawn_levels:
 		_check_level_loading_queue()
-
-
-func _on_tree_exiting() -> void:
-	# Save level data when quitting the game
-	Globals.save_level_data_to_file()
 
 
 ## This function reparents a node to become a child of world_3d.
