@@ -7,7 +7,7 @@
 [sub_resource type="Curve3D" id="Curve3D_sgefo"]
 bake_interval = 1.0
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 270, 0, 0, 0, 0, 0, 0, 0, 0, 540, 50, 0),
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 270, 0, 0, 0, 0, 0, 0, 0, 0, 540, 0, 0),
 "tilts": PackedFloat32Array(0, 0, 0)
 }
 point_count = 3
