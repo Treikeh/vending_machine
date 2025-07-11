@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://hlc7ccg56ek2"]
+[gd_scene load_steps=4 format=3 uid="uid://hlc7ccg56ek2"]
 
 [ext_resource type="Script" uid="uid://cjl5togjm6k0w" path="res://main.gd" id="1_ig7tw"]
-[ext_resource type="PackedScene" uid="uid://438mffbmqx1b" path="res://levels/train_station/train_station.tscn" id="3_1bvp3"]
-[ext_resource type="PackedScene" uid="uid://gs83e0u3lu6s" path="res://entities/player/spawner/player_spawner.tscn" id="3_lquwl"]
+[ext_resource type="PackedScene" uid="uid://wwxe07fon8hy" path="res://gui/main_menu/main_menu.tscn" id="2_h2yge"]
 [ext_resource type="PackedScene" uid="uid://c54fq80lg0u1l" path="res://gui/loading_screen/loading_screen.tscn" id="7_272bh"]
 
 [node name="Main" type="Node" node_paths=PackedStringArray("_gui", "_world_3d", "_loading_screen")]
@@ -15,10 +14,7 @@ _loading_screen = NodePath("LoadingScreen")
 [node name="World3D" type="Node3D" parent="."]
 process_mode = 1
 
-[node name="PlayerSpawner" parent="World3D" instance=ExtResource("3_lquwl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.41391, -1.35403)
-
-[node name="TrainStation" parent="World3D" instance=ExtResource("3_1bvp3")]
+[node name="MainMenu" parent="World3D" instance=ExtResource("2_h2yge")]
 
 [node name="GUI" type="Control" parent="."]
 process_mode = 1

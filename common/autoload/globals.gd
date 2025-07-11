@@ -23,6 +23,41 @@ signal throw_charge_stopped
 signal vending_machine_code_submitted(code: String, is_valid: bool)
 
 
+# Saving/Loading level data to/from file
+const RELEASE_SAVE_FILE_PATH: String = "user://savegame.save"
+const DEBUG_SAVE_FILE_PATH: String = "res://debug/savegame.ini"
+
+var level_save_data: Dictionary
+
+@onready var _save_file_path: String = DEBUG_SAVE_FILE_PATH if OS.is_debug_build() else RELEASE_SAVE_FILE_PATH
+
+
+func save_level_data_to_file() -> void:
+	# Create/open a file to write to
+	var save_file := FileAccess.open(_save_file_path, FileAccess.WRITE)
+	# Turn level save data into a string
+	var data_string: String = JSON.stringify(level_save_data)
+	# Save data to file
+	save_file.store_string(data_string)
+
+
+func load_level_data_from_file() -> void:
+	# Check if save file exists
+	if not FileAccess.file_exists(_save_file_path):
+		return
+	
+	# Turn text from save file into a dictionary using JSON
+	var save_file := FileAccess.open(_save_file_path, FileAccess.READ)
+	var json := JSON.new()
+	var parse_result: Error = json.parse(save_file.get_as_text())
+	if not parse_result == OK:
+		print("JSON Parse Error: %s, at line %s" % json.get_error_message(), json.get_error_line())
+		return
+	
+	# Set level save data
+	level_save_data = json.data
+
+
 # Utility
 func screen_to_world_3d_ray_cast(
 		camera: Camera3D,
