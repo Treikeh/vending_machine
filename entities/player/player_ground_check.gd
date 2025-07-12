@@ -41,6 +41,10 @@ func is_on_walkable_slope() -> bool:
 
 # Apply a spring force that moves the palyer towards "rest_height"
 func snap_to_ground() -> void:
+	# Check if ray cast is hitting the floor
+	if not _ray_cast_3d.is_colliding():
+		return
+	
 	var hit_distance: float = (global_position - _ray_cast_3d.get_collision_point()).length()
 	var normal_vel: float = -ground_normal.dot(player.linear_velocity)
 	var dispalcement: float = hit_distance - _rest_height

@@ -1,8 +1,10 @@
 extends Node
+#TODO: Encode save data to hex or something (Not necessary, but might be a good idea)
 
 # Saving/Loading level data to/from file
 const USER_PATH: String = "user://savegame.save"
 const DEBUG_PATH: String = "res://debug/savegame.ini"
+
 
 var _save_data: Dictionary
 

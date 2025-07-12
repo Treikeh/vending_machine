@@ -23,7 +23,6 @@ signal throw_charge_stopped
 signal vending_machine_code_submitted(code: String, is_valid: bool)
 
 
-
 # Utility
 func screen_to_world_3d_ray_cast(
 		camera: Camera3D,
