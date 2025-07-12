@@ -19,10 +19,6 @@ signal throw_charge_updated(value: float)
 signal throw_charge_stopped
 
 
-# Vending machine
-signal vending_machine_code_submitted(code: String, is_valid: bool)
-
-
 # Utility
 func screen_to_world_3d_ray_cast(
 		camera: Camera3D,
