@@ -1,6 +1,9 @@
 extends Node3D
 
 
+signal code_submitted(code: String, is_valid: bool)
+
+
 @export var max_code_length: int = 4
 @export var display_label: Label3D
 @export var reset_label_timer: Timer
@@ -36,10 +39,10 @@ func _on_vending_machine_confirm_button_presssed(_button_number: String) -> void
 	if items.has(code):
 		_spawn_item(items[code])
 		display_label.text = "OK"
-		Globals.vending_machine_code_submitted.emit(code, true)
+		code_submitted.emit(code, true)
 	else:
 		display_label.text = "ERR"
-		Globals.vending_machine_code_submitted.emit(code, false) 
+		code_submitted.emit(code, false)
 	
 	# Start timer to reset label
 	reset_label_timer.start(0.0)
@@ -57,4 +60,4 @@ func _spawn_item(scene: PackedScene) -> void:
 	var item: RigidBody3D = scene.instantiate()
 	add_child(item)
 	item.transform = item_spawn_point.transform
-	item.apply_central_impulse(-item.global_basis.z * 5.0 * item.mass)
+	item.apply_central_impulse(-item.global_basis.z * 10.0 * item.mass)
