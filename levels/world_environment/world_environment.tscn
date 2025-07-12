@@ -12,6 +12,10 @@ background_mode = 2
 sky = SubResource("Sky_seltn")
 tonemap_mode = 2
 sdfgi_use_occlusion = true
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.503895, 0.555251, 0.624693, 1)
+fog_density = 1.0
 
 [node name="WorldEnvironment" type="Node3D"]
 

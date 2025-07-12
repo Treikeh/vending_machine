@@ -14,7 +14,7 @@ var _save_data: Dictionary
 func _ready() -> void:
 	# Load data when game starts
 	_load_data_from_file()
-	tree_exiting.connect(_on_tree_exiting)
+	#tree_exiting.connect(_on_tree_exiting)
 
 
 func _on_tree_exiting() -> void:

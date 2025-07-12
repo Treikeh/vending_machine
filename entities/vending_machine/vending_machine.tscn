@@ -98,7 +98,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 1.73605, -0.3)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 1.73605, -0.3)
 
 [node name="ItemSpawnPoint" type="Marker3D" parent="."]
-transform = Transform3D(-4.24407e-08, 1, -1.04629e-08, -0.97093, -4.37114e-08, -0.239364, -0.239364, 0, 0.97093, 0.176314, 0.31306, -0.447846)
+transform = Transform3D(-4.24407e-08, 1, -1.04629e-08, -0.97093, -4.37114e-08, -0.239364, -0.239364, 0, 0.97093, 0.176314, 0.336996, -0.544939)
 
 [connection signal="timeout" from="DisplayLabel/ResetLabelTimer" to="." method="_on_reset_label_timer_timeout"]
 [connection signal="presssed" from="Buttons/VendingMachineButton1" to="." method="_on_vending_machine_button_presssed"]
