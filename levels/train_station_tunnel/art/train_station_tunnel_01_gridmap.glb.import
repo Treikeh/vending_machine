@@ -40,13 +40,7 @@ _subresources={
 }
 },
 "nodes": {
-"PATH:CornerAirShort_001": {
-"generate/physics": true
-},
-"PATH:CornerAir_001": {
-"generate/physics": true
-},
-"PATH:CornerFloor_001": {
+"PATH:Corner_001": {
 "generate/physics": true
 },
 "PATH:Doorway_001": {
@@ -68,17 +62,8 @@ _subresources={
 "generate/physics": true,
 "physics/shape_type": 1
 },
-"PATH:WallAirShort_001": {
-"generate/physics": true,
-"physics/shape_type": 1
-},
-"PATH:WallAir_001": {
-"generate/physics": true,
-"physics/shape_type": 1
-},
-"PATH:WallFloor_001": {
-"generate/physics": true,
-"physics/shape_type": 1
+"PATH:Wall_001": {
+"generate/physics": true
 }
 }
 }

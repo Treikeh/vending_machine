@@ -40,6 +40,9 @@ _subresources={
 }
 },
 "nodes": {
+"PATH:Back": {
+"generate/physics": true
+},
 "PATH:Ballast_001": {
 "generate/physics": true,
 "physics/shape_type": 1

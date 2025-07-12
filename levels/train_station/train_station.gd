@@ -1,5 +1,5 @@
 extends Node3D
-
+#TODO: Add 3 different trains that goes between their own station and this station
 
 @onready var _train: Train = %Train
 @onready var _stop_train_area: Area3D = %StopTrainArea

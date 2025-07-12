@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cf70rm8w8usqn" path="res://gui/main_menu/main_menu.gd" id="1_ctlfj"]
 [ext_resource type="PackedScene" uid="uid://b6iud14yjg3ef" path="res://entities/vending_machine/vending_machine.tscn" id="2_bvgim"]
 [ext_resource type="PackedScene" uid="uid://dn8fbqjnlj0qw" path="res://entities/trash_can/trash_can.tscn" id="3_1xgpt"]
-[ext_resource type="MeshLibrary" uid="uid://dsxstkxlclsu2" path="res://levels/train_station_tunnel/art/train_station_tunnel_01_gridmap.meshlib" id="3_bvgim"]
+[ext_resource type="MeshLibrary" uid="uid://dil5kl30j0edq" path="res://levels/train_station_tunnel/art/train_station_tunnel_01_gridmap.meshlib" id="3_bvgim"]
 [ext_resource type="Script" uid="uid://dqhfgqb124prw" path="res://gui/main_menu/main_menu_vending_machine.gd" id="4_ubcky"]
 [ext_resource type="PackedScene" uid="uid://bwmdyqpxrhydh" path="res://entities/items/soda_cans/blue_soda_can.tscn" id="5_vnwa6"]
 [ext_resource type="PackedScene" uid="uid://gh6w6ih0ohj2" path="res://entities/items/soda_cans/green_soda_can.tscn" id="6_bhc4r"]
@@ -39,16 +39,14 @@ shadow_enabled = true
 
 [node name="GridMap" type="GridMap" parent="World3D"]
 mesh_library = ExtResource("3_bvgim")
-cell_size = Vector3(1, 1, 1)
+cell_size = Vector3(1, 2, 1)
 cell_center_x = false
 cell_center_y = false
 cell_center_z = false
-collision_layer = 5
-collision_mask = 5
 data = {
-"cells": PackedInt32Array(65535, 0, 1048577, 1, 0, 1048577, 3, 0, 1048577, 65533, 0, 1048577, 65533, 1, 655360, 65535, 1, 655360, 1, 1, 655360, 3, 1, 655360, 196605, 1, 655364, 196607, 1, 655364, 131073, 1, 655364, 131075, 1, 655364, 3, 65534, 655370, 1, 65534, 655370, 65535, 65534, 655370, 65533, 65534, 655370)
+"cells": PackedInt32Array(3, 1, 655362, 1, 1, 655362, 65535, 1, 655362, 65533, 1, 655362, 65533, 0, 655360, 65535, 0, 655360, 3, 0, 655360, 1, 0, 655360, 3, 65534, 655365, 1, 65534, 655365, 65535, 65534, 655365, 65533, 65534, 655365, 65539, 1, 655362, 65537, 1, 655362, 131071, 1, 655362, 131069, 1, 655362)
 }
-metadata/_editor_floor_ = Vector3(0, 0, 0)
+metadata/_editor_floor_ = Vector3(0, 1, 0)
 
 [node name="VendingMachine" parent="World3D" instance=ExtResource("2_bvgim")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.4)
