@@ -17,11 +17,11 @@ display_label = NodePath("DisplayLabel")
 reset_label_timer = NodePath("DisplayLabel/ResetLabelTimer")
 item_spawn_point = NodePath("ItemSpawnPoint")
 
-[node name="vending_machine_01_sm" parent="." instance=ExtResource("7_goder")]
+[node name="VendingMachine_01_SM" parent="." instance=ExtResource("7_goder")]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="vending_machine_01_sm"]
+[node name="StaticBody3D" type="StaticBody3D" parent="VendingMachine_01_SM"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="vending_machine_01_sm/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VendingMachine_01_SM/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.96046e-08, 1.05, 0)
 shape = SubResource("BoxShape3D_goder")
 

@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cr7e312s4k7sh"
-path="res://.godot/imported/Street_trash_can_01_sm.glb-e2b2b444c38bec0cdb31cf1ab0da1793.scn"
+uid="uid://dmpedyt4iof4n"
+path="res://.godot/imported/street_trash_can_01_sm.glb-427789ae020bab8c98284a98b2665876.scn"
 
 [deps]
 
-source_file="res://entities/trash_can/art/Street_trash_can_01_sm.glb"
-dest_files=["res://.godot/imported/Street_trash_can_01_sm.glb-e2b2b444c38bec0cdb31cf1ab0da1793.scn"]
+source_file="res://entities/trash_can/art/street_trash_can_01_sm.glb"
+dest_files=["res://.godot/imported/street_trash_can_01_sm.glb-427789ae020bab8c98284a98b2665876.scn"]
 
 [params]
 
@@ -22,7 +22,7 @@ nodes/use_node_type_suffixes=true
 meshes/ensure_tangents=true
 meshes/generate_lods=true
 meshes/create_shadow_meshes=true
-meshes/light_baking=1
+meshes/light_baking=2
 meshes/lightmap_texel_size=0.2
 meshes/force_disable_compression=false
 skins/use_named_skins=true
@@ -39,18 +39,8 @@ _subresources={
 "use_external/path": "uid://2mtqhvlt8ji4"
 }
 },
-"meshes": {
-"Street_trash_can_01_sm_street_trash_can_collision_001": {
-"generate/lightmap_uv": 0,
-"generate/lods": 0,
-"generate/shadow_meshes": 0,
-"lods/normal_merge_angle": 60.0,
-"save_to_file/enabled": true,
-"save_to_file/path": "res://entities/trash_can/art/street_trash_can_01_col.res"
-}
-},
 "nodes": {
-"PATH:street_trash_can_collision_001": {
+"PATH:StreetTrashCanCollision_001": {
 "import/skip_import": true
 }
 }
