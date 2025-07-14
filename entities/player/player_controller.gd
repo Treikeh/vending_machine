@@ -5,6 +5,10 @@ func _ready() -> void:
 	_ground_check.player = self
 	# Set initial state machine
 	_state_machine.switch(FALLING)
+	
+	# Saving/Loading
+	_load_data()
+	tree_exiting.connect(_save_data)
 
 
 func _process(delta: float) -> void:
@@ -195,5 +199,27 @@ func _update_ui_throw_bar(sample_offset: float) -> void:
 	# Remap sample to a range of 0.0 -> 1.0
 	var value: float = remap(sample, i_start, i_stop, 0.0, 1.0)
 	Globals.throw_charge_updated.emit(value)
+
+#endregion
+
+
+#region Save/Load
+
+func _save_data() -> void:
+	var data: Dictionary = {
+		"item": _held_item.scene_file_path if _held_item != null else "",
+	}
+	
+	SaveManager.add_save_data("player", data)
+
+
+func _load_data() -> void:
+	var data: Dictionary = SaveManager.get_save_data("player")
+	if not data.is_empty():
+		if data.item != "":
+			var item: BaseItem = load(data.item).instantiate()
+			add_child(item)
+			await get_tree().process_frame
+			item.pick_up_item(self)
 
 #endregion

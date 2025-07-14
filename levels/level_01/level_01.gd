@@ -7,15 +7,15 @@ var _buy_count: int = 0
 
 
 func _ready() -> void:
-	# Load level save data
-	_load_data()
-	
 	# Spawn world environment that is independent from level
 	Globals.main.load_level(Globals.WORLD_ENV_PATH, global_transform)
 	
 	# Connect signals
-	tree_exiting.connect(_save_data)
 	_vending_machine.code_submitted.connect(_on_vending_machine_code_submitted)
+	
+	# Saving / Loading
+	_load_data()
+	tree_exiting.connect(_save_data)
 
 
 func _on_vending_machine_code_submitted(code: String, valid: bool) -> void:
