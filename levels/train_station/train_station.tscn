@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cpkqvybvj5ikj" path="res://levels/train_station/art/train_station_mock_up.glb" id="1_cn4k8"]
 [ext_resource type="Script" uid="uid://bo6ce11g13nmd" path="res://levels/train_station/train.gd" id="3_2rh3c"]
 [ext_resource type="PackedScene" uid="uid://d11y7b5nss2s5" path="res://common/scenes/level_load_trigger.tscn" id="4_2rh3c"]
+[ext_resource type="PackedScene" uid="uid://cnnitqbdy8yp6" path="res://levels/train_station/train/train_01_sm.glb" id="4_f26eg"]
 [ext_resource type="PackedScene" uid="uid://pgv43adw264g" path="res://common/scenes/level_unload_trigger.tscn" id="5_irpxo"]
 [ext_resource type="MeshLibrary" uid="uid://dil5kl30j0edq" path="res://levels/train_station_tunnel/art/train_station_tunnel_01_gridmap.meshlib" id="6_7vjbl"]
 
@@ -16,13 +17,10 @@ _data = {
 point_count = 3
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sgefo"]
-size = Vector3(3, 0.8, 8)
-
-[sub_resource type="BoxMesh" id="BoxMesh_2rh3c"]
-size = Vector3(3, 0.8, 8)
+size = Vector3(2.3, 1, 26)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_b0eu5"]
-size = Vector3(2, 2, 7)
+size = Vector3(3, 3.9, 25.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_irpxo"]
 
@@ -54,11 +52,10 @@ script = ExtResource("3_2rh3c")
 [node name="StaticBody3D" type="StaticBody3D" parent="TrainTracks/Train"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TrainTracks/Train/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_sgefo")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="TrainTracks/Train/StaticBody3D"]
-mesh = SubResource("BoxMesh_2rh3c")
-skeleton = NodePath("")
+[node name="Train_01_SM" parent="TrainTracks/Train" instance=ExtResource("4_f26eg")]
 
 [node name="ReparentArea" type="Area3D" parent="TrainTracks/Train"]
 unique_name_in_owner = true
@@ -66,6 +63,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
 collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TrainTracks/Train/ReparentArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
 shape = SubResource("BoxShape3D_b0eu5")
 
 [node name="StationWaitTimer" type="Timer" parent="TrainTracks/Train"]
