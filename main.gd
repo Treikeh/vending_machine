@@ -3,26 +3,23 @@ extends Node
 
 
 # The reason I use @export here and not @onready is because I need the references to be avalible
-# before _ready is called in child nodes and every node (except for autoloads) will be a child of
-# this node. It's also the reason why i'm setting the Globals.main reference in _init
+# before the _ready function is called in child nodes. And since every node (except for autoloads)
+# will be a children of this node, there might be a situation where they try to acces the reference
+# before it's set.
 @export var _gui: Control
 @export var _world_3d: Node3D
-@export var _loading_screen: LoadingScreen
 
+@onready var _loading_screen: LoadingScreen = %LoadingScreen
 
 
 func _init() -> void:
 	# I'm setting the reference here and not in _ready because child nodes might need to use the reference
-	# in their own _ready functions and since child nodes call thier _ready functions before the parent
+	# in their own _ready functions, and since child nodes call thier _ready functions before the parent
 	# there might be a situation where they try to acces the reference before it's set.
-	#NOTE: It's only necessary to do this when testing levels. When shipping the game the splash screen
-	# will be the frist and only scene that is loaded and it doesn't need a reference to the main scene
-	# so setting the reference in _ready would then work.
+	#NOTE: It's only necessary to do this when testing levels. When shipping the game, the splash screen
+	# will be the frist and only scene that is loaded and it doesn't need a reference to the main scene.
+	# So setting the reference in _ready would then work.
 	Globals.main = self
-
-
-#func _ready() -> void:
-	#Globals.main = self
 
 
 func _process(_delta: float) -> void:
@@ -71,10 +68,14 @@ var _loaded_levels: Dictionary[String, Node3D]
 var _level_loading_queue: Array[LevelLoadingData] = []
 
 
-## Start loading a new level. If a new trasform is given, the new level will be loaded asynchronously
+## Start loading a new level. If a new trasform is given, the new level will be loaded additively
 #NOTE: The level path should be the UID or of the scene
 #NOTE: The the default transform is Transform3D.FLIP_Y because I can't assign null as the default value
-func load_level(level_path: String, transform: Transform3D = Transform3D.FLIP_Y) -> void:
+func load_level(
+		level_path: String,
+		spawn_transform: Transform3D = Transform3D.FLIP_Y,
+		spawn_callback: Callable = func():,
+) -> void:
 	# Check if level exits
 	if not ResourceLoader.exists(level_path):
 		print("ERROR!: Level %s not found. Invalid level path" % level_path)
@@ -86,13 +87,11 @@ func load_level(level_path: String, transform: Transform3D = Transform3D.FLIP_Y)
 		return
 	
 	# Setup loding queue data
-	var level_data: LevelLoadingData = LevelLoadingData.new()
-	level_data.path = level_path
-	level_data.transform = transform
+	var level_data := LevelLoadingData.new(level_path, spawn_transform, spawn_callback)
 	
 	# Check if a new transform was given.
 	# If it was, show the loading screen and unload all currently active levels.
-	if transform == Transform3D.FLIP_Y:
+	if spawn_transform == Transform3D.FLIP_Y:
 		# Stop levels from spawning/despawning wile the loading screen is fading inn
 		_can_spawn_levels = false
 		_loading_screen.fade_in()
@@ -101,7 +100,7 @@ func load_level(level_path: String, transform: Transform3D = Transform3D.FLIP_Y)
 		_unload_all_levels()
 		_can_spawn_levels = true
 		# Override spawn transform
-		level_data.transform = _world_3d.global_transform
+		level_data.spawn_transform = _world_3d.global_transform
 	
 	# Add the level to the loading queue and start loading it
 	_level_loading_queue.append(level_data)
@@ -134,39 +133,57 @@ func _unload_all_levels() -> void:
 func _check_level_loading_queue() -> void:
 	for level_data: LevelLoadingData in _level_loading_queue:
 		var progress: Array = []
-		var status: int = ResourceLoader.load_threaded_get_status(level_data.path, progress)
+		var status: int = ResourceLoader.load_threaded_get_status(level_data.level_path, progress)
 		match status:
 			0: ## THREAD_LOAD_INVALID_RESOURCE
 				print("ERROR!: Invalid resource")
-				return
+				continue
 			1: ## THREAD_LOAD_IN_PROGRESS
 				_loading_screen.update_progress(progress[0])
-				return
+				continue
 			2: ## THREAD_LOAD_FAILED
 				print("ERROR!: Level failed to load")
-				return
+				continue
 			3: ## THREAD_LOAD_LOADED
-				# Add level to World3D
-				var new_level: Node3D = ResourceLoader.load_threaded_get(level_data.path).instantiate()
-				_world_3d.add_child(new_level)
-				new_level.global_transform = level_data.transform
-				
-				# Add new level to loaded levels dict
-				_loaded_levels[level_data.path] = new_level
-				
-				# Remove level from loading queue
-				_level_loading_queue.erase(level_data)
-				
-				# Hide loading screen
-				if _loading_screen.visible:
-					_loading_screen.fade_out()
-				return
+				_add_level_to_world_3d(level_data)
+				continue
 
 
-# There might be a better name for this subclass
-## Data that is useful to keep track of when loading scenes async
+func _add_level_to_world_3d(level_data: LevelLoadingData) -> void:
+	# Spawn level into the scene
+	var new_level: Node3D = ResourceLoader.load_threaded_get(level_data.level_path).instantiate()
+	_world_3d.add_child(new_level)
+	new_level.global_transform = level_data.spawn_transform
+	
+	# Call spawn_callback at the end of the frame
+	level_data.spawn_callback.call_deferred()
+	
+	# Add new level to loaded levels dict
+	_loaded_levels[level_data.level_path] = new_level
+	
+	# Remove level from loading queue
+	_level_loading_queue.erase(level_data)
+	
+	# Hide the loading screen if it's visible
+	if _loading_screen.visible:
+		_loading_screen.fade_out()
+
+
+## Data that is needed when loading the levels
 class LevelLoadingData:
-	var path: String
-	var transform: Transform3D
+	# Path to the level (Necessary). Used to check the loading status of the level.
+	var level_path: String
+	# Where the level will spawn (Optional).
+	# If set, the new level will be spawned in additively with the other levels.
+	# If not set, all the active levels will be unloaded before spawning in the new level.
+	var spawn_transform: Transform3D
+	# A function that will be called when the new level has been added to the scene tree (Optional).
+	# Used when you want to delay a function unitl the desired level has been spawned.
+	var spawn_callback: Callable
+	
+	func _init(path: String, transform: Transform3D, callback: Callable) -> void:
+		level_path = path
+		spawn_transform = transform
+		spawn_callback = callback
 
 #endregion

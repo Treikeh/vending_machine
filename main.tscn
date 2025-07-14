@@ -4,12 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://wwxe07fon8hy" path="res://gui/main_menu/main_menu.tscn" id="2_h2yge"]
 [ext_resource type="PackedScene" uid="uid://c54fq80lg0u1l" path="res://gui/loading_screen/loading_screen.tscn" id="7_272bh"]
 
-[node name="Main" type="Node" node_paths=PackedStringArray("_gui", "_world_3d", "_loading_screen")]
+[node name="Main" type="Node" node_paths=PackedStringArray("_gui", "_world_3d")]
 process_mode = 3
 script = ExtResource("1_ig7tw")
 _gui = NodePath("GUI")
 _world_3d = NodePath("World3D")
-_loading_screen = NodePath("LoadingScreen")
 
 [node name="World3D" type="Node3D" parent="."]
 process_mode = 1
@@ -27,4 +26,5 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="LoadingScreen" parent="." instance=ExtResource("7_272bh")]
+unique_name_in_owner = true
 visible = false
