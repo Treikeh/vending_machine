@@ -23,7 +23,7 @@ func _on_vending_machine_code_submitted(code: String, valid: bool) -> void:
 		_buy_count += 1
 	
 	# Allow the trash can to become active when buying enough items
-	if _buy_count >= _trash_can_become_visible_buy_count:
+	if _buy_count >= _trash_can_become_visible_buy_count and not _trash_can_screen_notifier.screen_exited.has_connections():
 		_trash_can_screen_notifier.screen_exited.connect(_on_trash_can_screen_notifier_screen_exited)
 	
 	# Allow the train station tunnel to spawn when typing in the right code
