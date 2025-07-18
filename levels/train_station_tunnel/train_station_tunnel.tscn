@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=4 uid="uid://gqsmdnolrjqo"]
+[gd_scene load_steps=14 format=4 uid="uid://gqsmdnolrjqo"]
 
 [ext_resource type="Material" uid="uid://byada0lhfojxq" path="res://levels/train_station_tunnel/art/train_station_tunnel_01_mat.tres" id="2_331ds"]
 [ext_resource type="PackedScene" uid="uid://d11y7b5nss2s5" path="res://common/scenes/level_load_trigger.tscn" id="2_xj2i1"]
 [ext_resource type="PackedScene" uid="uid://pgv43adw264g" path="res://common/scenes/level_unload_trigger.tscn" id="3_jqnph"]
 [ext_resource type="MeshLibrary" uid="uid://dil5kl30j0edq" path="res://levels/train_station_tunnel/art/train_station_tunnel_01_gridmap.meshlib" id="4_kjm4n"]
+[ext_resource type="PackedScene" uid="uid://t5bjga48mq8u" path="res://entities/door/door.tscn" id="5_331ds"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_5vu2g"]
 lightmap_size_hint = Vector2i(206, 202)
@@ -167,3 +168,10 @@ level_path = "uid://b64kpf3puwh5f"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Level01Triggers/Level01UnloadTrigger"]
 shape = SubResource("BoxShape3D_jqnph")
+
+[node name="Door" parent="." instance=ExtResource("5_331ds")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.75, -4, -14)
+
+[node name="Door2" parent="." instance=ExtResource("5_331ds")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -6.25, -4, -14)
+open_rotation = Vector3(0, -90, 0)

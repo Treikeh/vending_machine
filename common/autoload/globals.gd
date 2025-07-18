@@ -36,3 +36,19 @@ func screen_to_world_3d_ray_cast(
 	ray_query.collide_with_areas = collide_with_areas
 	ray_query.collide_with_bodies = collide_with_bodies
 	return space.intersect_ray(ray_query)
+
+
+## Converts every axis in a Vector3 from degrees to radians.
+func vec3_deg_to_rad(vector: Vector3) -> Vector3:
+	var x: float = deg_to_rad(vector.x)
+	var y: float = deg_to_rad(vector.y)
+	var z: float = deg_to_rad(vector.z)
+	return Vector3(x, y, z)
+
+
+## Converts every axis in a Vector3 from radians to degrees.
+func vec3_rad_to_deg(vector: Vector3) -> Vector3:
+	var x: float = rad_to_deg(vector.x)
+	var y: float = rad_to_deg(vector.y)
+	var z: float = rad_to_deg(vector.z)
+	return Vector3(x, y, z)
