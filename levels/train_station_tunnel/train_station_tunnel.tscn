@@ -1,11 +1,15 @@
-[gd_scene load_steps=16 format=4 uid="uid://gqsmdnolrjqo"]
+[gd_scene load_steps=20 format=4 uid="uid://gqsmdnolrjqo"]
 
 [ext_resource type="Material" uid="uid://byada0lhfojxq" path="res://levels/train_station_tunnel/art/train_station_tunnel_01_mat.tres" id="2_331ds"]
 [ext_resource type="PackedScene" uid="uid://d11y7b5nss2s5" path="res://common/scenes/level_load_trigger.tscn" id="2_xj2i1"]
 [ext_resource type="PackedScene" uid="uid://pgv43adw264g" path="res://common/scenes/level_unload_trigger.tscn" id="3_jqnph"]
 [ext_resource type="MeshLibrary" uid="uid://dil5kl30j0edq" path="res://levels/train_station_tunnel/art/train_station_tunnel_01_gridmap.meshlib" id="4_kjm4n"]
 [ext_resource type="PackedScene" uid="uid://t5bjga48mq8u" path="res://entities/doors/door.tscn" id="5_331ds"]
+[ext_resource type="Shape3D" uid="uid://brq5qvu3kpm2l" path="res://entities/doors/door_default_collision.tres" id="5_bnm24"]
+[ext_resource type="Texture2D" uid="uid://csigaasfs82vb" path="res://entities/doors/restroom_door/restroom_door_sign_male.png" id="5_kcsps"]
 [ext_resource type="PackedScene" uid="uid://gs83e0u3lu6s" path="res://entities/player/spawner/player_spawner.tscn" id="6_g767i"]
+[ext_resource type="Texture2D" uid="uid://crccykklxoigc" path="res://entities/doors/restroom_door/restroom_door_sign_female.png" id="6_gfadk"]
+[ext_resource type="PackedScene" uid="uid://b66dt13sk26pc" path="res://entities/doors/restroom_door/restroom_door_01_sm.tscn" id="6_x8h6a"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_5vu2g"]
 lightmap_size_hint = Vector2i(206, 202)
@@ -142,11 +146,35 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -2.9)
 [node name="Door" parent="Restrooms/Right" instance=ExtResource("5_331ds")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -5.75, -4, -14)
 
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Restrooms/Right/Door"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, 1.15, 9.53674e-07)
+shape = ExtResource("5_bnm24")
+debug_color = Color(0.652233, 0.518714, 3.85046e-07, 0.42)
+
+[node name="RestroomDoor_01_SM" parent="Restrooms/Right/Door" instance=ExtResource("6_x8h6a")]
+
+[node name="Decal" type="Decal" parent="Restrooms/Right/Door/RestroomDoor_01_SM"]
+transform = Transform3D(-1, 0, -8.74228e-08, 8.74228e-08, -4.37114e-08, -1, -7.10543e-15, -1, 4.37114e-08, -0.75, 1.6, -0.0999994)
+size = Vector3(0.25, 0.25, 0.25)
+texture_albedo = ExtResource("5_kcsps")
+
 [node name="Left" type="Node3D" parent="Restrooms"]
 
 [node name="Door" parent="Restrooms/Left" instance=ExtResource("5_331ds")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.25, -4, -14)
 _open_rotation = Vector3(0, -90, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Restrooms/Left/Door"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, 1.15, 9.53674e-07)
+shape = ExtResource("5_bnm24")
+debug_color = Color(0.652233, 0.518714, 3.85046e-07, 0.42)
+
+[node name="RestroomDoor_01_SM" parent="Restrooms/Left/Door" instance=ExtResource("6_x8h6a")]
+
+[node name="Decal" type="Decal" parent="Restrooms/Left/Door/RestroomDoor_01_SM"]
+transform = Transform3D(1, -8.74228e-08, -8.74228e-08, -8.74228e-08, 4.37114e-08, -1, 8.74228e-08, 1, 4.37114e-08, -0.75, 1.6, 0.1)
+size = Vector3(0.25, 0.25, 0.25)
+texture_albedo = ExtResource("6_gfadk")
 
 [node name="LevelTriggers" type="Node3D" parent="."]
 
