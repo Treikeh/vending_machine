@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b64kpf3puwh5f"]
+[gd_scene load_steps=7 format=3 uid="uid://b64kpf3puwh5f"]
 
 [ext_resource type="Script" uid="uid://bqvoejsdvjmuv" path="res://levels/level_01/level_01.gd" id="1_2fp4v"]
 [ext_resource type="PackedScene" uid="uid://b6iud14yjg3ef" path="res://entities/vending_machine/vending_machine.tscn" id="2_mckh2"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://i3qwnmsysi7n" path="res://levels/level_01/art/level_01_sm.glb" id="3_aqob7"]
 [ext_resource type="PackedScene" uid="uid://gs83e0u3lu6s" path="res://entities/player/spawner/player_spawner.tscn" id="5_71kry"]
 [ext_resource type="PackedScene" uid="uid://gkdkiaeobysh" path="res://entities/items/note/note.tscn" id="5_dm0pi"]
-[ext_resource type="PackedScene" uid="uid://t5bjga48mq8u" path="res://entities/door/door.tscn" id="7_aqob7"]
 
 [node name="Level01" type="Node3D"]
 script = ExtResource("1_2fp4v")
@@ -39,9 +38,5 @@ aabb = AABB(-0.4, -0.5, -0.4, 0.8, 1, 0.8)
 [node name="TrashCan" parent="TrashCanScreenNotifier" instance=ExtResource("3_81a5f")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -1.19209e-07)
-
-[node name="Door" parent="." instance=ExtResource("7_aqob7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.8, 0, 0)
-open_speed = 1.0
 
 [editable path="level_01_sm"]

@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=4 uid="uid://gqsmdnolrjqo"]
+[gd_scene load_steps=16 format=4 uid="uid://gqsmdnolrjqo"]
 
 [ext_resource type="Material" uid="uid://byada0lhfojxq" path="res://levels/train_station_tunnel/art/train_station_tunnel_01_mat.tres" id="2_331ds"]
 [ext_resource type="PackedScene" uid="uid://d11y7b5nss2s5" path="res://common/scenes/level_load_trigger.tscn" id="2_xj2i1"]
 [ext_resource type="PackedScene" uid="uid://pgv43adw264g" path="res://common/scenes/level_unload_trigger.tscn" id="3_jqnph"]
 [ext_resource type="MeshLibrary" uid="uid://dil5kl30j0edq" path="res://levels/train_station_tunnel/art/train_station_tunnel_01_gridmap.meshlib" id="4_kjm4n"]
-[ext_resource type="PackedScene" uid="uid://t5bjga48mq8u" path="res://entities/door/door.tscn" id="5_331ds"]
+[ext_resource type="PackedScene" uid="uid://t5bjga48mq8u" path="res://entities/doors/door.tscn" id="5_331ds"]
+[ext_resource type="PackedScene" uid="uid://gs83e0u3lu6s" path="res://entities/player/spawner/player_spawner.tscn" id="6_g767i"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_5vu2g"]
 lightmap_size_hint = Vector2i(206, 202)
@@ -114,6 +115,9 @@ _surfaces = [{
 [sub_resource type="BoxShape3D" id="BoxShape3D_jqnph"]
 size = Vector3(4, 2, 1)
 
+[sub_resource type="PlaneMesh" id="PlaneMesh_g767i"]
+size = Vector2(20, 13.5)
+
 [node name="TrainStationTunnel" type="Node3D"]
 
 [node name="GridMap" type="GridMap" parent="."]
@@ -128,50 +132,93 @@ data = {
 }
 metadata/_editor_floor_ = Vector3(0, -1, 0)
 
-[node name="TrainStationTriggers" type="Node3D" parent="."]
+[node name="PlayerSpawner" parent="." instance=ExtResource("6_g767i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -2.9)
 
-[node name="TrainStationSpawnPoint" type="Marker3D" parent="TrainStationTriggers"]
+[node name="Restrooms" type="Node3D" parent="."]
+
+[node name="Right" type="Node3D" parent="Restrooms"]
+
+[node name="Door" parent="Restrooms/Right" instance=ExtResource("5_331ds")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -5.75, -4, -14)
+
+[node name="Left" type="Node3D" parent="Restrooms"]
+
+[node name="Door" parent="Restrooms/Left" instance=ExtResource("5_331ds")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.25, -4, -14)
+_open_rotation = Vector3(0, -90, 0)
+
+[node name="LevelTriggers" type="Node3D" parent="."]
+
+[node name="TrainStation" type="Node3D" parent="LevelTriggers"]
+
+[node name="TrainStationSpawnPoint" type="Marker3D" parent="LevelTriggers/TrainStation"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -12, -8, 4)
 gizmo_extents = 2.5
 
-[node name="TrainStationLoadTrigger" parent="TrainStationTriggers" node_paths=PackedStringArray("spawn_transform") instance=ExtResource("2_xj2i1")]
+[node name="TrainStationLoadTrigger" parent="LevelTriggers/TrainStation" node_paths=PackedStringArray("spawn_transform") instance=ExtResource("2_xj2i1")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9, -3, -12)
 level_path = "uid://438mffbmqx1b"
 spawn_transform = NodePath("../TrainStationSpawnPoint")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TrainStationTriggers/TrainStationLoadTrigger"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LevelTriggers/TrainStation/TrainStationLoadTrigger"]
 shape = SubResource("BoxShape3D_jqnph")
 
-[node name="TrainStationUnloadTrigger" parent="TrainStationTriggers" instance=ExtResource("3_jqnph")]
+[node name="TrainStationUnloadTrigger" parent="LevelTriggers/TrainStation" instance=ExtResource("3_jqnph")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6, -3, -12)
 level_path = "uid://438mffbmqx1b"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TrainStationTriggers/TrainStationUnloadTrigger"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LevelTriggers/TrainStation/TrainStationUnloadTrigger"]
 shape = SubResource("BoxShape3D_jqnph")
 
-[node name="Level01Triggers" type="Node3D" parent="."]
+[node name="Level01" type="Node3D" parent="LevelTriggers"]
 
-[node name="Level01SpawnPoint" type="Marker3D" parent="Level01Triggers"]
+[node name="Level01SpawnPoint" type="Marker3D" parent="LevelTriggers/Level01"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.3)
+gizmo_extents = 2.5
 
-[node name="Level01LoadTrigger" parent="Level01Triggers" node_paths=PackedStringArray("spawn_transform") instance=ExtResource("2_xj2i1")]
+[node name="Level01LoadTrigger" parent="LevelTriggers/Level01" node_paths=PackedStringArray("spawn_transform") instance=ExtResource("2_xj2i1")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3, -3, -12)
 level_path = "uid://b64kpf3puwh5f"
 spawn_transform = NodePath("../Level01SpawnPoint")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Level01Triggers/Level01LoadTrigger"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LevelTriggers/Level01/Level01LoadTrigger"]
 shape = SubResource("BoxShape3D_jqnph")
 
-[node name="Level01UnloadTrigger" parent="Level01Triggers" instance=ExtResource("3_jqnph")]
+[node name="Level01UnloadTrigger" parent="LevelTriggers/Level01" instance=ExtResource("3_jqnph")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6, -3, -12)
 level_path = "uid://b64kpf3puwh5f"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Level01Triggers/Level01UnloadTrigger"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LevelTriggers/Level01/Level01UnloadTrigger"]
 shape = SubResource("BoxShape3D_jqnph")
 
-[node name="Door" parent="." instance=ExtResource("5_331ds")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.75, -4, -14)
+[node name="Lighting" type="Node3D" parent="."]
 
-[node name="Door2" parent="." instance=ExtResource("5_331ds")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -6.25, -4, -14)
-open_rotation = Vector3(0, -90, 0)
+[node name="StopLightLeakPlane" type="MeshInstance3D" parent="Lighting"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.1, -0.2, -14)
+mesh = SubResource("PlaneMesh_g767i")
+skeleton = NodePath("../..")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Lighting"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -4.54485e-07, -1, -12)
+light_color = Color(1, 0.865293, 0.584827, 1)
+light_bake_mode = 1
+spot_range = 3.7
+spot_attenuation = 0.1
+spot_angle = 64.88
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="Lighting"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -6, -1, -12)
+light_color = Color(1, 0.865293, 0.584827, 1)
+light_bake_mode = 1
+spot_range = 3.7
+spot_attenuation = 0.1
+spot_angle = 64.88
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="Lighting"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -12, -1, -12)
+light_color = Color(1, 0.865293, 0.584827, 1)
+light_bake_mode = 1
+spot_range = 3.7
+spot_attenuation = 0.1
+spot_angle = 64.88

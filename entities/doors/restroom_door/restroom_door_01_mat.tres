@@ -1,0 +1,7 @@
+[gd_resource type="ORMMaterial3D" load_steps=2 format=3 uid="uid://dkoney38og3ul"]
+
+[ext_resource type="Texture2D" uid="uid://chied2nbovh06" path="res://entities/doors/restroom_door/restroom_door_01_bc.png" id="1_hb8i3"]
+
+[resource]
+albedo_texture = ExtResource("1_hb8i3")
+texture_filter = 2
