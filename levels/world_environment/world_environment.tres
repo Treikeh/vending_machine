@@ -1,0 +1,19 @@
+[gd_resource type="Environment" load_steps=3 format=3 uid="uid://dookt17pysku4"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tyqfe"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_seltn"]
+sky_material = SubResource("ProceduralSkyMaterial_tyqfe")
+
+[resource]
+background_mode = 2
+sky = SubResource("Sky_seltn")
+tonemap_mode = 2
+ssao_enabled = true
+sdfgi_use_occlusion = true
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.503895, 0.555251, 0.624693, 1)
+fog_density = 1.0
