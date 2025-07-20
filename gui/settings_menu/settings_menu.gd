@@ -8,6 +8,7 @@ func _ready() -> void:
 	_setup_audio_settings()
 	_setup_input_settings()
 	_setup_video_settings()
+	_setup_keybinding()
 	_setup_confirm_pop_up()
 	
 	## Connect signals
@@ -175,12 +176,12 @@ var old_video_settings: Dictionary
 var new_video_settings: Dictionary
 
 @onready var _display_mode_options_button: OptionButton = %DisplayModeOptionsButton
+@onready var _vsync_mode_options_button: OptionButton = %VsyncModeOptionsButton
+@onready var _fps_slider: HSlider = %FpsSlider
+@onready var _fps_spin_box: SpinBox = %FpsSpinBox
 @onready var _fov_slider: HSlider = %FovSlider
 @onready var _fov_spin_box: SpinBox = %FovSpinBox
 @onready var _camera_3d: Camera3D = %Camera3D
-@onready var _fps_slider: HSlider = %FpsSlider
-@onready var _fps_spin_box: SpinBox = %FpsSpinBox
-@onready var _vsync_mode_options_button: OptionButton = %VsyncModeOptionsButton
 
 
 func _setup_video_settings() -> void:
@@ -256,5 +257,23 @@ func _on_field_of_view_changed(value: float) -> void:
 	
 	# Disable the apply button if the new and old values aren't matching
 	_apply_button.disabled = _are_new_and_old_settings_matching()
+
+#endregion
+
+#region Keybinding
+
+const _INPUT_REMAP_ENTRY_SCENE := preload("uid://bhiluyjm3vp1y")
+
+@onready var _keybindings_container: VBoxContainer = %KeybindingsContainer
+
+
+func _setup_keybinding() -> void:
+	var input_actions: Dictionary = SettingsManager.INPUT_ACTIONS
+	for action: String in input_actions:
+		var input_entry: Control = _INPUT_REMAP_ENTRY_SCENE.instantiate()
+		_keybindings_container.add_child(input_entry)
+		
+		input_entry.setup_scene(action)
+		input_entry.set_process_input(false)
 
 #endregion

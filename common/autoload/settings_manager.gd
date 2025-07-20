@@ -22,6 +22,7 @@ const DEFAULTS: Dictionary = {
 	},
 	"INPUT": {
 		"CAMERA_SENSITIVITY": 0.1,
+		#"KEYBINDINGS": InputMap.get_actions(),
 	},
 	"VIDEO": {
 		"DISPLAY_MODE": DISPLAY_MODE.BORDERLESS_FULLSCREEN,
@@ -29,6 +30,12 @@ const DEFAULTS: Dictionary = {
 		"MAX_FPS": 60.0,
 		"FIELD_OF_VIEW": 90.0,
 	},
+}
+
+const INPUT_ACTIONS: Dictionary = {
+	"interact": "Interact",
+	"use_item": "Use item",
+	"throw_item": "Throw item",
 }
 
 
@@ -44,12 +51,12 @@ func _ready() -> void:
 		_config_file.set_value("AUDIO", "master_volume", DEFAULTS.AUDIO.MASTER_VOLUME)
 		
 		_config_file.set_value("INPUT", "camera_sensitivity", DEFAULTS.INPUT.CAMERA_SENSITIVITY)
+		#_config_file.set_value("INPUT", "keybindings", InputMap.)
 		
 		_config_file.set_value("VIDEO", "display_mode", DEFAULTS.VIDEO.DISPLAY_MODE)
 		_config_file.set_value("VIDEO", "vsync_mode", DEFAULTS.VIDEO.VSYNC_MODE)
 		_config_file.set_value("VIDEO", "max_fps", DEFAULTS.VIDEO.MAX_FPS)
 		_config_file.set_value("VIDEO", "field_of_view", DEFAULTS.VIDEO.FIELD_OF_VIEW)
-		
 		
 		save_settings()
 	else:
