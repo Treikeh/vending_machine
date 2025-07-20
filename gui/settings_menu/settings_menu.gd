@@ -21,7 +21,9 @@ func _on_apply_button_pressed() -> void:
 	SettingsManager.set_audio_setting("master_volume", new_audio_settings.master_volume)
 	SettingsManager.set_input_setting("camera_sensitivity", new_input_settings.camera_sensitivity)
 	SettingsManager.set_video_setting("display_mode", new_video_settings.display_mode)
+	SettingsManager.set_video_setting("vsync_mode", new_video_settings.vsync_mode)
 	SettingsManager.set_video_setting("field_of_view", new_video_settings.field_of_view)
+	SettingsManager.set_video_setting("max_fps", new_video_settings.max_fps)
 	SettingsManager.save_settings()
 	# Reset apply button
 	old_audio_settings = new_audio_settings.duplicate()
@@ -39,11 +41,13 @@ func _on_back_button_pressed() -> void:
 
 
 func _on_defaults_button_pressed() -> void:
-	#TODO: Don't hard code the default values, but store them somewhere
-	_on_master_volume_changed(0.75)
-	_on_sensitivity_changed(0.1)
-	_on_display_mode_changed(SettingsManager.DISPLAY_MODE.BORDERLESS_FULLSCREEN)
-	_on_field_of_view_changed(90.0)
+	var defaults: Dictionary = SettingsManager.DEFAULTS
+	_on_master_volume_changed(defaults.AUDIO.MASTER_VOLUME)
+	_on_sensitivity_changed(defaults.INPUT.CAMERA_SENSITIVITY)
+	_on_display_mode_changed(defaults.VIDEO.DISPLAY_MODE)
+	_on_vsync_mode_changed(defaults.VIDEO.VSYNC_MODE)
+	_on_fps_changed(defaults.VIDEO.MAX_FPS)
+	_on_field_of_view_changed(defaults.VIDEO.FIELD_OF_VIEW)
 
 
 func _are_new_and_old_settings_matching() -> bool:
@@ -174,6 +178,9 @@ var new_video_settings: Dictionary
 @onready var _fov_slider: HSlider = %FovSlider
 @onready var _fov_spin_box: SpinBox = %FovSpinBox
 @onready var _camera_3d: Camera3D = %Camera3D
+@onready var _fps_slider: HSlider = %FpsSlider
+@onready var _fps_spin_box: SpinBox = %FpsSpinBox
+@onready var _vsync_mode_options_button: OptionButton = %VsyncModeOptionsButton
 
 
 func _setup_video_settings() -> void:
@@ -184,6 +191,20 @@ func _setup_video_settings() -> void:
 	# Display mode
 	_display_mode_options_button.selected = video_settings.display_mode
 	_display_mode_options_button.item_selected.connect(_on_display_mode_changed)
+	
+	#VSync
+	_vsync_mode_options_button.selected = video_settings.vsync_mode
+	_vsync_mode_options_button.item_selected.connect(_on_vsync_mode_changed)
+	
+	# Frame rate
+	var vsync_enabled: bool = _vsync_mode_options_button.selected == DisplayServer.VSYNC_ENABLED
+	_fps_slider.editable = not vsync_enabled
+	_fps_slider.value = video_settings.max_fps
+	_fps_slider.value_changed.connect(_on_fps_changed)
+	
+	_fps_spin_box.editable = not vsync_enabled
+	_fps_spin_box.value = video_settings.max_fps
+	_fps_spin_box.value_changed.connect(_on_fps_changed)
 	
 	# Field of view
 	_camera_3d.fov = video_settings.field_of_view
@@ -197,6 +218,31 @@ func _setup_video_settings() -> void:
 func _on_display_mode_changed(index: int) -> void:
 	new_video_settings.display_mode = index
 	SettingsManager.set_display_mode(index)
+	
+	# Disable the apply button if the new and old values aren't matching
+	_apply_button.disabled = _are_new_and_old_settings_matching()
+
+
+func _on_vsync_mode_changed(index: int) -> void:
+	new_video_settings.vsync_mode = index
+	SettingsManager.set_vsync_mode(index as DisplayServer.VSyncMode)
+	# Disable/Enable fps options if vsync is enabled
+	if index == DisplayServer.VSYNC_ENABLED:
+		_on_fps_changed(DisplayServer.screen_get_refresh_rate())
+		_fps_slider.editable = false
+		_fps_spin_box.editable = false
+	else:
+		_fps_slider.editable = true
+		_fps_spin_box.editable = true
+	
+	# Disable the apply button if the new and old values aren't matching
+	_apply_button.disabled = _are_new_and_old_settings_matching()
+
+
+func _on_fps_changed(value: float) -> void:
+	new_video_settings.max_fps = value
+	_fps_slider.value = value
+	_fps_spin_box.value = value
 	
 	# Disable the apply button if the new and old values aren't matching
 	_apply_button.disabled = _are_new_and_old_settings_matching()

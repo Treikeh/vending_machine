@@ -4,11 +4,11 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fasm0"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vbnwq"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cybwm"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4geqv"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cybwm"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vbnwq"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rgsgl"]
 
@@ -83,8 +83,10 @@ theme_override_styles/separator = SubResource("StyleBoxEmpty_fasm0")
 
 [node name="DisplayModeOptionsButton" type="OptionButton" parent="MarginContainer/HBoxContainer/Settings/DisplayMode"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-selected = 0
+alignment = 1
+selected = 1
 item_count = 3
 popup/item_0/text = "Fullscreen"
 popup/item_0/id = 0
@@ -92,6 +94,90 @@ popup/item_1/text = "Borderless fullscreen"
 popup/item_1/id = 1
 popup/item_2/text = "Windowed"
 popup/item_2/id = 2
+
+[node name="Vsync" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Settings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Settings/Vsync"]
+layout_mode = 2
+text = "Vertical sync"
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/HBoxContainer/Settings/Vsync"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxEmpty_cybwm")
+
+[node name="VsyncModeOptionsButton" type="OptionButton" parent="MarginContainer/HBoxContainer/Settings/Vsync"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+alignment = 1
+selected = 1
+item_count = 4
+popup/item_0/text = "Disabled"
+popup/item_0/id = 0
+popup/item_1/text = "Enabled"
+popup/item_1/id = 1
+popup/item_2/text = "Adaptive"
+popup/item_2/id = 2
+popup/item_3/text = "Mailbox"
+popup/item_3/id = 3
+
+[node name="MaxFps" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Settings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Settings/MaxFps"]
+layout_mode = 2
+text = "Max frame rate"
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/HBoxContainer/Settings/MaxFps"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxEmpty_cybwm")
+
+[node name="FpsSlider" type="HSlider" parent="MarginContainer/HBoxContainer/Settings/MaxFps"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(215, 0)
+layout_mode = 2
+min_value = 30.0
+max_value = 120.0
+value = 60.0
+
+[node name="FpsSpinBox" type="SpinBox" parent="MarginContainer/HBoxContainer/Settings/MaxFps"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 30.0
+max_value = 120.0
+value = 60.0
+alignment = 2
+
+[node name="FieldOfView" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Settings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Settings/FieldOfView"]
+layout_mode = 2
+text = "Field of view"
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/HBoxContainer/Settings/FieldOfView"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxEmpty_4geqv")
+
+[node name="FovSlider" type="HSlider" parent="MarginContainer/HBoxContainer/Settings/FieldOfView"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(215, 0)
+layout_mode = 2
+min_value = 70.0
+max_value = 110.0
+value = 90.0
+
+[node name="FovSpinBox" type="SpinBox" parent="MarginContainer/HBoxContainer/Settings/FieldOfView"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 70.0
+max_value = 110.0
+value = 90.0
+alignment = 2
 
 [node name="InputSettings" type="Label" parent="MarginContainer/HBoxContainer/Settings"]
 layout_mode = 2
@@ -126,34 +212,6 @@ min_value = 0.01
 max_value = 1.0
 step = 0.01
 value = 0.1
-alignment = 2
-
-[node name="FieldOfView" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Settings"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Settings/FieldOfView"]
-layout_mode = 2
-text = "Field of view"
-
-[node name="VSeparator" type="VSeparator" parent="MarginContainer/HBoxContainer/Settings/FieldOfView"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/separator = SubResource("StyleBoxEmpty_4geqv")
-
-[node name="FovSlider" type="HSlider" parent="MarginContainer/HBoxContainer/Settings/FieldOfView"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(215, 0)
-layout_mode = 2
-min_value = 70.0
-max_value = 110.0
-value = 90.0
-
-[node name="FovSpinBox" type="SpinBox" parent="MarginContainer/HBoxContainer/Settings/FieldOfView"]
-unique_name_in_owner = true
-layout_mode = 2
-min_value = 70.0
-max_value = 110.0
-value = 70.0
 alignment = 2
 
 [node name="AudioSettings" type="Label" parent="MarginContainer/HBoxContainer/Settings"]
@@ -226,6 +284,7 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="MarginContainer/HBoxContainer/Preview/SubViewportContainer"]
 own_world_3d = true
+handle_input_locally = false
 size = Vector2i(534, 618)
 render_target_update_mode = 4
 
