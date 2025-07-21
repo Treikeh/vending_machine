@@ -8,7 +8,6 @@ func _ready() -> void:
 	_setup_audio_settings()
 	_setup_input_settings()
 	_setup_video_settings()
-	_setup_keybinding()
 	_setup_confirm_pop_up()
 	
 	## Connect signals
@@ -17,19 +16,31 @@ func _ready() -> void:
 	%DefaultsButton.pressed.connect(_on_defaults_button_pressed)
 
 
+func _input(event: InputEvent) -> void:
+	# Capture key and mouse button events when remapping a key
+	if _action_to_remap != "":
+		var key_press: bool = event is InputEventKey
+		var mouse_button_press: bool = event is InputEventMouseButton and event.pressed
+		# Stop double press
+		if key_press or mouse_button_press:
+			_on_input_remapped(event)
+			accept_event()
+
+
 func _on_apply_button_pressed() -> void:
 	# Save new settings
-	SettingsManager.set_audio_setting("master_volume", new_audio_settings.master_volume)
-	SettingsManager.set_input_setting("camera_sensitivity", new_input_settings.camera_sensitivity)
-	SettingsManager.set_video_setting("display_mode", new_video_settings.display_mode)
-	SettingsManager.set_video_setting("vsync_mode", new_video_settings.vsync_mode)
-	SettingsManager.set_video_setting("field_of_view", new_video_settings.field_of_view)
-	SettingsManager.set_video_setting("max_fps", new_video_settings.max_fps)
+	SettingsManager.set_audio_setting("master_volume", _new_audio_settings.master_volume)
+	SettingsManager.set_input_setting("camera_sensitivity", _new_input_settings.camera_sensitivity)
+	SettingsManager.set_input_setting("keybindings", _new_input_settings.keybindings)
+	SettingsManager.set_video_setting("display_mode", _new_video_settings.display_mode)
+	SettingsManager.set_video_setting("vsync_mode", _new_video_settings.vsync_mode)
+	SettingsManager.set_video_setting("field_of_view", _new_video_settings.field_of_view)
+	SettingsManager.set_video_setting("max_fps", _new_video_settings.max_fps)
 	SettingsManager.save_settings()
 	# Reset apply button
-	old_audio_settings = new_audio_settings.duplicate()
-	old_input_settings = new_input_settings.duplicate()
-	old_video_settings = new_video_settings.duplicate()
+	_old_audio_settings = _new_audio_settings.duplicate()
+	_old_input_settings = _new_input_settings.duplicate()
+	_old_video_settings = _new_video_settings.duplicate()
 	_apply_button.disabled = true
 
 
@@ -49,12 +60,15 @@ func _on_defaults_button_pressed() -> void:
 	_on_vsync_mode_changed(defaults.VIDEO.VSYNC_MODE)
 	_on_fps_changed(defaults.VIDEO.MAX_FPS)
 	_on_field_of_view_changed(defaults.VIDEO.FIELD_OF_VIEW)
+	# Reset keybindings
+	InputMap.load_from_project_settings()
+	_create_keybindings()
 
 
 func _are_new_and_old_settings_matching() -> bool:
-	var audio: bool = new_audio_settings == old_audio_settings
-	var input: bool = new_input_settings == old_input_settings
-	var video: bool = new_video_settings == old_video_settings
+	var audio: bool = _new_audio_settings == _old_audio_settings
+	var input: bool = _new_input_settings == _old_input_settings
+	var video: bool = _new_video_settings == _old_video_settings
 	return (video and input and audio)
 
 
@@ -62,6 +76,7 @@ func _close_settings_menu() -> void:
 	# Actually apply the settings when closing the menu. If the new settings aren't applied with ->
 	# <- the apply button then the new settings are discarded
 	SettingsManager.apply_audio_settings()
+	SettingsManager.apply_input_settings()
 	SettingsManager.apply_video_settings()
 	queue_free()
 
@@ -97,16 +112,16 @@ func _on_discard_button_pressed() -> void:
 
 
 # The settings when the menu is opened
-var old_audio_settings: Dictionary
+var _old_audio_settings: Dictionary
 # The settigns that are changed in the menu
 # Is compared with the old settings to enable/disable the apply button or discard changes
-var new_audio_settings: Dictionary
+var _new_audio_settings: Dictionary
 
 
 func _setup_audio_settings() -> void:
 	var audio_settings: Dictionary = SettingsManager.load_audio_settings()
-	old_audio_settings = audio_settings.duplicate()
-	new_audio_settings = audio_settings.duplicate()
+	_old_audio_settings = audio_settings.duplicate()
+	_new_audio_settings = audio_settings.duplicate()
 	
 	# Master volume
 	_master_volume_slider.value = audio_settings.master_volume
@@ -117,7 +132,7 @@ func _setup_audio_settings() -> void:
 
 
 func _on_master_volume_changed(value: float) -> void:
-	new_audio_settings.master_volume = value
+	_new_audio_settings.master_volume = value
 	_master_volume_slider.value = value
 	_master_volume_spin_box.value = value
 	AudioServer.set_bus_volume_linear(AudioServer.get_bus_index("Master"), value)
@@ -131,21 +146,27 @@ func _on_master_volume_changed(value: float) -> void:
 
 #region Input settings
 
+const _INPUT_REMAP_ENTRY_SCENE := preload("uid://bhiluyjm3vp1y")
+
 # The settings when the menu is opened
-var old_input_settings: Dictionary
+var _old_input_settings: Dictionary
 # The settigns that are changed in the menu
 # Is compared with the old settings to enable/disable the apply button or discard changes
-var new_input_settings: Dictionary
+var _new_input_settings: Dictionary
+# Keybindings
+var _action_to_remap: String = ""
+var _button_to_remap: Button
 
 @onready var _sensitivity_slider: HSlider = %SensitivitySlider
 @onready var _sensitivity_spin_box: SpinBox = %SensitivitySpinBox
+@onready var _keybindings_container: VBoxContainer = %KeybindingsContainer
 
 
 func _setup_input_settings() -> void:
 	# Load input settings when opening the menu
 	var input_settings: Dictionary = SettingsManager.load_input_settings()
-	old_input_settings = input_settings.duplicate()
-	new_input_settings = input_settings.duplicate()
+	_old_input_settings = input_settings.duplicate(true)
+	_new_input_settings = input_settings.duplicate(true)
 	
 	# Camera sensitivity
 	_sensitivity_slider.value = input_settings.camera_sensitivity
@@ -153,15 +174,53 @@ func _setup_input_settings() -> void:
 	
 	_sensitivity_spin_box.value = input_settings.camera_sensitivity
 	_sensitivity_spin_box.value_changed.connect(_on_sensitivity_changed)
+	
+	# Keybindings
+	_create_keybindings()
+
+
+func _create_keybindings() -> void:
+	# Remove children of keybindings container
+	for child: Control in _keybindings_container.get_children():
+		_keybindings_container.remove_child(child)
+		child.queue_free()
+	
+	# Add new children to keybindings container
+	var input_actions: Dictionary = SettingsManager.REMAPPABLE_INPUT_ACTIONS
+	for action: String in input_actions:
+		var input_entry: Control = _INPUT_REMAP_ENTRY_SCENE.instantiate()
+		_keybindings_container.add_child(input_entry)
+		
+		input_entry.setup_scene(action)
+		
+		var button: Button = input_entry.button
+		button.pressed.connect(_on_input_button_pressed.bind(button, action))
 
 
 func _on_sensitivity_changed(value: float) -> void:
-	new_input_settings.camera_sensitivity = value
+	_new_input_settings.camera_sensitivity = value
 	_sensitivity_slider.value = value
 	_sensitivity_spin_box.value = value
 	
 	# Disable the apply button if the new and old values aren't matching
 	_apply_button.disabled = _are_new_and_old_settings_matching()
+
+
+func _on_input_button_pressed(button: Button, action: String) -> void:
+	_action_to_remap = action
+	_button_to_remap = button
+	_button_to_remap.text = "Press any key"
+
+
+func _on_input_remapped(event: InputEvent) -> void:
+	_new_input_settings.keybindings[_action_to_remap] = event
+	
+	_action_to_remap = ""
+	_button_to_remap.text = event.as_text()
+	
+	# Disable the apply button if the new and old values aren't matching
+	_apply_button.disabled = _are_new_and_old_settings_matching()
+
 
 #endregion
 
@@ -170,10 +229,10 @@ func _on_sensitivity_changed(value: float) -> void:
 #region Video settings
 
 # The settings when the menu is opened
-var old_video_settings: Dictionary
+var _old_video_settings: Dictionary
 # The settigns that are changed in the menu
 # Is compared with the old settings to enable/disable the apply button or discard changes
-var new_video_settings: Dictionary
+var _new_video_settings: Dictionary
 
 @onready var _display_mode_options_button: OptionButton = %DisplayModeOptionsButton
 @onready var _vsync_mode_options_button: OptionButton = %VsyncModeOptionsButton
@@ -185,8 +244,8 @@ var new_video_settings: Dictionary
 
 func _setup_video_settings() -> void:
 	var video_settings: Dictionary = SettingsManager.load_video_settings()
-	old_video_settings = video_settings.duplicate()
-	new_video_settings = video_settings.duplicate()
+	_old_video_settings = video_settings.duplicate()
+	_new_video_settings = video_settings.duplicate()
 	
 	# Display mode
 	_display_mode_options_button.selected = video_settings.display_mode
@@ -215,7 +274,7 @@ func _setup_video_settings() -> void:
 
 
 func _on_display_mode_changed(index: int) -> void:
-	new_video_settings.display_mode = index
+	_new_video_settings.display_mode = index
 	SettingsManager.set_display_mode(index)
 	
 	# Disable the apply button if the new and old values aren't matching
@@ -223,7 +282,7 @@ func _on_display_mode_changed(index: int) -> void:
 
 
 func _on_vsync_mode_changed(index: int) -> void:
-	new_video_settings.vsync_mode = index
+	_new_video_settings.vsync_mode = index
 	SettingsManager.set_vsync_mode(index as DisplayServer.VSyncMode)
 	# Disable/Enable fps options if vsync is enabled
 	if index == DisplayServer.VSYNC_ENABLED:
@@ -239,7 +298,7 @@ func _on_vsync_mode_changed(index: int) -> void:
 
 
 func _on_fps_changed(value: float) -> void:
-	new_video_settings.max_fps = value
+	_new_video_settings.max_fps = value
 	_fps_slider.value = value
 	_fps_spin_box.value = value
 	
@@ -248,38 +307,12 @@ func _on_fps_changed(value: float) -> void:
 
 
 func _on_field_of_view_changed(value: float) -> void:
-	new_video_settings.field_of_view = value
+	_new_video_settings.field_of_view = value
 	_fov_slider.value = value
 	_fov_spin_box.value = value
 	SettingsManager.fov_updated.emit(value)
 	
 	# Disable the apply button if the new and old values aren't matching
 	_apply_button.disabled = _are_new_and_old_settings_matching()
-
-#endregion
-
-#region Keybinding
-
-const _INPUT_REMAP_ENTRY_SCENE := preload("uid://bhiluyjm3vp1y")
-
-@onready var _keybindings_container: VBoxContainer = %KeybindingsContainer
-
-
-func _setup_keybinding() -> void:
-	_create_keybindings()
-
-
-func _create_keybindings() -> void:
-	for child: Control in _keybindings_container.get_children():
-		_keybindings_container.remove_child(child)
-		child.queue_free()
-	
-	var input_actions: Dictionary = SettingsManager.REMAPPABLE_INPUT_ACTIONS
-	for action: String in input_actions:
-		var input_entry: Control = _INPUT_REMAP_ENTRY_SCENE.instantiate()
-		_keybindings_container.add_child(input_entry)
-		
-		input_entry.setup_scene(action)
-		input_entry.set_process_input(false)
 
 #endregion

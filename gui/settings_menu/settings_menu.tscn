@@ -235,11 +235,6 @@ step = 0.01
 value = 0.75
 alignment = 2
 
-[node name="Keybindings" type="Label" parent="MarginContainer/HBoxContainer/Settings"]
-layout_mode = 2
-text = "Keybindings"
-horizontal_alignment = 1
-
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/Settings"]
 layout_mode = 2
 size_flags_vertical = 3
