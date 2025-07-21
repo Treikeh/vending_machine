@@ -1,5 +1,6 @@
 extends Node
 #TODO: Encode save data to hex or something (Not necessary, but might be a good idea)
+#TODO: Find a way to save items that have been spawned into levels
 
 # Saving/Loading level data to/from file
 const USER_PATH: String = "user://savegame.save"
@@ -33,8 +34,8 @@ func get_save_data(key: String) -> Dictionary:
 func _save_data_to_file() -> void:
 	# Create/open a file to write to
 	var save_file := FileAccess.open(_save_path, FileAccess.WRITE)
-	# Turn level save data into a string
-	var data_string: String = JSON.stringify(_save_data)
+	# Turn save data into a string
+	var data_string: String = JSON.stringify(_save_data, "\t")
 	# Save data to file
 	save_file.store_string(data_string)
 
