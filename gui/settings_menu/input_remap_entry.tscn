@@ -1,14 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://bhiluyjm3vp1y"]
-
-[ext_resource type="Script" uid="uid://bdilhogqb5pw8" path="res://gui/settings_menu/input_remap_entry.gd" id="1_4mtd4"]
+[gd_scene load_steps=2 format=3 uid="uid://bhiluyjm3vp1y"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cybwm"]
 
 [node name="InputRemapEntry" type="HBoxContainer"]
-script = ExtResource("1_4mtd4")
 
 [node name="Label" type="Label" parent="."]
-unique_name_in_owner = true
 layout_mode = 2
 text = "Action name"
 
@@ -18,7 +14,6 @@ size_flags_horizontal = 3
 theme_override_styles/separator = SubResource("StyleBoxEmpty_cybwm")
 
 [node name="Button" type="Button" parent="."]
-unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Press any key"

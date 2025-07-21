@@ -100,6 +100,7 @@ const REMAPPABLE_INPUT_ACTIONS: Dictionary[String, String] = {
 	"move_b": "Walk backward",
 	"move_l": "Strafe left",
 	"move_r": "Strafe right",
+	"jump": "Jump",
 	"interact": "Interact",
 	"use_item": "Use item",
 	"throw_item": "Throw item",

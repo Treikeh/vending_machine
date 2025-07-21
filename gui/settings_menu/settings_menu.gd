@@ -1,4 +1,5 @@
 extends Control
+#TODO: Add a check to remapping to avoid giving 2 actions the same key.
 
 
 @onready var _apply_button: Button = %ApplyButton
@@ -52,6 +53,15 @@ func _on_back_button_pressed() -> void:
 	_close_settings_menu()
 
 
+func _close_settings_menu() -> void:
+	# Actually apply the settings when closing the menu. If the new settings aren't applied with ->
+	# <- the apply button then the new settings are discarded
+	SettingsManager.apply_audio_settings()
+	SettingsManager.apply_input_settings()
+	SettingsManager.apply_video_settings()
+	queue_free()
+
+
 func _on_defaults_button_pressed() -> void:
 	var defaults: Dictionary = SettingsManager.DEFAULTS
 	_on_master_volume_changed(defaults.AUDIO.MASTER_VOLUME)
@@ -70,15 +80,6 @@ func _are_new_and_old_settings_matching() -> bool:
 	var input: bool = _new_input_settings == _old_input_settings
 	var video: bool = _new_video_settings == _old_video_settings
 	return (video and input and audio)
-
-
-func _close_settings_menu() -> void:
-	# Actually apply the settings when closing the menu. If the new settings aren't applied with ->
-	# <- the apply button then the new settings are discarded
-	SettingsManager.apply_audio_settings()
-	SettingsManager.apply_input_settings()
-	SettingsManager.apply_video_settings()
-	queue_free()
 
 
 
@@ -191,9 +192,11 @@ func _create_keybindings() -> void:
 		var input_entry: Control = _INPUT_REMAP_ENTRY_SCENE.instantiate()
 		_keybindings_container.add_child(input_entry)
 		
-		input_entry.setup_scene(action)
+		var label: Label = input_entry.find_child("Label")
+		label.text = SettingsManager.REMAPPABLE_INPUT_ACTIONS[action]
 		
-		var button: Button = input_entry.button
+		var button: Button = input_entry.find_child("Button")
+		button.text = InputMap.action_get_events(action)[0].as_text().trim_suffix(" (Physical)")
 		button.pressed.connect(_on_input_button_pressed.bind(button, action))
 
 
