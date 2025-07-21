@@ -3,12 +3,17 @@ extends Camera3D
 
 func _ready() -> void:
 	_load_video_settings()
+	SettingsManager.fov_updated.connect(_on_fov_updated)
 	SettingsManager.video_settings_changed.connect(_load_video_settings)
 
 
 func _load_video_settings() -> void:
 	var settings: Dictionary = SettingsManager.load_video_settings()
 	fov = settings.field_of_view
+
+
+func _on_fov_updated(value: float) -> void:
+	fov = value
 
 
 #region Head bobbing

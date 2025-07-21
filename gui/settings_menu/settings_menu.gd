@@ -181,7 +181,6 @@ var new_video_settings: Dictionary
 @onready var _fps_spin_box: SpinBox = %FpsSpinBox
 @onready var _fov_slider: HSlider = %FovSlider
 @onready var _fov_spin_box: SpinBox = %FovSpinBox
-@onready var _camera_3d: Camera3D = %Camera3D
 
 
 func _setup_video_settings() -> void:
@@ -208,7 +207,6 @@ func _setup_video_settings() -> void:
 	_fps_spin_box.value_changed.connect(_on_fps_changed)
 	
 	# Field of view
-	_camera_3d.fov = video_settings.field_of_view
 	_fov_slider.value = video_settings.field_of_view
 	_fov_slider.value_changed.connect(_on_field_of_view_changed)
 	
@@ -251,9 +249,9 @@ func _on_fps_changed(value: float) -> void:
 
 func _on_field_of_view_changed(value: float) -> void:
 	new_video_settings.field_of_view = value
-	_camera_3d.fov = value
 	_fov_slider.value = value
 	_fov_spin_box.value = value
+	SettingsManager.fov_updated.emit(value)
 	
 	# Disable the apply button if the new and old values aren't matching
 	_apply_button.disabled = _are_new_and_old_settings_matching()
@@ -268,7 +266,15 @@ const _INPUT_REMAP_ENTRY_SCENE := preload("uid://bhiluyjm3vp1y")
 
 
 func _setup_keybinding() -> void:
-	var input_actions: Dictionary = SettingsManager.INPUT_ACTIONS
+	_create_keybindings()
+
+
+func _create_keybindings() -> void:
+	for child: Control in _keybindings_container.get_children():
+		_keybindings_container.remove_child(child)
+		child.queue_free()
+	
+	var input_actions: Dictionary = SettingsManager.REMAPPABLE_INPUT_ACTIONS
 	for action: String in input_actions:
 		var input_entry: Control = _INPUT_REMAP_ENTRY_SCENE.instantiate()
 		_keybindings_container.add_child(input_entry)

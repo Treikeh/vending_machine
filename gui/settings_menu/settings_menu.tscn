@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://t0lpsh2ot3se"]
+[gd_scene load_steps=8 format=3 uid="uid://t0lpsh2ot3se"]
 
 [ext_resource type="Script" uid="uid://by4l8mmigkwbj" path="res://gui/settings_menu/settings_menu.gd" id="1_rgsgl"]
+[ext_resource type="PackedScene" uid="uid://bhiluyjm3vp1y" path="res://gui/settings_menu/input_remap_entry.tscn" id="2_cehoh"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fasm0"]
 
@@ -11,20 +12,6 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vbnwq"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rgsgl"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rgsgl"]
-sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
-ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
-
-[sub_resource type="Sky" id="Sky_cehoh"]
-sky_material = SubResource("ProceduralSkyMaterial_rgsgl")
-
-[sub_resource type="Environment" id="Environment_fasm0"]
-background_mode = 2
-sky = SubResource("Sky_cehoh")
-tonemap_mode = 2
-
-[sub_resource type="BoxMesh" id="BoxMesh_rgsgl"]
 
 [node name="SettingsMenu" type="Control"]
 process_mode = 3
@@ -59,6 +46,7 @@ theme_override_constants/margin_bottom = 15
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 25
 
 [node name="Settings" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
@@ -252,10 +240,6 @@ layout_mode = 2
 text = "Keybindings"
 horizontal_alignment = 1
 
-[node name="KeybindingsContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Settings"]
-unique_name_in_owner = true
-layout_mode = 2
-
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/Settings"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -282,31 +266,25 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Defaults"
 
-[node name="Preview" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+[node name="KeybindingsContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/margin_left = 25
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="MarginContainer/HBoxContainer/Preview"]
+[node name="InputRemapEntry" parent="MarginContainer/HBoxContainer/KeybindingsContainer" instance=ExtResource("2_cehoh")]
 layout_mode = 2
-stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="MarginContainer/HBoxContainer/Preview/SubViewportContainer"]
-own_world_3d = true
-handle_input_locally = false
-size = Vector2i(534, 618)
-render_target_update_mode = 4
+[node name="InputRemapEntry2" parent="MarginContainer/HBoxContainer/KeybindingsContainer" instance=ExtResource("2_cehoh")]
+layout_mode = 2
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="MarginContainer/HBoxContainer/Preview/SubViewportContainer/SubViewport"]
-environment = SubResource("Environment_fasm0")
+[node name="InputRemapEntry3" parent="MarginContainer/HBoxContainer/KeybindingsContainer" instance=ExtResource("2_cehoh")]
+layout_mode = 2
 
-[node name="Camera3D" type="Camera3D" parent="MarginContainer/HBoxContainer/Preview/SubViewportContainer/SubViewport"]
-unique_name_in_owner = true
-fov = 90.0
+[node name="InputRemapEntry4" parent="MarginContainer/HBoxContainer/KeybindingsContainer" instance=ExtResource("2_cehoh")]
+layout_mode = 2
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="MarginContainer/HBoxContainer/Preview/SubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.8)
-mesh = SubResource("BoxMesh_rgsgl")
+[node name="InputRemapEntry5" parent="MarginContainer/HBoxContainer/KeybindingsContainer" instance=ExtResource("2_cehoh")]
+layout_mode = 2
 
 [node name="ConfirmPopUp" type="PanelContainer" parent="."]
 unique_name_in_owner = true

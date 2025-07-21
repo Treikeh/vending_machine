@@ -14,7 +14,7 @@ func _ready() -> void:
 #TODO: Look into scene constructor functions
 func setup_scene(new_action: String) -> void:
 	action = new_action
-	label.text = SettingsManager.INPUT_ACTIONS[new_action]
+	label.text = SettingsManager.REMAPPABLE_INPUT_ACTIONS[new_action]
 	button.text = InputMap.action_get_events(new_action)[0].as_text().trim_suffix(" (Physical)")
 
 
