@@ -40,8 +40,7 @@ func _fade_between_screens() -> void:
 		tween.tween_property(screen, "modulate", Color.WHITE, _fade_in_time)
 		tween.tween_interval(_pause_time)
 		tween.tween_property(screen, "modulate", Color.TRANSPARENT, _fade_out_time)
-		await tween.finished
-	_load_main_menu()
+		tween.tween_callback(_load_main_menu)
 
 
 func _load_main_menu() -> void:
