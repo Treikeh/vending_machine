@@ -37,7 +37,7 @@ func _on_interacted(_instigator: Node3D) -> void:
 
 
 func _get_open_transform() -> Transform3D:
-	var open_quat := Quaternion.from_euler(Globals.vec3_deg_to_rad(_open_rotation))
+	var open_quat := Quaternion.from_euler(Utility.vec3_deg_to_rad(_open_rotation))
 	var open_basis := Basis(quaternion * open_quat)
 	var open_origin: Vector3 = position + _open_position
 	return Transform3D(open_basis, open_origin)

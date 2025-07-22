@@ -19,7 +19,8 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	# Cast a ray into the world to interact with objects
 	if event.is_action_pressed("use_item"):
-		var hit: Dictionary = Globals.screen_to_world_3d_ray_cast(%Camera3D, 100.0, true)
+		var viewport: Viewport = get_viewport()
+		var hit: Dictionary = Utility.screen_to_world_3d_ray_cast(viewport, %Camera3D, 100.0, true)
 		if hit and hit.collider is InteractArea3D:
 			hit.collider.interact(self)
 

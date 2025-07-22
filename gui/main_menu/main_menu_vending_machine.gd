@@ -48,10 +48,8 @@ func _on_vending_machine_confirm_button_presssed(_button_number: String) -> void
 			if items.has(code):
 				_spawn_item(items[code])
 				display_label.text = "OK"
-				Globals.vending_machine_code_submitted.emit(code, true)
 			else:
 				display_label.text = "ERR"
-				Globals.vending_machine_code_submitted.emit(code, false) 
 	
 	# Start timer to reset label
 	reset_label_timer.start(0.0)
