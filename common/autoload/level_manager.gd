@@ -1,25 +1,28 @@
-class_name MainScene
-extends Node
+extends Node3D
 
 
-# The reason I use @export here and not @onready is because I need the references to be avalible
-# before the _ready function is called in child nodes. And since every node (except for autoloads)
-# will be a children of this node, there might be a situation where they try to acces the reference
-# before it's set.
-@export var _gui: Control
-@export var _world_3d: Node3D
+const _LOADING_SCREEN_SCENE: PackedScene = preload("uid://c54fq80lg0u1l")
 
-@onready var _loading_screen: LoadingScreen = %LoadingScreen
+var _loading_screen: LoadingScreen
+
+## Whether or not new levels are actually allowed to spawn into the scene tree
+## Mainly used to stop levels from spawning in when the loading screen is fading in/out
+var _can_spawn_levels: bool = true
+## A list of all the level that are currently loaded and active in the scene tree
+## The key (String) is the UID or resource path (I prefer UID) to the level scene.
+var _loaded_levels: Dictionary[String, Node3D]
+## A list of all the levels that are currently being loded in the background
+var _level_loading_queue: Array[LevelLoadingData] = []
 
 
-func _init() -> void:
-	# I'm setting the reference here and not in _ready because child nodes might need to use the reference
-	# in their own _ready functions, and since child nodes call thier _ready functions before the parent
-	# there might be a situation where they try to acces the reference before it's set.
-	#NOTE: It's only necessary to do this when testing levels. When shipping the game, the splash screen
-	# will be the frist and only scene that is loaded and it doesn't need a reference to the main scene.
-	# So setting the reference in _ready would then work.
-	Globals.main = self
+func _ready() -> void:
+	# Hijack the main scene
+	var current_scene: Node = get_tree().current_scene
+	current_scene.reparent.call_deferred(self)
+	
+	# Spawn loading screen
+	_loading_screen = _LOADING_SCREEN_SCENE.instantiate()
+	get_tree().root.add_child.call_deferred(_loading_screen)
 
 
 func _process(_delta: float) -> void:
@@ -30,42 +33,7 @@ func _process(_delta: float) -> void:
 ## This function reparents a node to become a child of world_3d.
 ## Can be used to discconet an object form the level it spawned into.
 func attach_to_world_3d(node: Node, use_global_transform: bool = true) -> void:
-	node.reparent(_world_3d, use_global_transform)
-
-
-#region Ui
-
-func load_menu(menu_path: String) -> Control:
-	# Check if scene exists
-	if !ResourceLoader.exists(menu_path):
-		print("ERROR!: Ui scene %s not found" % menu_path)
-		return null
-	
-	# Load new scene and add it to the scene tree
-	var new_scene: Control = load(menu_path).instantiate()
-	_gui.add_child(new_scene)
-	return new_scene
-
-
-func unload_all_menus() -> void:
-	for child: Node in _gui.get_children():
-		_gui.remove_child(child)
-		child.queue_free()
-
-#endregion
-
-
-
-#region Level laoding
-
-## Whether or not new levels are actually allowed to spawn into the scene tree
-## Mainly used to stop levels from spawning in when the loading screen is fading in/out
-var _can_spawn_levels: bool = true
-## A list of all the level that are currently loaded and active in the scene tree
-## The key (String) is the UID or resource path (I prefer UID) to the level scene.
-var _loaded_levels: Dictionary[String, Node3D]
-## A list of all the levels that are currently being loded in the background
-var _level_loading_queue: Array[LevelLoadingData] = []
+	node.reparent(self, use_global_transform)
 
 
 ## Start loading a new level. If a new trasform is given, the new level will be loaded additively
@@ -100,7 +68,7 @@ func load_level(
 		_unload_all_levels()
 		_can_spawn_levels = true
 		# Override spawn transform
-		level_data.spawn_transform = _world_3d.global_transform
+		level_data.spawn_transform = global_transform
 	
 	# Add the level to the loading queue and start loading it
 	_level_loading_queue.append(level_data)
@@ -113,7 +81,7 @@ func unload_level(level_path: String) -> void:
 	if _loaded_levels.has(level_path):
 		# Remove level form scene
 		var level: Node3D = _loaded_levels[level_path]
-		_world_3d.remove_child(level)
+		remove_child(level)
 		level.queue_free()
 		# Remove level from loaded_levels dict
 		_loaded_levels.erase(level_path)
@@ -124,8 +92,8 @@ func unload_level(level_path: String) -> void:
 ## Unload all child nodes of World3D.
 ## Only used when fully changing levels
 func _unload_all_levels() -> void:
-	for child: Node in _world_3d.get_children():
-		_world_3d.remove_child(child)
+	for child: Node in get_children():
+		remove_child(child)
 		child.queue_free()
 		_loaded_levels.clear()
 
@@ -145,14 +113,14 @@ func _check_level_loading_queue() -> void:
 				print("ERROR!: Level failed to load")
 				continue
 			3: ## THREAD_LOAD_LOADED
-				_add_level_to_world_3d(level_data)
+				_add_level_to_world(level_data)
 				continue
 
 
-func _add_level_to_world_3d(level_data: LevelLoadingData) -> void:
+func _add_level_to_world(level_data: LevelLoadingData) -> void:
 	# Spawn level into the scene
 	var new_level: Node3D = ResourceLoader.load_threaded_get(level_data.level_path).instantiate()
-	_world_3d.add_child(new_level)
+	add_child(new_level)
 	new_level.global_transform = level_data.spawn_transform
 	
 	# Call spawn_callback at the end of the frame
@@ -185,5 +153,3 @@ class LevelLoadingData:
 		level_path = path
 		spawn_transform = transform
 		spawn_callback = callback
-
-#endregion

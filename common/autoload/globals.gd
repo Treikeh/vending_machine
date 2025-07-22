@@ -9,10 +9,6 @@ const CREDITS_PATH: String = "uid://dkyrn54813ilp"
 const WORLD_ENV_PATH: String = "uid://4jbcov8xso67"
 
 
-# System
-var main: MainScene
-
-
 # Player ui
 signal interact_icon_updated(prompt: int)
 signal throw_charge_updated(value: float)

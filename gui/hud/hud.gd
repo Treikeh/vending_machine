@@ -24,7 +24,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		hide()
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		# Spawn pause menu
-		_pause_menu = Globals.main.load_menu("uid://ca47ihv0ka8al")
+		_pause_menu = GuiManager.load_menu("uid://ca47ihv0ka8al")
 		_pause_menu.tree_exiting.connect(_on_pause_menu_tree_exiting)
 
 

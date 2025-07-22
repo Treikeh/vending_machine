@@ -6,4 +6,4 @@ func _ready() -> void:
 
 
 func _on_close_button_pressed() -> void:
-	Globals.main.load_level(Globals.MAIN_MENU_PATH)
+	LevelManager.load_level(Globals.MAIN_MENU_PATH)

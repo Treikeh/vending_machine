@@ -32,13 +32,13 @@ func _on_destroy_item_area_body_entered(body: Node3D) -> void:
 #region Buttons
 
 func _on_play_button_pressed() -> void:
-	Globals.main.load_level(first_level_path)
+	LevelManager.load_level(first_level_path)
 
 
 func _on_settings_button_pressed() -> void:
 	_ui.hide()
 	# Spawn settings menu
-	var settings_menu: Control = Globals.main.load_menu(Globals.SETTINGS_MENU_PATH)
+	var settings_menu: Control = GuiManager.load_menu(Globals.SETTINGS_MENU_PATH)
 	settings_menu.tree_exiting.connect(_on_setting_menu_closed)
 
 
@@ -49,7 +49,7 @@ func _on_setting_menu_closed() -> void:
 func _on_credits_button_pressed() -> void:
 	# I load the credits in as a level since i want there to be a fade in/out when going to the credits
 	# and the easiest way to do this is to load it in as a level.
-	Globals.main.load_level(Globals.CREDITS_PATH)
+	LevelManager.load_level(Globals.CREDITS_PATH)
 
 
 func _on_quit_button_pressed() -> void:

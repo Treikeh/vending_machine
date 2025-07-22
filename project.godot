@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Vending machine"
 config/version="dev 1"
-run/main_scene="uid://hlc7ccg56ek2"
+run/main_scene="uid://dol476noyi00q"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/show_image=false
@@ -23,6 +23,8 @@ config/icon="res://icon.svg"
 Globals="*res://common/autoload/globals.gd"
 SaveManager="*res://common/autoload/save_manager.gd"
 SettingsManager="*res://common/autoload/settings_manager.gd"
+LevelManager="*res://common/autoload/level_manager.gd"
+GuiManager="*res://common/autoload/gui_manager.gd"
 
 [display]
 

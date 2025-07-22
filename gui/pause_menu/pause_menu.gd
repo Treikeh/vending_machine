@@ -19,7 +19,7 @@ func _on_resume_button_pressed() -> void:
 func _on_settings_button_pressed() -> void:
 	hide()
 	# Spawn settings menu
-	var settings_menu: Control = Globals.main.load_menu(Globals.SETTINGS_MENU_PATH)
+	var settings_menu: Control = GuiManager.load_menu(Globals.SETTINGS_MENU_PATH)
 	settings_menu.tree_exiting.connect(_on_settings_menu_closed)
 
 
@@ -30,8 +30,8 @@ func _on_settings_menu_closed() -> void:
 func _on_main_menu_button_pressed() -> void:
 	get_tree().paused = false
 	# Load main menu
-	Globals.main.load_level(Globals.MAIN_MENU_PATH)
-	Globals.main.unload_all_menus()
+	LevelManager.load_level(Globals.MAIN_MENU_PATH)
+	GuiManager.unload_all_menus()
 
 
 

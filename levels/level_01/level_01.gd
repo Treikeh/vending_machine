@@ -8,7 +8,7 @@ var _buy_count: int = 0
 
 func _ready() -> void:
 	# Spawn world environment that is independent from level
-	Globals.main.load_level(Globals.WORLD_ENV_PATH, global_transform)
+	LevelManager.load_level(Globals.WORLD_ENV_PATH, global_transform)
 	
 	# Connect signals
 	_vending_machine.code_submitted.connect(_on_vending_machine_code_submitted)
@@ -45,7 +45,7 @@ func _on_tunnel_path_screen_notifier_screen_exited() -> void:
 func _spawn_train_station_tunnel() -> void:
 	var scene_path: String = "uid://gqsmdnolrjqo"
 	var spawn_transform: Transform3D = _train_station_tunnel_spawn_point.global_transform
-	Globals.main.load_level(scene_path, spawn_transform)
+	LevelManager.load_level(scene_path, spawn_transform)
 	var tunnel_path: Node3D = _tunnel_path_screen_notifier.get_parent()
 	tunnel_path.hide()
 	tunnel_path.process_mode = Node.PROCESS_MODE_DISABLED

@@ -45,4 +45,4 @@ func _fade_between_screens() -> void:
 
 
 func _load_main_menu() -> void:
-	Globals.main.load_level(Globals.MAIN_MENU_PATH)
+	LevelManager.load_level(Globals.MAIN_MENU_PATH)
