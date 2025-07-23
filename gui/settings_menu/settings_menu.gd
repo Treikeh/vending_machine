@@ -155,7 +155,7 @@ var _old_input_settings: Dictionary
 # Is compared with the old settings to enable/disable the apply button or discard changes
 var _new_input_settings: Dictionary
 # Keybindings
-var _action_to_remap: String = ""
+var _action_to_remap: String
 var _button_to_remap: Button
 
 @onready var _sensitivity_slider: HSlider = %SensitivitySlider
@@ -189,15 +189,11 @@ func _create_keybindings() -> void:
 	# Add new children to keybindings container
 	var input_actions: Dictionary = SettingsManager.REMAPPABLE_INPUT_ACTIONS
 	for action: String in input_actions:
-		var input_entry: Control = _INPUT_REMAP_ENTRY_SCENE.instantiate()
-		_keybindings_container.add_child(input_entry)
-		
-		var label: Label = input_entry.find_child("Label")
-		label.text = SettingsManager.REMAPPABLE_INPUT_ACTIONS[action]
-		
-		var button: Button = input_entry.find_child("Button")
-		button.text = InputMap.action_get_events(action)[0].as_text().trim_suffix(" (Physical)")
-		button.pressed.connect(_on_input_button_pressed.bind(button, action))
+		var remap_button_callback: Callable = _on_remap_button_pressed
+		var remap_entry: Control = (
+			_INPUT_REMAP_ENTRY_SCENE.instantiate().with_data(action, remap_button_callback)
+		)
+		_keybindings_container.add_child(remap_entry)
 
 
 func _on_sensitivity_changed(value: float) -> void:
@@ -209,7 +205,7 @@ func _on_sensitivity_changed(value: float) -> void:
 	_apply_button.disabled = _are_new_and_old_settings_matching()
 
 
-func _on_input_button_pressed(button: Button, action: String) -> void:
+func _on_remap_button_pressed(action: String, button: Button) -> void:
 	_action_to_remap = action
 	_button_to_remap = button
 	_button_to_remap.text = "Press any key"
