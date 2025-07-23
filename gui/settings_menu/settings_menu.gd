@@ -29,18 +29,20 @@ func _input(event: InputEvent) -> void:
 
 
 func _on_apply_button_pressed() -> void:
-	# Save new settings
-	SettingsManager.set_audio_setting("master_volume", _new_audio_settings.master_volume)
-	SettingsManager.set_input_setting("camera_sensitivity", _new_input_settings.camera_sensitivity)
-	SettingsManager.set_input_setting("keybindings", _new_input_settings.keybindings)
-	SettingsManager.set_video_setting("display_mode", _new_video_settings.display_mode)
-	SettingsManager.set_video_setting("vsync_mode", _new_video_settings.vsync_mode)
-	SettingsManager.set_video_setting("field_of_view", _new_video_settings.field_of_view)
-	SettingsManager.set_video_setting("max_fps", _new_video_settings.max_fps)
+	for setting: String in _new_audio_settings:
+		SettingsManager.set_audio_setting(setting, _new_audio_settings[setting])
+		
+	for setting: String in _new_input_settings:
+		SettingsManager.set_input_setting(setting, _new_input_settings[setting])
+		
+	for setting: String in _new_video_settings:
+		SettingsManager.set_video_setting(setting, _new_video_settings[setting])
+	
 	SettingsManager.save_settings()
+	
 	# Reset apply button
 	_old_audio_settings = _new_audio_settings.duplicate()
-	_old_input_settings = _new_input_settings.duplicate()
+	_old_input_settings = _new_input_settings.duplicate(true)
 	_old_video_settings = _new_video_settings.duplicate()
 	_apply_button.disabled = true
 
@@ -63,6 +65,11 @@ func _close_settings_menu() -> void:
 
 
 func _on_defaults_button_pressed() -> void:
+	# Reset keybindings
+	InputMap.load_from_project_settings()
+	_new_input_settings.keybindings.clear()
+	_create_keybindings()
+	
 	var defaults: Dictionary = SettingsManager.DEFAULTS
 	_on_master_volume_changed(defaults.AUDIO.MASTER_VOLUME)
 	_on_sensitivity_changed(defaults.INPUT.CAMERA_SENSITIVITY)
@@ -70,9 +77,6 @@ func _on_defaults_button_pressed() -> void:
 	_on_vsync_mode_changed(defaults.VIDEO.VSYNC_MODE)
 	_on_fps_changed(defaults.VIDEO.MAX_FPS)
 	_on_field_of_view_changed(defaults.VIDEO.FIELD_OF_VIEW)
-	# Reset keybindings
-	InputMap.load_from_project_settings()
-	_create_keybindings()
 
 
 func _are_new_and_old_settings_matching() -> bool:
@@ -180,6 +184,15 @@ func _setup_input_settings() -> void:
 	_create_keybindings()
 
 
+func _on_sensitivity_changed(value: float) -> void:
+	_new_input_settings.camera_sensitivity = value
+	_sensitivity_slider.value = value
+	_sensitivity_spin_box.value = value
+	
+	# Disable the apply button if the new and old values aren't matching
+	_apply_button.disabled = _are_new_and_old_settings_matching()
+
+
 func _create_keybindings() -> void:
 	# Remove children of keybindings container
 	for child: Control in _keybindings_container.get_children():
@@ -194,15 +207,6 @@ func _create_keybindings() -> void:
 			_INPUT_REMAP_ENTRY_SCENE.instantiate().with_data(action, remap_button_callback)
 		)
 		_keybindings_container.add_child(remap_entry)
-
-
-func _on_sensitivity_changed(value: float) -> void:
-	_new_input_settings.camera_sensitivity = value
-	_sensitivity_slider.value = value
-	_sensitivity_spin_box.value = value
-	
-	# Disable the apply button if the new and old values aren't matching
-	_apply_button.disabled = _are_new_and_old_settings_matching()
 
 
 func _on_remap_button_pressed(action: String, button: Button) -> void:

@@ -44,15 +44,9 @@ func _ready() -> void:
 	if not FileAccess.file_exists(_config_path):
 		# Create new config file with all the settings.
 		#NOTE: Remember to delete settings.ini file when adding/removing elements
-		_config_file.set_value("AUDIO", "master_volume", DEFAULTS.AUDIO.MASTER_VOLUME)
-		
-		_config_file.set_value("INPUT", "camera_sensitivity", DEFAULTS.INPUT.CAMERA_SENSITIVITY)
-		_config_file.set_value("INPUT", "keybindings", DEFAULTS.INPUT.KEYBINDINGS)
-		
-		_config_file.set_value("VIDEO", "display_mode", DEFAULTS.VIDEO.DISPLAY_MODE)
-		_config_file.set_value("VIDEO", "vsync_mode", DEFAULTS.VIDEO.VSYNC_MODE)
-		_config_file.set_value("VIDEO", "max_fps", DEFAULTS.VIDEO.MAX_FPS)
-		_config_file.set_value("VIDEO", "field_of_view", DEFAULTS.VIDEO.FIELD_OF_VIEW)
+		for section: String in DEFAULTS:
+			for setting: String in DEFAULTS[section]:
+				_config_file.set_value(section, setting.to_lower(), DEFAULTS[section][setting])
 		
 		save_settings()
 	else:
