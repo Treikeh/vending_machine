@@ -28,7 +28,7 @@ func _on_reparent_area_body_entered(body: Node3D) -> void:
 
 func _on_reparent_area_body_exited(body: Node3D) -> void:
 	if body.get_parent() == self:
-		Globals.main.attach_to_world_3d.call_deferred(body)
+		LevelManager.attach_to_world_3d.call_deferred(body)
 
 
 func start() -> void:

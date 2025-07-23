@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://438mffbmqx1b"]
+[gd_scene load_steps=15 format=3 uid="uid://438mffbmqx1b"]
 
 [ext_resource type="Script" uid="uid://bb00o1p43k44i" path="res://levels/train_station/train_station.gd" id="1_b0eu5"]
 [ext_resource type="PackedScene" uid="uid://cpkqvybvj5ikj" path="res://levels/train_station/art/train_station_mock_up.glb" id="1_cn4k8"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cnnitqbdy8yp6" path="res://levels/train_station/train/train_01_sm.glb" id="4_f26eg"]
 [ext_resource type="PackedScene" uid="uid://pgv43adw264g" path="res://common/scenes/level_unload_trigger.tscn" id="5_irpxo"]
 [ext_resource type="MeshLibrary" uid="uid://dil5kl30j0edq" path="res://levels/train_station_tunnel/art/train_station_tunnel_01_gridmap.meshlib" id="6_7vjbl"]
+[ext_resource type="PackedScene" uid="uid://gs83e0u3lu6s" path="res://entities/player/spawner/player_spawner.tscn" id="8_50y1m"]
 
 [sub_resource type="Curve3D" id="Curve3D_sgefo"]
 bake_interval = 1.0
@@ -46,7 +47,6 @@ curve = SubResource("Curve3D_sgefo")
 [node name="Train" type="PathFollow3D" parent="TrainTracks"]
 unique_name_in_owner = true
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-loop = false
 script = ExtResource("3_2rh3c")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="TrainTracks/Train"]
@@ -119,5 +119,8 @@ data = {
 "cells": PackedInt32Array(1, 1, 655360, 65535, 1, 655360, 65534, 1, 1048578, 2, 1, 1048578, 131074, 1, 1048578, 196606, 1, 1048578, 262143, 1, 1048576, 196609, 1, 1048576)
 }
 metadata/_editor_floor_ = Vector3(0, 3, 0)
+
+[node name="PlayerSpawner" parent="." instance=ExtResource("8_50y1m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [editable path="train_station_mock_up"]
