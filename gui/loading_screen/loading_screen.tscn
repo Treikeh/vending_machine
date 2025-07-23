@@ -5,6 +5,7 @@
 [ext_resource type="StyleBox" uid="uid://disry8f63qax4" path="res://gui/loading_screen/loading_screen_progress_bar_style_box_fill.tres" id="3_mrd8x"]
 
 [node name="LoadingScreen" type="CanvasLayer"]
+process_mode = 3
 layer = 100
 script = ExtResource("1_mkdfe")
 fade_duration = 0.5
