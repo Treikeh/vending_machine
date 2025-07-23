@@ -13,10 +13,12 @@ var _save_data: Dictionary
 
 
 func _ready() -> void:
-	# Load data when game starts
 	_load_data_from_file()
-	# Save data when exiting the game
-	#tree_exiting.connect(_save_data_to_file)
+
+
+func _exit_tree() -> void:
+	#_save_data_to_file()
+	pass
 
 
 func add_save_data(key:String, data: Dictionary) -> void:

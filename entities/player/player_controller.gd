@@ -2,13 +2,15 @@ extends RigidBody3D
 
 
 func _ready() -> void:
+	_load_data()
+	
 	_ground_check.player = self
 	# Set initial state machine
 	_state_machine.switch(FALLING)
-	
-	# Saving/Loading
-	_load_data()
-	tree_exiting.connect(_save_data)
+
+
+func _exit_tree() -> void:
+	_save_data()
 
 
 func _process(delta: float) -> void:
