@@ -1,7 +1,8 @@
 extends Node
-#TODO: Find a way to save items that have been spawned into levels
+## This script is responsible for saving/loaidng save data form a file and to store that data so
+## other scenes can use it.
 
-# Saving/Loading level data to/from file
+
 const USER_PATH: String = "user://savegame.save"
 const DEBUG_PATH: String = "res://debug/savegame.ini"
 
@@ -17,8 +18,8 @@ func _ready() -> void:
 
 
 func _exit_tree() -> void:
-	#_save_data_to_file()
-	pass
+	return
+	_save_data_to_file()
 
 
 func add_save_data(key:String, data: Dictionary) -> void:
