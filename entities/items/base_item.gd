@@ -20,8 +20,8 @@ func pick_up_item(instigator: Node3D) -> void:
 	_item_picked_up(instigator)
 	picked_up.emit()
 	linear_velocity = Vector3.ZERO
-	#freeze = true
-	process_mode = Node.PROCESS_MODE_DISABLED
+	freeze = true
+	#process_mode = Node.PROCESS_MODE_DISABLED
 	if instigator.has_method("pick_up_item"):
 		instigator.pick_up_item(self)
 
@@ -30,8 +30,8 @@ func drop_item(instigator: Node3D) -> void:
 	LevelManager.attach_to_world_3d(self)
 	_item_dropped(instigator)
 	dropped.emit()
-	#freeze = false
-	process_mode = Node.PROCESS_MODE_INHERIT
+	freeze = false
+	#process_mode = Node.PROCESS_MODE_INHERIT
 
 
 func destroy_item(instigator: Node3D) -> void:

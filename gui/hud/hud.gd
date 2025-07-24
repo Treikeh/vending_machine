@@ -1,6 +1,8 @@
 extends Control
 
 
+const PAUSE_MENU_PATH: String = "uid://ca47ihv0ka8al"
+
 @export var _interact_icon_sprite_frames: SpriteFrames
 
 var _pause_menu: Control
@@ -24,7 +26,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		hide()
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		# Spawn pause menu
-		_pause_menu = GuiManager.load_menu("uid://ca47ihv0ka8al")
+		_pause_menu = GuiManager.load_menu(PAUSE_MENU_PATH)
 		_pause_menu.tree_exiting.connect(_on_pause_menu_tree_exiting)
 
 

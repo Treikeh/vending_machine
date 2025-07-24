@@ -22,12 +22,12 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_reparent_area_body_entered(body: Node3D) -> void:
-	if body.get_parent() != self:
+	if not is_ancestor_of(body):
 		body.reparent.call_deferred(self)
 
 
 func _on_reparent_area_body_exited(body: Node3D) -> void:
-	if body.get_parent() == self:
+	if is_ancestor_of(body):
 		LevelManager.attach_to_world_3d.call_deferred(body)
 
 
