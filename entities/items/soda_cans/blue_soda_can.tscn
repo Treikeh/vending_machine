@@ -9,7 +9,7 @@
 [sub_resource type="BoxMesh" id="BoxMesh_74b1s"]
 size = Vector3(0.1, 0.2, 0.1)
 
-[node name="BlueSodaCan" type="RigidBody3D" node_paths=PackedStringArray("normal_mesh", "empty_mesh") groups=["item"]]
+[node name="BlueSodaCan" type="RigidBody3D" node_paths=PackedStringArray("normal_mesh", "empty_mesh") groups=["item", "persistent"]]
 collision_layer = 4
 mass = 0.1
 script = ExtResource("1_74b1s")

@@ -78,34 +78,17 @@ func _set_trash_can_state(active: bool) -> void:
 
 #region Save/Load
 
-func save_data() -> Dictionary:
+func get_save_data() -> Dictionary:
 	var data: Dictionary = {
 		"buy_count": _buy_count,
 		"trash_can_visible": _trash_can.visible,
 		"tunnel_state": _tunnel_state,
-		"persistent_nodes": {},
+		"persistent_nodes": _save_persistent_nodes(),
 	}
-	
-	# Get all overlapping persistent bodies in the level
-	var body_id: int = 0
-	for body: Node3D in get_overlapping_bodies():
-		if body.has_method("save_data"):
-			# Remove the body at the end of the frame if it's not a descendant
-			var is_descendant: bool = is_ancestor_of(body)
-			if not is_descendant:
-				body.queue_free.call_deferred()
-			
-			data.persistent_nodes[body_id] = {
-				"scene_file_path": body.scene_file_path,
-				"is_descendant": is_descendant,
-				"data": body.save_data(),
-			}
-			body_id += 1
-			print(body.name, "is an persistent overlapping body")
 	return data
 
 
-func with_data(data: Dictionary) -> Level3D:
+func load_save_data(data: Dictionary) -> void:
 	if not data.is_empty():
 		_buy_count = data.buy_count
 		
@@ -115,19 +98,8 @@ func with_data(data: Dictionary) -> Level3D:
 		if _tunnel_state == Tunnel_State.SPAWNED:
 			_spawn_train_station_tunnel()
 		
-		# Spawn persistant nodes
-		for node_id: String in data.persistent_nodes:
-			var node_data: Dictionary = data.persistent_nodes[node_id]
-			var scene: PackedScene = load(node_data.scene_file_path)
-			var node: Node3D = scene.instantiate().with_data(node_data.data)
-			if node_data.is_descendant:
-				add_child(node)
-			else:
-				#TODO: Replace this with a function to add the node as a child of the LevelManager
-				add_child(node)
+		_load_persistent_nodes(data.persistent_nodes)
 	else:
 		_set_trash_can_state(false)
-	
-	return self
 
 #endregion

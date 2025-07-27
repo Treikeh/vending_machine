@@ -11,14 +11,15 @@ extends InteractArea3D
 @export var _transition_type: Tween.TransitionType = Tween.TRANS_LINEAR
 
 var _is_open: bool = false
-
-@onready var _start_transform: Transform3D = transform
-@onready var _open_transform: Transform3D = _get_open_transform()
+var _start_transform: Transform3D
+var _open_transform: Transform3D
 
 
 func _ready() -> void:
-	# Connect signals
-	interacted.connect(_on_interacted)
+	_start_transform = transform
+	_open_transform = _get_open_transform()
+	if _is_open:
+		transform = _open_transform
 
 
 func _on_interacted(_instigator: Node3D) -> void:
@@ -41,3 +42,23 @@ func _get_open_transform() -> Transform3D:
 	var open_basis := Basis(quaternion * open_quat)
 	var open_origin: Vector3 = position + _open_position
 	return Transform3D(open_basis, open_origin)
+
+
+func get_save_data() -> Dictionary:
+	var data: Dictionary = {
+		"is_open": _is_open,
+		"open_speed": _open_speed,
+		"open_pos": var_to_str(_open_position),
+		"open_rot": var_to_str(_open_rotation),
+		"start_transform": var_to_str(_start_transform),
+	}
+	return data
+
+
+func load_save_data(data: Dictionary) -> void:
+	if not data.is_empty():
+		_is_open = data.is_open
+		_open_speed = data.open_speed
+		_open_position = str_to_var(data.open_pos)
+		_open_rotation = str_to_var(data.open_rot)
+		transform = str_to_var(data.start_transform)

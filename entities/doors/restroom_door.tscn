@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://copdk6dcpyiln"]
+
+[ext_resource type="PackedScene" uid="uid://t5bjga48mq8u" path="res://entities/doors/door.tscn" id="1_pph4r"]
+[ext_resource type="Shape3D" uid="uid://brq5qvu3kpm2l" path="res://entities/doors/door_default_collision.tres" id="2_ssl8n"]
+[ext_resource type="PackedScene" uid="uid://b66dt13sk26pc" path="res://entities/doors/restroom_door/restroom_door_01_sm.tscn" id="3_7p658"]
+[ext_resource type="Texture2D" uid="uid://csigaasfs82vb" path="res://entities/doors/restroom_door/restroom_door_sign_male.png" id="4_my8sj"]
+
+[node name="RestroomDoor" instance=ExtResource("1_pph4r")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, 1.125, 0)
+shape = ExtResource("2_ssl8n")
+debug_color = Color(0.652233, 0.518714, 3.85046e-07, 0.42)
+
+[node name="RestroomDoor_01_SM" parent="." index="1" instance=ExtResource("3_7p658")]
+
+[node name="Decal" type="Decal" parent="RestroomDoor_01_SM" index="2"]
+transform = Transform3D(-1, 0, -8.74228e-08, 8.74228e-08, -4.37114e-08, -1, -7.10543e-15, -1, 4.37114e-08, -0.75, 1.6, -0.0999994)
+size = Vector3(0.25, 0.25, 0.25)
+texture_albedo = ExtResource("4_my8sj")

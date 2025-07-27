@@ -30,15 +30,14 @@ func _process(_delta: float) -> void:
 
 
 func _hijack_current_scene() -> void:
+	# Get and make current scene a child of this node
 	var current_scene: Node = get_tree().current_scene
 	var current_scene_file_path: String = current_scene.scene_file_path
-	
-	# Get and instantiate save data on scene
-	var save_data: Dictionary = SaveManager.get_save_data(current_scene_file_path)
-	current_scene = current_scene.with_data(save_data)
-	
-	# Make current scene a child of this node
 	current_scene.reparent.call_deferred(self)
+	
+	# Load level save data
+	if current_scene is Level3D:
+		current_scene.load_save_data(SaveManager.get_save_data(current_scene_file_path))
 	
 	# Add the uid of the current scene to the loaded levels list so that it can be unloaded.
 	var uid_id: int = ResourceLoader.get_resource_uid(current_scene_file_path)
@@ -99,9 +98,9 @@ func unload_level(level_path: String) -> void:
 		# Remove level form scene
 		var level: Node3D = _loaded_levels[level_path]
 		
-		if level.has_method("_save_data"):
-			#level.call("_save_data")
-			pass
+		# Save level data
+		if level is Level3D:
+			SaveManager.add_save_data(level.scene_file_path, level.get_save_data())
 		
 		remove_child(level)
 		level.queue_free()
@@ -116,6 +115,10 @@ func unload_level(level_path: String) -> void:
 ## Only used when fully changing levels
 func _unload_all_levels() -> void:
 	for child: Node in get_children():
+		# Save level data
+		if child is Level3D:
+			SaveManager.add_save_data(child.scene_file_path, child.get_save_data())
+		
 		remove_child(child)
 		child.queue_free()
 		_loaded_levels.clear()
@@ -153,6 +156,10 @@ func _add_level_to_world(level_data: LevelLoadingData) -> void:
 	
 	# Add new level to loaded levels dict
 	_loaded_levels[level_data.level_path] = level_node
+	
+	# Load level save data
+	if level_node is Level3D:
+		level_node.load_save_data(SaveManager.get_save_data(level_node.scene_file_path))
 	
 	# Remove level from loading queue
 	_level_loading_queue.erase(level_data)

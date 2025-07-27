@@ -59,6 +59,7 @@ import/blender/enabled=false
 
 player=""
 item=""
+persistent=""
 
 [input]
 

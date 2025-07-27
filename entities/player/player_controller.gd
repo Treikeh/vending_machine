@@ -1,16 +1,20 @@
 extends RigidBody3D
 
 
+const HUD_SCENE: String = "uid://codyyu2jnkho5"
+
+
 func _ready() -> void:
-	_load_data()
-	
 	_ground_check.player = self
 	# Set initial state machine
 	_state_machine.switch(FALLING)
+	
+	# Spawn hud
+	GuiManager.load_menu(HUD_SCENE)
 
 
 func _exit_tree() -> void:
-	_save_data()
+	SaveManager.add_save_data("player", get_save_data())
 
 
 func _process(delta: float) -> void:
@@ -207,16 +211,15 @@ func _update_ui_throw_bar(sample_offset: float) -> void:
 
 #region Save/Load
 
-func _save_data() -> void:
+func get_save_data() -> Dictionary:
 	var data: Dictionary = {
 		"item": _held_item.scene_file_path if _held_item != null else "",
 	}
 	
-	SaveManager.add_save_data("player", data)
+	return data
 
 
-func _load_data() -> void:
-	var data: Dictionary = SaveManager.get_save_data("player")
+func load_save_data(data: Dictionary) -> void:
 	if not data.is_empty():
 		if data.item != "":
 			var item: BaseItem = load(data.item).instantiate()

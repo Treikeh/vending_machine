@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://k4r22ohcsxla" path="res://common/scripts/interact_area_3d.gd" id="3_kg4ro"]
 [ext_resource type="Shape3D" uid="uid://d1ycbhtwgtq72" path="res://entities/items/soda_cans/soda_cans_collision_interact.tres" id="4_l6wyn"]
 
-[node name="RedSodaCan" type="RigidBody3D" groups=["item"]]
+[node name="RedSodaCan" type="RigidBody3D" groups=["item", "persistent"]]
 collision_layer = 4
 mass = 0.1
 script = ExtResource("1_kkxw1")
