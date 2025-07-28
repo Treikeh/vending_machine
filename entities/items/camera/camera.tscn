@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://dflqugmxo8c5n"]
+
+[ext_resource type="Script" uid="uid://cyqru3m8se37k" path="res://entities/items/camera/camera.gd" id="1_x16dh"]
+[ext_resource type="Script" uid="uid://k4r22ohcsxla" path="res://common/scripts/interact_area_3d.gd" id="2_6b4lh"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6872s"]
+size = Vector3(0.2, 0.1, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_oflmg"]
+size = Vector3(0.2, 0.1, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x16dh"]
+size = Vector3(0.21, 0.11, 0.11)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_x16dh"]
+viewport_path = NodePath("CameraProjection/SubViewport")
+
+[node name="Camera" type="RigidBody3D" node_paths=PackedStringArray("_sub_viewport") groups=["item", "persistent"]]
+collision_layer = 4
+script = ExtResource("1_x16dh")
+_sub_viewport = NodePath("CameraProjection/SubViewport")
+metadata/_custom_type_script = "uid://bmq7avs8vtf6a"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_6872s")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_oflmg")
+
+[node name="PickUpArea" type="Area3D" parent="."]
+script = ExtResource("2_6b4lh")
+metadata/_custom_type_script = "uid://k4r22ohcsxla"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PickUpArea"]
+shape = SubResource("BoxShape3D_x16dh")
+debug_color = Color(0.652233, 0.518714, 3.85046e-07, 0.42)
+
+[node name="CameraTransform" type="RemoteTransform3D" parent="."]
+remote_path = NodePath("../CameraProjection/SubViewport/Camera3D")
+
+[node name="CameraProjection" type="Sprite3D" parent="."]
+transform = Transform3D(0.015, 0, 0, 0, 0.015, 0, 0, 0, 0.015, 0, 0, 0.06)
+texture = SubResource("ViewportTexture_x16dh")
+
+[node name="SubViewport" type="SubViewport" parent="CameraProjection"]
+
+[node name="Camera3D" type="Camera3D" parent="CameraProjection/SubViewport"]
+
+[connection signal="interacted" from="PickUpArea" to="." method="pick_up_item"]

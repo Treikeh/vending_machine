@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b6iud14yjg3ef"]
+[gd_scene load_steps=10 format=3 uid="uid://b6iud14yjg3ef"]
 
 [ext_resource type="Script" uid="uid://x80psvvcpak" path="res://entities/vending_machine/vending_machine.gd" id="1_qauav"]
 [ext_resource type="PackedScene" uid="uid://dickh50sq4kdu" path="res://entities/vending_machine/vending_machine_button.tscn" id="2_qauav"]
@@ -10,6 +10,9 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_goder"]
 size = Vector3(1.5, 1.9, 0.9)
+
+[sub_resource type="BoxMesh" id="BoxMesh_oflmg"]
+size = Vector3(0.2, 0.1, 0.1)
 
 [node name="VendingMachine" type="Node3D" node_paths=PackedStringArray("display_label", "reset_label_timer", "item_spawn_point")]
 script = ExtResource("1_qauav")
@@ -96,6 +99,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 1.73605, -0.3)
 
 [node name="soda_can_04_sm" parent="Items" instance=ExtResource("6_npqjt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 1.73605, -0.3)
+
+[node name="CameraMesh" type="MeshInstance3D" parent="Items"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.36, -0.2)
+mesh = SubResource("BoxMesh_oflmg")
+skeleton = NodePath("")
 
 [node name="ItemSpawnPoint" type="Marker3D" parent="."]
 transform = Transform3D(-4.24407e-08, 1, -1.04629e-08, -0.97093, -4.37114e-08, -0.239364, -0.239364, 0, 0.97093, 0.176314, 0.336996, -0.544939)
