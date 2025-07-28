@@ -45,12 +45,12 @@ func _get_open_transform() -> Transform3D:
 
 
 func get_save_data() -> Dictionary:
+	transform = _start_transform
 	var data: Dictionary = {
 		"is_open": _is_open,
 		"open_speed": _open_speed,
 		"open_pos": var_to_str(_open_position),
 		"open_rot": var_to_str(_open_rotation),
-		"start_transform": var_to_str(_start_transform),
 	}
 	return data
 
@@ -61,4 +61,3 @@ func load_save_data(data: Dictionary) -> void:
 		_open_speed = data.open_speed
 		_open_position = str_to_var(data.open_pos)
 		_open_rotation = str_to_var(data.open_rot)
-		transform = str_to_var(data.start_transform)

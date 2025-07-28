@@ -28,12 +28,18 @@ func _save_persistent_nodes() -> Dictionary:
 		var in_level_bounds: bool = aabb.has_point(node.global_position)
 		
 		if in_level_bounds:
+			#NOTE I need to set the save data before I set the transform so that scenes that are
+			# dependent on their transform (e.g. doors) can reset their transform first.
+			var save_data: Dictionary = node.get_save_data()
+			var is_descendant: bool = self.is_ancestor_of(node)
+			var relative_transform : = global_transform.affine_inverse() * node.global_transform
 			persistent_nodes_data[node_id] = {
 				"scene_file_path": node.scene_file_path,
 				"name": node.name,
 				"parent_path": node.get_parent().get_path(),
-				"transform": var_to_str(node.transform),
-				"save_data": node.get_save_data(),
+				"is_descendant": is_descendant,
+				"transform": var_to_str(node.transform if is_descendant else relative_transform),
+				"save_data": save_data,
 				#TODO: Find a way to reconnect signals on persistent nodes
 				#"connected_signals": {},
 			}
@@ -58,7 +64,10 @@ func _load_persistent_nodes(persistent_nodes_data: Dictionary) -> void:
 		var node: Node3D = scene.instantiate()
 		
 		node.name = node_data.name
-		node.transform = str_to_var(node_data.transform)
+		if node_data.is_descendant:
+			node.transform = str_to_var(node_data.transform)
+		else:
+			node.global_transform = global_transform * str_to_var(node_data.transform)
 		node.load_save_data(node_data.save_data)
 		
 		var parent: Node = get_node(node_data.parent_path)
