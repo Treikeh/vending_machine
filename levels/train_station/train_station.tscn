@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://438mffbmqx1b"]
+[gd_scene load_steps=17 format=3 uid="uid://438mffbmqx1b"]
 
 [ext_resource type="Script" uid="uid://bb00o1p43k44i" path="res://levels/train_station/train_station.gd" id="1_b0eu5"]
 [ext_resource type="PackedScene" uid="uid://cpkqvybvj5ikj" path="res://levels/train_station/art/train_station_mock_up.glb" id="1_cn4k8"]
@@ -8,6 +8,12 @@
 [ext_resource type="PackedScene" uid="uid://pgv43adw264g" path="res://common/scenes/level_unload_trigger.tscn" id="5_irpxo"]
 [ext_resource type="MeshLibrary" uid="uid://dil5kl30j0edq" path="res://levels/train_station_tunnel/art/train_station_tunnel_01_gridmap.meshlib" id="6_7vjbl"]
 [ext_resource type="PackedScene" uid="uid://gs83e0u3lu6s" path="res://entities/player/spawner/player_spawner.tscn" id="8_50y1m"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_xg3uo"]
+points = PackedVector3Array(-50, 0, -10, -50, 0, 10, 50, 0, -10, 50, 0, 10)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_50y1m"]
+size = Vector2(100, 20)
 
 [sub_resource type="Curve3D" id="Curve3D_sgefo"]
 bake_interval = 1.0
@@ -31,8 +37,17 @@ size = Vector3(52, 6, 16)
 [sub_resource type="BoxShape3D" id="BoxShape3D_f26eg"]
 size = Vector3(1.6, 6, 16)
 
-[node name="TrainStation" type="Node3D"]
+[node name="TrainStation" type="StaticBody3D"]
 script = ExtResource("1_b0eu5")
+metadata/_custom_type_script = "uid://bqomd2e1p3srg"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, -8)
+shape = SubResource("ConvexPolygonShape3D_xg3uo")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("PlaneMesh_50y1m")
+skeleton = NodePath("../..")
 
 [node name="train_station_mock_up" parent="." instance=ExtResource("1_cn4k8")]
 

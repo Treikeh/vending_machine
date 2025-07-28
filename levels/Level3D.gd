@@ -1,13 +1,13 @@
 class_name Level3D
-extends Node3D
+extends StaticBody3D
 @warning_ignore_start("unused_parameter")
 
 
-@export var level_bounds: VisualInstance3D
+const _SAVE_LAYER := int(pow(2, 24-1))
 
 
 func _enter_tree() -> void:
-	level_bounds.layers = 0
+	collision_layer = _SAVE_LAYER
 
 
 func get_save_data() -> Dictionary:
@@ -24,14 +24,23 @@ func _save_persistent_nodes() -> Dictionary:
 	var node_id: int = 0
 	# Get all persistant noes
 	for node: Node3D in get_tree().get_nodes_in_group("persistent"):
-		var aabb: AABB = level_bounds.global_transform * level_bounds.get_aabb()
-		var in_level_bounds: bool = aabb.has_point(node.global_position)
+		var is_descendant: bool = self.is_ancestor_of(node)
+		var in_level_bounds: bool = false
 		
-		if in_level_bounds:
+		if not is_descendant:
+			var space: PhysicsDirectSpaceState3D = get_world_3d().direct_space_state
+			var ray_query := PhysicsRayQueryParameters3D.new()
+			ray_query.from = node.global_position
+			ray_query.to = ray_query.from + (Vector3.DOWN * 100.0)
+			ray_query.collision_mask = _SAVE_LAYER
+			var result = space.intersect_ray(ray_query)
+			if result and result.collider == self:
+				in_level_bounds = true
+		
+		if is_descendant or in_level_bounds:
 			#NOTE I need to set the save data before I set the transform so that scenes that are
 			# dependent on their transform (e.g. doors) can reset their transform first.
 			var save_data: Dictionary = node.get_save_data()
-			var is_descendant: bool = self.is_ancestor_of(node)
 			var relative_transform : = global_transform.affine_inverse() * node.global_transform
 			persistent_nodes_data[node_id] = {
 				"scene_file_path": node.scene_file_path,

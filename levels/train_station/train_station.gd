@@ -1,4 +1,4 @@
-extends Node3D
+extends Level3D
 #TODO: Add 3 different trains that goes between their own station and this station
 
 @onready var _train: Train = %Train
