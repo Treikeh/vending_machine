@@ -10,7 +10,7 @@ var _loading_screen: LoadingScreen
 var _can_spawn_levels: bool = true
 ## A list of all the level that are currently loaded and active in the scene tree
 ## The key (String) is the UID or resource path (I prefer UID) to the level scene.
-var _loaded_levels: Dictionary[String, Node3D]
+var _loaded_levels: Dictionary[String, Level3D]
 ## A list of all the levels that are currently being loded in the background
 var _level_loading_queue: Array[LevelLoadingData] = []
 
@@ -32,23 +32,17 @@ func _process(_delta: float) -> void:
 func _hijack_current_scene() -> void:
 	# Get and make current scene a child of this node
 	var current_scene: Node = get_tree().current_scene
-	var current_scene_file_path: String = current_scene.scene_file_path
 	current_scene.reparent.call_deferred(self)
 	
 	# Load level save data
 	if current_scene is Level3D:
+		# Add the uid of the current scene to the loaded levels list so that it can be unloaded.
+		var current_scene_file_path: String = current_scene.scene_file_path
+		var uid_id: int = ResourceLoader.get_resource_uid(current_scene_file_path)
+		var uid_string: String = ResourceUID.id_to_text(uid_id)
+		_loaded_levels[uid_string] = current_scene
+		# Load level data
 		current_scene.load_save_data(SaveManager.get_save_data(current_scene_file_path))
-	
-	# Add the uid of the current scene to the loaded levels list so that it can be unloaded.
-	var uid_id: int = ResourceLoader.get_resource_uid(current_scene_file_path)
-	var uid_string: String = ResourceUID.id_to_text(uid_id)
-	_loaded_levels[uid_string] = current_scene
-
-
-## This function reparents a node to become a child of world_3d.
-## Can be used to discconet an object form the level it spawned into.
-func attach_to_world_3d(node: Node, use_global_transform: bool = true) -> void:
-	node.reparent(self, use_global_transform)
 
 
 ## Start loading a new level. If a new trasform is given, the new level will be loaded additively
@@ -96,11 +90,10 @@ func unload_level(level_path: String) -> void:
 	# Check if level is loaded
 	if _loaded_levels.has(level_path):
 		# Remove level form scene
-		var level: Node3D = _loaded_levels[level_path]
+		var level: Level3D = _loaded_levels[level_path]
 		
 		# Save level data
-		if level is Level3D:
-			SaveManager.add_save_data(level.scene_file_path, level.get_save_data())
+		SaveManager.add_save_data(level.scene_file_path, level.get_save_data())
 		
 		remove_child(level)
 		level.queue_free()
@@ -114,11 +107,12 @@ func unload_level(level_path: String) -> void:
 ## Unload all child nodes of World3D.
 ## Only used when fully changing levels
 func _unload_all_levels() -> void:
+	# Save data on all loaded levels
+	for level_path: String in _loaded_levels:
+		SaveManager.add_save_data(level_path, _loaded_levels[level_path].get_save_data())
+	
+	# Remove all nodes
 	for child: Node in get_children():
-		# Save level data
-		if child is Level3D:
-			SaveManager.add_save_data(child.scene_file_path, child.get_save_data())
-		
 		remove_child(child)
 		child.queue_free()
 		_loaded_levels.clear()
@@ -146,20 +140,19 @@ func _check_level_loading_queue() -> void:
 func _add_level_to_world(level_data: LevelLoadingData) -> void:
 	# Spawn level into the scene
 	var level_scene: PackedScene = ResourceLoader.load_threaded_get(level_data.level_path)
-	print(level_scene.resource_path)
 	var level_node: Node3D = level_scene.instantiate()
-	add_child(level_node)
 	level_node.global_transform = level_data.spawn_transform
+	add_child(level_node)
 	
 	# Call spawn_callback at the end of the frame
 	level_data.spawn_callback.call_deferred()
 	
-	# Add new level to loaded levels dict
-	_loaded_levels[level_data.level_path] = level_node
-	
-	# Load level save data
 	if level_node is Level3D:
+		# Add new level to loaded levels dict
+		_loaded_levels[level_data.level_path] = level_node
+		# Load level save data
 		level_node.load_save_data(SaveManager.get_save_data(level_node.scene_file_path))
+	
 	
 	# Remove level from loading queue
 	_level_loading_queue.erase(level_data)

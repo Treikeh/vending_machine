@@ -27,7 +27,7 @@ func pick_up_item(instigator: Node3D) -> void:
 
 
 func drop_item(instigator: Node3D) -> void:
-	LevelManager.attach_to_world_3d(self)
+	reparent(LevelManager)
 	_item_dropped(instigator)
 	dropped.emit()
 	freeze = false
