@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3 uid="uid://puva7m3d5vds"]
+
+[ext_resource type="Script" uid="uid://bo6ce11g13nmd" path="res://entities/train/train.gd" id="1_xkud1"]
+[ext_resource type="PackedScene" uid="uid://cnnitqbdy8yp6" path="res://entities/train/art/train_01_sm.glb" id="2_2fpse"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sgefo"]
+size = Vector3(2.3, 0.9, 26)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b0eu5"]
+size = Vector3(3, 3.9, 25.5)
+
+[node name="Train" type="PathFollow3D" node_paths=PackedStringArray("_tarin_body", "_station_wait_timer") groups=["persistent"]]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+loop = false
+script = ExtResource("1_xkud1")
+_tarin_body = NodePath("TrainBody")
+_station_wait_timer = NodePath("StationWaitTimer")
+
+[node name="TrainBody" type="CharacterBody3D" parent="." groups=["train"]]
+collision_layer = 8388609
+collision_mask = 0
+motion_mode = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrainBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
+shape = SubResource("BoxShape3D_sgefo")
+
+[node name="Train_01_SM" parent="TrainBody" instance=ExtResource("2_2fpse")]
+
+[node name="ReparentArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+collision_layer = 0
+collision_mask = 6
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ReparentArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
+shape = SubResource("BoxShape3D_b0eu5")
+
+[node name="StationWaitTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="body_entered" from="ReparentArea" to="." method="_on_reparent_area_body_entered"]
+[connection signal="body_exited" from="ReparentArea" to="." method="_on_reparent_area_body_exited"]
+[connection signal="timeout" from="StationWaitTimer" to="." method="start"]

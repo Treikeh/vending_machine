@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://cnnitqbdy8yp6"
-path="res://.godot/imported/train_01_sm.glb-d6245146b10f831e6f82bce6f4e1a00b.scn"
+path="res://.godot/imported/train_01_sm.glb-e2352980423d84a98cee8f49c4c41e2e.scn"
 
 [deps]
 
-source_file="res://levels/train_station/train/train_01_sm.glb"
-dest_files=["res://.godot/imported/train_01_sm.glb-d6245146b10f831e6f82bce6f4e1a00b.scn"]
+source_file="res://entities/train/art/train_01_sm.glb"
+dest_files=["res://.godot/imported/train_01_sm.glb-e2352980423d84a98cee8f49c4c41e2e.scn"]
 
 [params]
 

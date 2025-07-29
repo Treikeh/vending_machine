@@ -1,19 +1,18 @@
-[gd_scene load_steps=17 format=3 uid="uid://438mffbmqx1b"]
+[gd_scene load_steps=14 format=3 uid="uid://438mffbmqx1b"]
 
 [ext_resource type="Script" uid="uid://bb00o1p43k44i" path="res://levels/train_station/train_station.gd" id="1_b0eu5"]
 [ext_resource type="PackedScene" uid="uid://cpkqvybvj5ikj" path="res://levels/train_station/art/train_station_mock_up.glb" id="1_cn4k8"]
-[ext_resource type="Script" uid="uid://bo6ce11g13nmd" path="res://levels/train_station/train.gd" id="3_2rh3c"]
+[ext_resource type="PackedScene" uid="uid://puva7m3d5vds" path="res://entities/train/train.tscn" id="3_f26eg"]
 [ext_resource type="PackedScene" uid="uid://d11y7b5nss2s5" path="res://common/scenes/level_load_trigger.tscn" id="4_2rh3c"]
-[ext_resource type="PackedScene" uid="uid://cnnitqbdy8yp6" path="res://levels/train_station/train/train_01_sm.glb" id="4_f26eg"]
 [ext_resource type="PackedScene" uid="uid://pgv43adw264g" path="res://common/scenes/level_unload_trigger.tscn" id="5_irpxo"]
 [ext_resource type="MeshLibrary" uid="uid://dil5kl30j0edq" path="res://levels/train_station_tunnel/art/train_station_tunnel_01_gridmap.meshlib" id="6_7vjbl"]
-[ext_resource type="PackedScene" uid="uid://gs83e0u3lu6s" path="res://entities/player/spawner/player_spawner.tscn" id="8_50y1m"]
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_xg3uo"]
-points = PackedVector3Array(-50, 0, -10, -50, 0, 10, 50, 0, -10, 50, 0, 10)
+[ext_resource type="PackedScene" uid="uid://gs83e0u3lu6s" path="res://entities/player/spawner/player_spawner.tscn" id="7_f26eg"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_50y1m"]
-size = Vector2(100, 20)
+size = Vector2(500, 20)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_7vjbl"]
+points = PackedVector3Array(-250, 0, -10, -250, 0, 10, 250, 0, -10, 250, 0, 10)
 
 [sub_resource type="Curve3D" id="Curve3D_sgefo"]
 bake_interval = 1.0
@@ -22,12 +21,6 @@ _data = {
 "tilts": PackedFloat32Array(0, 0, 0)
 }
 point_count = 3
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_sgefo"]
-size = Vector3(2.3, 1, 26)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_b0eu5"]
-size = Vector3(3, 3.9, 25.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_irpxo"]
 
@@ -38,16 +31,23 @@ size = Vector3(52, 6, 16)
 size = Vector3(1.6, 6, 16)
 
 [node name="TrainStation" type="StaticBody3D"]
+collision_layer = 8388608
+collision_mask = 0
 script = ExtResource("1_b0eu5")
 metadata/_custom_type_script = "uid://bqomd2e1p3srg"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, -8)
-shape = SubResource("ConvexPolygonShape3D_xg3uo")
+[node name="SaveFloor" type="StaticBody3D" parent="."]
+collision_layer = 8388608
+collision_mask = 0
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SaveFloor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, -8)
 mesh = SubResource("PlaneMesh_50y1m")
 skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SaveFloor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, -8)
+shape = SubResource("ConvexPolygonShape3D_7vjbl")
 
 [node name="train_station_mock_up" parent="." instance=ExtResource("1_cn4k8")]
 
@@ -59,72 +59,53 @@ visible = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -270, -0.7, -6)
 curve = SubResource("Curve3D_sgefo")
 
-[node name="Train" type="PathFollow3D" parent="TrainTracks"]
-unique_name_in_owner = true
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-script = ExtResource("3_2rh3c")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="TrainTracks/Train"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TrainTracks/Train/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-shape = SubResource("BoxShape3D_sgefo")
-
-[node name="Train_01_SM" parent="TrainTracks/Train" instance=ExtResource("4_f26eg")]
-
-[node name="ReparentArea" type="Area3D" parent="TrainTracks/Train"]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
-collision_mask = 2
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TrainTracks/Train/ReparentArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
-shape = SubResource("BoxShape3D_b0eu5")
-
-[node name="StationWaitTimer" type="Timer" parent="TrainTracks/Train"]
-wait_time = 5.0
-one_shot = true
+[node name="Train" parent="TrainTracks" groups=["train"] instance=ExtResource("3_f26eg")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 200, 0, 0)
+progress = 200.0
 
 [node name="StopTrainArea" type="Area3D" parent="."]
-unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -5.9)
 collision_layer = 0
+collision_mask = 3
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StopTrainArea"]
 shape = SubResource("BoxShape3D_irpxo")
 
-[node name="TrainStationTunnel" type="Node3D" parent="."]
+[node name="OtherLevels" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0)
 
-[node name="TrainStationTunnelSpawnPoint" type="Marker3D" parent="TrainStationTunnel"]
+[node name="TrainStationTunnel" type="Node3D" parent="OtherLevels"]
+
+[node name="TrainStationTunnelSpawnPoint" type="Marker3D" parent="OtherLevels/TrainStationTunnel"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -12, 8, 4)
 gizmo_extents = 5.0
 
-[node name="TrainStationTunnelLoadTrigger" parent="TrainStationTunnel" node_paths=PackedStringArray("spawn_transform") instance=ExtResource("4_2rh3c")]
+[node name="TrainStationTunnelLoadTrigger" parent="OtherLevels/TrainStationTunnel" node_paths=PackedStringArray("spawn_transform") instance=ExtResource("4_2rh3c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
 level_path = "uid://gqsmdnolrjqo"
 spawn_transform = NodePath("../TrainStationTunnelSpawnPoint")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TrainStationTunnel/TrainStationTunnelLoadTrigger"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OtherLevels/TrainStationTunnel/TrainStationTunnelLoadTrigger"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
 shape = SubResource("BoxShape3D_7vjbl")
 debug_color = Color(0, 0.639353, 0.365875, 0.42)
 
-[node name="TrainStationTunnelUnloadTrigger" parent="TrainStationTunnel" instance=ExtResource("5_irpxo")]
+[node name="TrainStationTunnelUnloadTrigger" parent="OtherLevels/TrainStationTunnel" instance=ExtResource("5_irpxo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
 level_path = "uid://gqsmdnolrjqo"
 
-[node name="LeftCollider" type="CollisionShape3D" parent="TrainStationTunnel/TrainStationTunnelUnloadTrigger"]
+[node name="LeftCollider" type="CollisionShape3D" parent="OtherLevels/TrainStationTunnel/TrainStationTunnelUnloadTrigger"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.8, 2.5, 0)
 shape = SubResource("BoxShape3D_f26eg")
 debug_color = Color(0.806939, 0.00229757, 0.992764, 0.42)
 
-[node name="RightCollider" type="CollisionShape3D" parent="TrainStationTunnel/TrainStationTunnelUnloadTrigger"]
+[node name="RightCollider" type="CollisionShape3D" parent="OtherLevels/TrainStationTunnel/TrainStationTunnelUnloadTrigger"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.8, 2.5, 0)
 shape = SubResource("BoxShape3D_f26eg")
 debug_color = Color(0.806939, 0.00229757, 0.992764, 0.42)
 
-[node name="GridMap" type="GridMap" parent="TrainStationTunnel"]
+[node name="GridMap" type="GridMap" parent="OtherLevels/TrainStationTunnel"]
 mesh_library = ExtResource("6_7vjbl")
 cell_size = Vector3(1, 1, 1)
 cell_center_x = false
@@ -135,7 +116,9 @@ data = {
 }
 metadata/_editor_floor_ = Vector3(0, 3, 0)
 
-[node name="PlayerSpawner" parent="." instance=ExtResource("8_50y1m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+[node name="PlayerSpawner" parent="." instance=ExtResource("7_f26eg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.975, -1.9)
+
+[connection signal="body_entered" from="StopTrainArea" to="." method="_on_stop_train_area_body_entered"]
 
 [editable path="train_station_mock_up"]
