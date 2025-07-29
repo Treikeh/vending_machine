@@ -57,3 +57,15 @@ func _item_dropped(instigator: Node3D) -> void:
 
 func _item_destroyed(instigator: Node3D) -> void:
 	pass
+
+
+#region Save/Load
+
+func get_save_data() -> Dictionary:
+	return {}
+
+
+func load_save_data(data: Dictionary) -> void:
+	pass
+
+#endregion
