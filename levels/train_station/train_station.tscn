@@ -30,15 +30,11 @@ size = Vector3(52, 6, 16)
 [sub_resource type="BoxShape3D" id="BoxShape3D_f26eg"]
 size = Vector3(1.6, 6, 16)
 
-[node name="TrainStation" type="StaticBody3D"]
-collision_layer = 8388608
-collision_mask = 0
+[node name="TrainStation" type="Node3D"]
 script = ExtResource("1_b0eu5")
 metadata/_custom_type_script = "uid://bqomd2e1p3srg"
 
 [node name="SaveFloor" type="StaticBody3D" parent="."]
-collision_layer = 8388608
-collision_mask = 0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SaveFloor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, -8)

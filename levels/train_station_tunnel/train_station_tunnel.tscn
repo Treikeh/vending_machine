@@ -7,11 +7,11 @@
 [ext_resource type="MeshLibrary" uid="uid://dil5kl30j0edq" path="res://levels/train_station_tunnel/art/train_station_tunnel_01_gridmap.meshlib" id="4_kjm4n"]
 [ext_resource type="PackedScene" uid="uid://gs83e0u3lu6s" path="res://entities/player/spawner/player_spawner.tscn" id="6_g767i"]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_g767i"]
-points = PackedVector3Array(8, 0, 10, -8, 0, 10, 8, 0, -10, -8, 0, -10)
-
 [sub_resource type="PlaneMesh" id="PlaneMesh_5vu2g"]
 size = Vector2(16, 20)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_g767i"]
+points = PackedVector3Array(8, 0, 10, -8, 0, 10, 8, 0, -10, -8, 0, -10)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jqnph"]
 size = Vector3(4, 2, 1)
@@ -19,17 +19,21 @@ size = Vector3(4, 2, 1)
 [sub_resource type="PlaneMesh" id="PlaneMesh_g767i"]
 size = Vector2(20, 13.5)
 
-[node name="TrainStationTunnel" type="StaticBody3D"]
+[node name="TrainStationTunnel" type="Node3D" node_paths=PackedStringArray("_save_floor")]
 script = ExtResource("1_bnm24")
+_save_floor = NodePath("SaveFloor")
 metadata/_custom_type_script = "uid://bqomd2e1p3srg"
 
-[node name="SaveFloor" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.05, -10, -8.05)
-shape = SubResource("ConvexPolygonShape3D_g767i")
+[node name="SaveFloor" type="StaticBody3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SaveFloor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.05, -10, -8.05)
 mesh = SubResource("PlaneMesh_5vu2g")
 skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SaveFloor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.05, -10, -8.05)
+shape = SubResource("ConvexPolygonShape3D_g767i")
 
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("4_kjm4n")

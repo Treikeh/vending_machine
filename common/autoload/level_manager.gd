@@ -42,7 +42,7 @@ func _hijack_current_scene() -> void:
 		var uid_string: String = ResourceUID.id_to_text(uid_id)
 		_loaded_levels[uid_string] = current_scene
 		# Load level data
-		current_scene.load_save_data(SaveManager.get_save_data(current_scene_file_path))
+		current_scene.load_save_data(SaveManager.get_save_data(uid_string))
 
 
 ## Start loading a new level. If a new trasform is given, the new level will be loaded additively
@@ -93,6 +93,7 @@ func unload_level(level_path: String) -> void:
 		var level: Level3D = _loaded_levels[level_path]
 		
 		# Save level data
+		SaveManager.persistent_nodes = get_tree().get_nodes_in_group("persistent")
 		SaveManager.add_save_data(level.scene_file_path, level.get_save_data())
 		
 		remove_child(level)
@@ -108,6 +109,7 @@ func unload_level(level_path: String) -> void:
 ## Only used when fully changing levels
 func _unload_all_levels() -> void:
 	# Save data on all loaded levels
+	SaveManager.persistent_nodes = get_tree().get_nodes_in_group("persistent")
 	for level_path: String in _loaded_levels:
 		SaveManager.add_save_data(level_path, _loaded_levels[level_path].get_save_data())
 	

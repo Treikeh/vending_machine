@@ -9,9 +9,6 @@ var _buy_count: int = 0
 func _ready() -> void:
 	# Spawn world environment that is independent from level
 	LevelManager.load_level(Globals.WORLD_ENV_PATH, global_transform)
-	
-	# Connect signals
-	_vending_machine.code_submitted.connect(_on_vending_machine_code_submitted)
 
 
 func _on_vending_machine_code_submitted(code: String, valid: bool) -> void:
@@ -21,6 +18,14 @@ func _on_vending_machine_code_submitted(code: String, valid: bool) -> void:
 	# Allow the train station tunnel to spawn when typing in the right code
 	if code == "1996":
 		_tunnel_state = Tunnel_State.CAN_SPAWN
+	
+	if code == "666":
+		# Spawn elevator
+		pass
+	
+	if code == "41":
+		# Spawn basketball hoop
+		pass
 
 
 #region Train station tunnel
@@ -83,7 +88,7 @@ func get_save_data() -> Dictionary:
 		"buy_count": _buy_count,
 		"trash_can_visible": _trash_can.visible,
 		"tunnel_state": _tunnel_state,
-		"persistent_nodes": _save_persistent_nodes(),
+		"persistent_nodes": SaveManager.save_persistent_nodes(self),
 	}
 	return data
 
@@ -98,7 +103,7 @@ func load_save_data(data: Dictionary) -> void:
 		if _tunnel_state == Tunnel_State.SPAWNED:
 			_spawn_train_station_tunnel()
 		
-		_load_persistent_nodes(data.persistent_nodes)
+		SaveManager.load_persistent_nodes(self, data.persistent_nodes)
 	else:
 		_set_trash_can_state(false)
 

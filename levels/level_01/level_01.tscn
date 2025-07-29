@@ -7,27 +7,30 @@
 [ext_resource type="PackedScene" uid="uid://gs83e0u3lu6s" path="res://entities/player/spawner/player_spawner.tscn" id="5_71kry"]
 [ext_resource type="PackedScene" uid="uid://gkdkiaeobysh" path="res://entities/items/note/note.tscn" id="5_dm0pi"]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_71kry"]
-points = PackedVector3Array(-50, 0, -50, -50, 0, 50, 50, 0, -50, 50, 0, 50)
-
 [sub_resource type="PlaneMesh" id="PlaneMesh_71kry"]
 size = Vector2(100, 100)
 
-[node name="Level01" type="StaticBody3D" node_paths=PackedStringArray("_vending_machine", "_train_station_tunnel_spawn_point", "_tunnel_path", "_trash_can")]
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_71kry"]
+points = PackedVector3Array(-50, 0, -50, -50, 0, 50, 50, 0, -50, 50, 0, 50)
+
+[node name="Level01" type="Node3D" node_paths=PackedStringArray("_vending_machine", "_train_station_tunnel_spawn_point", "_tunnel_path", "_trash_can", "_save_floor")]
 script = ExtResource("1_2fp4v")
 _vending_machine = NodePath("VendingMachine")
 _train_station_tunnel_spawn_point = NodePath("OtherLevels/TrainStationTunnel/TrainStationTunnelSpawnPoint")
 _tunnel_path = NodePath("level_01_sm/Level01TunnelPath_001")
 _trash_can = NodePath("TrashCanScreenNotifier/TrashCan")
+_save_floor = NodePath("SaveFloor")
 metadata/_custom_type_script = "uid://bqomd2e1p3srg"
 
-[node name="SaveFloor" type="CollisionShape3D" parent="."]
-shape = SubResource("ConvexPolygonShape3D_71kry")
+[node name="SaveFloor" type="StaticBody3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SaveFloor"]
 visible = false
 mesh = SubResource("PlaneMesh_71kry")
 skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SaveFloor"]
+shape = SubResource("ConvexPolygonShape3D_71kry")
 
 [node name="level_01_sm" parent="." instance=ExtResource("3_aqob7")]
 
@@ -63,6 +66,7 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -1.19209e-07)
 
 [connection signal="screen_exited" from="level_01_sm/Level01TunnelPath_001/TunnelPathScreenNotifier" to="." method="_on_tunnel_path_screen_notifier_screen_exited"]
+[connection signal="code_submitted" from="VendingMachine" to="." method="_on_vending_machine_code_submitted"]
 [connection signal="screen_exited" from="TrashCanScreenNotifier" to="." method="_on_trash_can_screen_notifier_screen_exited"]
 
 [editable path="level_01_sm"]
