@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://ddiakxh5cwpsj"]
+
+[ext_resource type="Script" uid="uid://bmq7avs8vtf6a" path="res://entities/items/base_item.gd" id="1_wpgql"]
+[ext_resource type="PackedScene" uid="uid://okem3oya16no" path="res://common/scenes/interact_area_3d.tscn" id="2_wpgql"]
+
+[node name="BaseItem" type="RigidBody3D"]
+collision_layer = 4
+script = ExtResource("1_wpgql")
+metadata/_custom_type_script = "uid://bmq7avs8vtf6a"
+
+[node name="InteractArea3D" parent="." instance=ExtResource("2_wpgql")]
+
+[node name="ActiveWhileHeld" type="Node3D" parent="."]
+process_mode = 1
+editor_description = "This node is active when the item is being held by another entity. This is necessary because the root nodes process mode is disabled when picked up."
+
+[connection signal="interacted" from="InteractArea3D" to="." method="_on_interacted"]
