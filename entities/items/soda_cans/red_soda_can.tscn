@@ -28,4 +28,4 @@ metadata/_custom_type_script = "uid://k4r22ohcsxla"
 shape = ExtResource("4_l6wyn")
 debug_color = Color(0.652233, 0.518714, 3.85046e-07, 0.42)
 
-[connection signal="interacted" from="PickUpArea" to="." method="pick_up_item"]
+[connection signal="interacted" from="PickUpArea" to="." method="_on_interacted"]

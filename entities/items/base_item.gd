@@ -8,6 +8,11 @@ signal dropped
 signal destroyed
 
 
+func _on_interacted(instigator: Node3D) -> void:
+	if instigator.has_method("pick_up_item"):
+		instigator.pick_up_item(self)
+
+
 ## Functions to call from other scripts
 
 func use_item(instigator: Node3D) -> void:
@@ -16,22 +21,18 @@ func use_item(instigator: Node3D) -> void:
 
 
 func pick_up_item(instigator: Node3D) -> void:
-	reparent(instigator, true)
 	_item_picked_up(instigator)
 	picked_up.emit()
 	linear_velocity = Vector3.ZERO
-	freeze = true
-	#process_mode = Node.PROCESS_MODE_DISABLED
-	if instigator.has_method("pick_up_item"):
-		instigator.pick_up_item(self)
+	remove_from_group("persistent")
+	process_mode = Node.PROCESS_MODE_DISABLED
 
 
 func drop_item(instigator: Node3D) -> void:
-	reparent(LevelManager)
 	_item_dropped(instigator)
 	dropped.emit()
-	freeze = false
-	#process_mode = Node.PROCESS_MODE_INHERIT
+	add_to_group("persistent")
+	process_mode = Node.PROCESS_MODE_INHERIT
 
 
 func destroy_item(instigator: Node3D) -> void:

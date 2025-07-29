@@ -1,49 +1,59 @@
-[gd_scene load_steps=7 format=3 uid="uid://dflqugmxo8c5n"]
+[gd_scene load_steps=8 format=3 uid="uid://dflqugmxo8c5n"]
 
-[ext_resource type="Script" uid="uid://cyqru3m8se37k" path="res://entities/items/camera/camera.gd" id="1_x16dh"]
-[ext_resource type="Script" uid="uid://k4r22ohcsxla" path="res://common/scripts/interact_area_3d.gd" id="2_6b4lh"]
+[ext_resource type="PackedScene" uid="uid://ddiakxh5cwpsj" path="res://entities/items/base_item.tscn" id="1_lemjp"]
+[ext_resource type="Script" uid="uid://cyqru3m8se37k" path="res://entities/items/camera/camera.gd" id="2_w4nqt"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_6872s"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_2uk6l"]
 size = Vector3(0.2, 0.1, 0.1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_oflmg"]
+[sub_resource type="BoxMesh" id="BoxMesh_yl246"]
 size = Vector3(0.2, 0.1, 0.1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_x16dh"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_evswr"]
 size = Vector3(0.21, 0.11, 0.11)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_x16dh"]
-viewport_path = NodePath("CameraProjection/SubViewport")
+[sub_resource type="CylinderMesh" id="CylinderMesh_gh0hb"]
+bottom_radius = 0.1
+height = 1.0
+radial_segments = 16
+rings = 0
+cap_top = false
+cap_bottom = false
 
-[node name="Camera" type="RigidBody3D" node_paths=PackedStringArray("_sub_viewport") groups=["item", "persistent"]]
-collision_layer = 4
-script = ExtResource("1_x16dh")
-_sub_viewport = NodePath("CameraProjection/SubViewport")
-metadata/_custom_type_script = "uid://bmq7avs8vtf6a"
+[sub_resource type="ViewportTexture" id="ViewportTexture_gblom"]
+viewport_path = NodePath("CameraProjection/ProjectionSprite/SubViewport")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_6872s")
+[node name="Camera" node_paths=PackedStringArray("_sub_viewport", "_flash") instance=ExtResource("1_lemjp")]
+script = ExtResource("2_w4nqt")
+_sub_viewport = NodePath("CameraProjection/ProjectionSprite/SubViewport")
+_flash = NodePath("ActiveWhileHeld/Flash")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_oflmg")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="0"]
+shape = SubResource("BoxShape3D_2uk6l")
 
-[node name="PickUpArea" type="Area3D" parent="."]
-script = ExtResource("2_6b4lh")
-metadata/_custom_type_script = "uid://k4r22ohcsxla"
+[node name="CameraMesh" type="MeshInstance3D" parent="." index="1"]
+mesh = SubResource("BoxMesh_yl246")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PickUpArea"]
-shape = SubResource("BoxShape3D_x16dh")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractArea3D" index="0"]
+shape = SubResource("BoxShape3D_evswr")
 debug_color = Color(0.652233, 0.518714, 3.85046e-07, 0.42)
 
-[node name="CameraTransform" type="RemoteTransform3D" parent="."]
-remote_path = NodePath("../CameraProjection/SubViewport/Camera3D")
+[node name="Flash" type="Node3D" parent="ActiveWhileHeld" index="0"]
 
-[node name="CameraProjection" type="Sprite3D" parent="."]
+[node name="Mesh" type="MeshInstance3D" parent="ActiveWhileHeld/Flash" index="0"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.54)
+mesh = SubResource("CylinderMesh_gh0hb")
+skeleton = NodePath("../../../CameraMesh")
+
+[node name="CameraProjection" type="Node3D" parent="." index="4"]
+
+[node name="CameraTransform" type="RemoteTransform3D" parent="CameraProjection" index="0"]
+remote_path = NodePath("../ProjectionSprite/SubViewport/Camera3D")
+
+[node name="ProjectionSprite" type="Sprite3D" parent="CameraProjection" index="1"]
 transform = Transform3D(0.015, 0, 0, 0, 0.015, 0, 0, 0, 0.015, 0, 0, 0.06)
-texture = SubResource("ViewportTexture_x16dh")
+texture = SubResource("ViewportTexture_gblom")
 
-[node name="SubViewport" type="SubViewport" parent="CameraProjection"]
+[node name="SubViewport" type="SubViewport" parent="CameraProjection/ProjectionSprite" index="0"]
 
-[node name="Camera3D" type="Camera3D" parent="CameraProjection/SubViewport"]
-
-[connection signal="interacted" from="PickUpArea" to="." method="pick_up_item"]
+[node name="Camera3D" type="Camera3D" parent="CameraProjection/ProjectionSprite/SubViewport" index="0"]

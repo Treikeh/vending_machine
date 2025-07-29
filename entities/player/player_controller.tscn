@@ -12,13 +12,14 @@
 radius = 0.4
 height = 1.5
 
-[node name="PlayerController" type="RigidBody3D" groups=["player"]]
+[node name="PlayerController" type="RigidBody3D" node_paths=PackedStringArray("_held_item_transform") groups=["persistent", "player"]]
 collision_layer = 2
 collision_mask = 3
 physics_material_override = ExtResource("1_0fegy")
 lock_rotation = true
 script = ExtResource("1_y5f1h")
 _throw_force_curve = ExtResource("3_tpcj3")
+_held_item_transform = NodePath("Orientation/Head/HeldItemTransform")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_6tidu")
@@ -42,8 +43,7 @@ collision_mask = 17
 collide_with_areas = true
 script = ExtResource("3_rs2e6")
 
-[node name="HeldItemTransform" type="RemoteTransform3D" parent="Orientation/Head"]
-unique_name_in_owner = true
+[node name="HeldItemTransform" type="Marker3D" parent="Orientation/Head"]
 transform = Transform3D(0.85957, 0.121869, -0.496273, 0.0408115, 0.951673, 0.304389, 0.509386, -0.281898, 0.813056, 0.345, -0.185, -0.31)
 
 [node name="GroundCheck" parent="Orientation" instance=ExtResource("6_1tq3d")]

@@ -1,6 +1,5 @@
 extends RigidBody3D
 
-
 const HUD_SCENE: String = "uid://codyyu2jnkho5"
 
 
@@ -9,12 +8,10 @@ func _ready() -> void:
 	# Set initial state machine
 	_state_machine.switch(FALLING)
 	
+	print("The player is here")
+	
 	# Spawn hud
 	GuiManager.load_menu(HUD_SCENE)
-
-
-func _exit_tree() -> void:
-	SaveManager.add_save_data("player", get_save_data())
 
 
 func _process(delta: float) -> void:
@@ -161,25 +158,21 @@ func _jumping_enter() -> void:
 
 @export_group("Item")
 @export var _throw_force_curve: Curve
+@export var _held_item_transform: Node3D
 
 var _throw_charge: float = 0.0
 var _held_item: BaseItem
-
-@onready var _held_item_transform: RemoteTransform3D = %HeldItemTransform
 
 
 func pick_up_item(item: BaseItem) -> void:
 	# Drop　held_item when　picking up　new　item
 	if _held_item:
 		_held_item.drop_item(self)
-		#return
 	
 	_held_item = item
-	# Reset held_item_transfom so that it can pick up nodes with the same NodePath as the previous->
-	# <-held_item, if that item was destoryed while using it.
-	_held_item_transform.remote_path = ""
-	# Attach item to remote transfrom
-	_held_item_transform.remote_path = item.get_path()
+	_held_item.pick_up_item(self)
+	_held_item.reparent(_held_item_transform, false)
+	_held_item.global_transform = _held_item_transform.global_transform
 
 
 func _use_held_item() -> void:
@@ -191,7 +184,7 @@ func _throw_held_item() -> void:
 	var force: float = _throw_force_curve.sample(_throw_charge)
 	if _held_item:
 		_held_item.drop_item(self)
-		_held_item_transform.remote_path = ""
+		_held_item.reparent(LevelManager)
 		_held_item.global_transform = _head.global_transform
 		_held_item.apply_central_impulse(-_head.global_basis.z * force * _held_item.mass)
 		_held_item = null
@@ -215,7 +208,6 @@ func get_save_data() -> Dictionary:
 	var data: Dictionary = {
 		"item": _held_item.scene_file_path if _held_item != null else "",
 	}
-	
 	return data
 
 
@@ -224,7 +216,6 @@ func load_save_data(data: Dictionary) -> void:
 		if data.item != "":
 			var item: BaseItem = load(data.item).instantiate()
 			add_child(item)
-			await get_tree().process_frame
 			item.pick_up_item(self)
 
 #endregion
