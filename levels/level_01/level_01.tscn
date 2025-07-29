@@ -13,16 +13,16 @@ size = Vector2(100, 100)
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_71kry"]
 points = PackedVector3Array(-50, 0, -50, -50, 0, 50, 50, 0, -50, 50, 0, 50)
 
-[node name="Level01" type="Node3D" node_paths=PackedStringArray("_vending_machine", "_train_station_tunnel_spawn_point", "_tunnel_path", "_trash_can", "_save_floor")]
+[node name="Level01" type="Node3D" node_paths=PackedStringArray("_train_station_tunnel_spawn_point", "_tunnel_path", "_trash_can")]
 script = ExtResource("1_2fp4v")
-_vending_machine = NodePath("VendingMachine")
 _train_station_tunnel_spawn_point = NodePath("OtherLevels/TrainStationTunnel/TrainStationTunnelSpawnPoint")
 _tunnel_path = NodePath("level_01_sm/Level01TunnelPath_001")
 _trash_can = NodePath("TrashCanScreenNotifier/TrashCan")
-_save_floor = NodePath("SaveFloor")
 metadata/_custom_type_script = "uid://bqomd2e1p3srg"
 
 [node name="SaveFloor" type="StaticBody3D" parent="."]
+collision_layer = 8388608
+collision_mask = 0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SaveFloor"]
 visible = false

@@ -1,5 +1,6 @@
 extends RigidBody3D
 
+
 const HUD_SCENE: String = "uid://codyyu2jnkho5"
 
 
@@ -7,8 +8,6 @@ func _ready() -> void:
 	_ground_check.player = self
 	# Set initial state machine
 	_state_machine.switch(FALLING)
-	
-	print("The player is here")
 	
 	# Spawn hud
 	GuiManager.load_menu(HUD_SCENE)
@@ -216,6 +215,6 @@ func load_save_data(data: Dictionary) -> void:
 		if data.item != "":
 			var item: BaseItem = load(data.item).instantiate()
 			add_child(item)
-			item.pick_up_item(self)
+			pick_up_item(item)
 
 #endregion

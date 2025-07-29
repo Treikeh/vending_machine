@@ -18,8 +18,8 @@ func _ready() -> void:
 
 
 func _exit_tree() -> void:
-	return
-	_save_data_to_file()
+	#_save_data_to_file()
+	pass
 
 
 func add_save_data(key:String, data: Dictionary) -> void:
@@ -50,10 +50,7 @@ func _load_data_from_file() -> void:
 
 #region Persistent Nodes
 
-
 const SAVE_LAYER := int(pow(2, 24-1))
-
-var persistent_nodes: Array[Node] = []
 
 
 func save_persistent_nodes(root: Node3D) -> Dictionary:
@@ -61,7 +58,7 @@ func save_persistent_nodes(root: Node3D) -> Dictionary:
 	var id: int = 0
 	
 	# Iterate over every persistent ndoe
-	for node: Node3D in persistent_nodes:
+	for node: Node3D in get_tree().get_nodes_in_group("persistent"):
 		# Make sure node isn't the root and that it's still in the persistent group
 		if node == root or not node.is_in_group("persistent"):
 			continue

@@ -1,14 +1,7 @@
 extends Level3D
 
 
-@export var _vending_machine: Node3D
-
 var _buy_count: int = 0
-
-
-func _ready() -> void:
-	# Spawn world environment that is independent from level
-	LevelManager.load_level(Globals.WORLD_ENV_PATH, global_transform)
 
 
 func _on_vending_machine_code_submitted(code: String, valid: bool) -> void:

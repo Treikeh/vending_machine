@@ -19,12 +19,13 @@ size = Vector3(4, 2, 1)
 [sub_resource type="PlaneMesh" id="PlaneMesh_g767i"]
 size = Vector2(20, 13.5)
 
-[node name="TrainStationTunnel" type="Node3D" node_paths=PackedStringArray("_save_floor")]
+[node name="TrainStationTunnel" type="Node3D"]
 script = ExtResource("1_bnm24")
-_save_floor = NodePath("SaveFloor")
 metadata/_custom_type_script = "uid://bqomd2e1p3srg"
 
 [node name="SaveFloor" type="StaticBody3D" parent="."]
+collision_layer = 8388608
+collision_mask = 0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SaveFloor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.05, -10, -8.05)

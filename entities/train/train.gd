@@ -12,7 +12,7 @@ var _speed: float = _max_speed
 
 func _physics_process(delta: float) -> void:
 	progress += _speed * delta
-	_tarin_body.velocity = -_tarin_body.global_basis.x * _speed
+	_tarin_body.velocity = -_tarin_body.global_basis.z * _speed
 
 
 func _on_reparent_area_body_entered(body: Node3D) -> void:

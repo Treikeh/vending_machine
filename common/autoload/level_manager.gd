@@ -34,7 +34,7 @@ func _hijack_current_scene() -> void:
 	var current_scene: Node = get_tree().current_scene
 	current_scene.reparent.call_deferred(self)
 	
-	# Load level save data
+	# Add level to loaded level list
 	if current_scene is Level3D:
 		# Add the uid of the current scene to the loaded levels list so that it can be unloaded.
 		var current_scene_file_path: String = current_scene.scene_file_path
@@ -42,7 +42,7 @@ func _hijack_current_scene() -> void:
 		var uid_string: String = ResourceUID.id_to_text(uid_id)
 		_loaded_levels[uid_string] = current_scene
 		# Load level data
-		current_scene.load_save_data(SaveManager.get_save_data(uid_string))
+		current_scene.load_save_data(SaveManager.get_save_data(current_scene_file_path))
 
 
 ## Start loading a new level. If a new trasform is given, the new level will be loaded additively
@@ -60,8 +60,7 @@ func load_level(
 	
 	# Check if level is already in the scene tree
 	if _loaded_levels.has(level_path):
-		#TODO: Print the level name
-		print("NOTE!: Level %s is already loaded" % level_path)
+		print("NOTE!: Level %s is already loaded" % _loaded_levels[level_path].name)
 		return
 	
 	# Setup loding queue data
@@ -70,12 +69,13 @@ func load_level(
 	# Check if a new transform was given.
 	# If it was, show the loading screen and unload all currently active levels.
 	if spawn_transform == Transform3D.FLIP_Y:
-		# Stop levels from spawning/despawning wile the loading screen is fading inn
+		# Stop levels from spawning/despawning while the loading screen is fading inn
 		_can_spawn_levels = false
 		_loading_screen.fade_in()
 		await _loading_screen.fully_visible
 		# Unload all levels and allow the new level to spawn inn when the loading screen is fully visible
 		_unload_all_levels()
+		#TODO: Await until _unload_all_levels() is completely finished
 		_can_spawn_levels = true
 		# Override spawn transform
 		level_data.spawn_transform = global_transform
@@ -93,7 +93,6 @@ func unload_level(level_path: String) -> void:
 		var level: Level3D = _loaded_levels[level_path]
 		
 		# Save level data
-		SaveManager.persistent_nodes = get_tree().get_nodes_in_group("persistent")
 		SaveManager.add_save_data(level.scene_file_path, level.get_save_data())
 		
 		remove_child(level)
@@ -108,16 +107,18 @@ func unload_level(level_path: String) -> void:
 ## Unload all child nodes of World3D.
 ## Only used when fully changing levels
 func _unload_all_levels() -> void:
-	# Save data on all loaded levels
-	SaveManager.persistent_nodes = get_tree().get_nodes_in_group("persistent")
-	for level_path: String in _loaded_levels:
-		SaveManager.add_save_data(level_path, _loaded_levels[level_path].get_save_data())
+	for level_id: String in _loaded_levels:
+		var level: Level3D = _loaded_levels[level_id]
+		SaveManager.add_save_data(level.scene_file_path, level.get_save_data())
+		level.queue_free()
 	
-	# Remove all nodes
+	_loaded_levels.clear()
+	
+	# Remove all that don't need to save aything
 	for child: Node in get_children():
+		# Save data on all loaded levels
 		remove_child(child)
 		child.queue_free()
-		_loaded_levels.clear()
 
 
 func _check_level_loading_queue() -> void:
@@ -155,7 +156,6 @@ func _add_level_to_world(level_data: LevelLoadingData) -> void:
 		# Load level save data
 		level_node.load_save_data(SaveManager.get_save_data(level_node.scene_file_path))
 	
-	
 	# Remove level from loading queue
 	_level_loading_queue.erase(level_data)
 	
@@ -164,19 +164,9 @@ func _add_level_to_world(level_data: LevelLoadingData) -> void:
 		_loading_screen.fade_out()
 
 
-## Data that is needed when loading the levels
-class LevelLoadingData:
-	# Path to the level (Necessary). Used to check the loading status of the level.
-	var level_path: String
-	# Where the level will spawn (Optional).
-	# If set, the new level will be spawned in additively with the other levels.
-	# If not set, all the active levels will be unloaded before spawning in the new level.
-	var spawn_transform: Transform3D
-	# A function that will be called when the new level has been added to the scene tree (Optional).
-	# Used when you want to delay a function unitl the desired level has been spawned.
-	var spawn_callback: Callable
-	
-	func _init(path: String, transform: Transform3D, callback: Callable) -> void:
-		level_path = path
-		spawn_transform = transform
-		spawn_callback = callback
+func get_active_levels() -> Dictionary:
+	var active_levels: Dictionary = {}
+	for level_id: String in _loaded_levels:
+		var level_transform: Transform3D = _loaded_levels[level_id].global_transform
+		active_levels[level_id] = var_to_str(level_transform)
+	return active_levels

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://438mffbmqx1b"]
+[gd_scene load_steps=15 format=3 uid="uid://438mffbmqx1b"]
 
 [ext_resource type="Script" uid="uid://bb00o1p43k44i" path="res://levels/train_station/train_station.gd" id="1_b0eu5"]
 [ext_resource type="PackedScene" uid="uid://cpkqvybvj5ikj" path="res://levels/train_station/art/train_station_mock_up.glb" id="1_cn4k8"]
@@ -7,12 +7,13 @@
 [ext_resource type="PackedScene" uid="uid://pgv43adw264g" path="res://common/scenes/level_unload_trigger.tscn" id="5_irpxo"]
 [ext_resource type="MeshLibrary" uid="uid://dil5kl30j0edq" path="res://levels/train_station_tunnel/art/train_station_tunnel_01_gridmap.meshlib" id="6_7vjbl"]
 [ext_resource type="PackedScene" uid="uid://gs83e0u3lu6s" path="res://entities/player/spawner/player_spawner.tscn" id="7_f26eg"]
+[ext_resource type="PackedScene" uid="uid://dflqugmxo8c5n" path="res://entities/items/camera/camera.tscn" id="8_50y1m"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_50y1m"]
-size = Vector2(500, 20)
+size = Vector2(550, 20)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_7vjbl"]
-points = PackedVector3Array(-250, 0, -10, -250, 0, 10, 250, 0, -10, 250, 0, 10)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_50y1m"]
+points = PackedVector3Array(-275, 0, -10, -275, 0, 10, 275, 0, -10, 275, 0, 10)
 
 [sub_resource type="Curve3D" id="Curve3D_sgefo"]
 bake_interval = 1.0
@@ -35,6 +36,8 @@ script = ExtResource("1_b0eu5")
 metadata/_custom_type_script = "uid://bqomd2e1p3srg"
 
 [node name="SaveFloor" type="StaticBody3D" parent="."]
+collision_layer = 8388608
+collision_mask = 0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SaveFloor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, -8)
@@ -43,7 +46,7 @@ skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SaveFloor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, -8)
-shape = SubResource("ConvexPolygonShape3D_7vjbl")
+shape = SubResource("ConvexPolygonShape3D_50y1m")
 
 [node name="train_station_mock_up" parent="." instance=ExtResource("1_cn4k8")]
 
@@ -69,7 +72,6 @@ monitorable = false
 shape = SubResource("BoxShape3D_irpxo")
 
 [node name="OtherLevels" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0)
 
 [node name="TrainStationTunnel" type="Node3D" parent="OtherLevels"]
 
@@ -114,6 +116,9 @@ metadata/_editor_floor_ = Vector3(0, 3, 0)
 
 [node name="PlayerSpawner" parent="." instance=ExtResource("7_f26eg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.975, -1.9)
+
+[node name="Camera" parent="." instance=ExtResource("8_50y1m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9, 0.5, -2.6)
 
 [connection signal="body_entered" from="StopTrainArea" to="." method="_on_stop_train_area_body_entered"]
 

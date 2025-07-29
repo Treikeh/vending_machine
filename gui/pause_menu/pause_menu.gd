@@ -29,11 +29,13 @@ func _on_settings_menu_closed() -> void:
 
 func _on_main_menu_button_pressed() -> void:
 	get_tree().paused = false
-	# Load main menu
+	SaveManager.add_save_data("active_levels", LevelManager.get_active_levels())
 	LevelManager.load_level(Globals.MAIN_MENU_PATH)
 	GuiManager.unload_all_menus()
 
 
-
 func _on_quit_button_pressed() -> void:
-	get_tree().quit()
+	get_tree().paused = false
+	SaveManager.add_save_data("active_levels", LevelManager.get_active_levels())
+	LevelManager.load_level(Globals.QUIT_LEVEL_PATH)
+	GuiManager.unload_all_menus()

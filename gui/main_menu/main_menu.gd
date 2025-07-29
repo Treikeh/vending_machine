@@ -33,7 +33,15 @@ func _on_destroy_item_area_body_entered(body: Node3D) -> void:
 #region Buttons
 
 func _on_play_button_pressed() -> void:
-	LevelManager.load_level(first_level_path)
+	var active_levels: Dictionary = SaveManager.get_save_data("active_levels")
+	if not active_levels.is_empty():
+		LevelManager.load_level(Globals.WORLD_ENV_PATH)
+		for level: String in active_levels:
+			var level_transform: Transform3D = str_to_var(active_levels[level])
+			LevelManager.load_level(level, level_transform)
+	else:
+		LevelManager.load_level(Globals.WORLD_ENV_PATH)
+		LevelManager.load_level(first_level_path, LevelManager.global_transform)
 
 
 func _on_settings_button_pressed() -> void:
@@ -54,6 +62,6 @@ func _on_credits_button_pressed() -> void:
 
 
 func _on_quit_button_pressed() -> void:
-	get_tree().quit()
+	LevelManager.load_level(Globals.QUIT_LEVEL_PATH)
 
 #endregion
