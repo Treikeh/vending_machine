@@ -14,7 +14,8 @@ signal code_submitted(code: String, is_valid: bool)
 	"12": preload("res://entities/items/soda_cans/blue_soda_can.tscn"),
 	"13": preload("res://entities/items/soda_cans/green_soda_can.tscn"),
 	"14": preload("res://entities/items/soda_cans/yellow_soda_can.tscn"),
-	"21": preload("res://entities/items/camera/camera.tscn")
+	"21": preload("res://entities/items/camera/camera.tscn"),
+	"41": preload("res://entities/items/basketball/basketball.tscn"),
 }
 
 
