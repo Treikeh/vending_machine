@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b64kpf3puwh5f"]
+[gd_scene load_steps=8 format=3 uid="uid://b64kpf3puwh5f"]
 
 [ext_resource type="Script" uid="uid://bqvoejsdvjmuv" path="res://levels/level_01/level_01.gd" id="1_2fp4v"]
 [ext_resource type="PackedScene" uid="uid://b6iud14yjg3ef" path="res://entities/vending_machine/vending_machine.tscn" id="2_mckh2"]
@@ -7,30 +7,25 @@
 [ext_resource type="PackedScene" uid="uid://gs83e0u3lu6s" path="res://entities/player/spawner/player_spawner.tscn" id="5_71kry"]
 [ext_resource type="PackedScene" uid="uid://gkdkiaeobysh" path="res://entities/items/note/note.tscn" id="5_dm0pi"]
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_71kry"]
-size = Vector2(100, 100)
+[sub_resource type="BoxShape3D" id="BoxShape3D_71kry"]
+size = Vector3(100, 5, 100)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_71kry"]
-points = PackedVector3Array(-50, 0, -50, -50, 0, 50, 50, 0, -50, 50, 0, 50)
-
-[node name="Level01" type="Node3D" node_paths=PackedStringArray("_train_station_tunnel_spawn_point", "_tunnel_path", "_trash_can")]
+[node name="Level01" type="Node3D" node_paths=PackedStringArray("_train_station_tunnel_spawn_point", "_tunnel_path", "_trash_can", "level_bounds")]
 script = ExtResource("1_2fp4v")
 _train_station_tunnel_spawn_point = NodePath("OtherLevels/TrainStationTunnel/TrainStationTunnelSpawnPoint")
 _tunnel_path = NodePath("level_01_sm/Level01TunnelPath_001")
 _trash_can = NodePath("TrashCanScreenNotifier/TrashCan")
+level_bounds = NodePath("LevelBounds")
 metadata/_custom_type_script = "uid://bqomd2e1p3srg"
 
-[node name="SaveFloor" type="StaticBody3D" parent="."]
-collision_layer = 8388608
-collision_mask = 0
+[node name="LevelBounds" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 23
+monitorable = false
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SaveFloor"]
-visible = false
-mesh = SubResource("PlaneMesh_71kry")
-skeleton = NodePath("")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SaveFloor"]
-shape = SubResource("ConvexPolygonShape3D_71kry")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LevelBounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+shape = SubResource("BoxShape3D_71kry")
 
 [node name="level_01_sm" parent="." instance=ExtResource("3_aqob7")]
 

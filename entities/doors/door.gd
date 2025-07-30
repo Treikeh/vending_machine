@@ -18,8 +18,6 @@ var _open_transform: Transform3D
 func _ready() -> void:
 	_start_transform = transform
 	_open_transform = _get_open_transform()
-	if _is_open:
-		transform = _open_transform
 
 
 func _on_interacted(_instigator: Node3D) -> void:
@@ -61,3 +59,9 @@ func load_save_data(data: Dictionary) -> void:
 		_open_speed = data.open_speed
 		_open_position = str_to_var(data.open_pos)
 		_open_rotation = str_to_var(data.open_rot)
+		# Update start and open transform.
+		# It's necessarry to do this here since function is called after _ready.
+		_start_transform = transform
+		_open_transform = _get_open_transform()
+		if _is_open:
+			transform = _open_transform

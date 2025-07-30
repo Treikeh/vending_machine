@@ -2,8 +2,9 @@ extends Level3D
 
 
 func get_save_data() -> Dictionary:
+	var overlapping_nodes: Array[Node3D] = Utility.get_overlapping_nodes(level_bounds)
 	var data: Dictionary = {
-		"persistent_nodes": SaveManager.save_persistent_nodes(self),
+		"persistent_nodes": SaveManager.save_persistent_nodes(self, overlapping_nodes),
 	}
 	return data
 

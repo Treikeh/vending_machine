@@ -77,11 +77,12 @@ func _set_trash_can_state(active: bool) -> void:
 #region Save/Load
 
 func get_save_data() -> Dictionary:
+	var overlapping_nodes: Array[Node3D] = Utility.get_overlapping_nodes(level_bounds)
 	var data: Dictionary = {
 		"buy_count": _buy_count,
 		"trash_can_visible": _trash_can.visible,
 		"tunnel_state": _tunnel_state,
-		"persistent_nodes": SaveManager.save_persistent_nodes(self),
+		"persistent_nodes": SaveManager.save_persistent_nodes(self, overlapping_nodes),
 	}
 	return data
 

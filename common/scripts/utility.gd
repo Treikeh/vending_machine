@@ -38,14 +38,25 @@ static func vec3_rad_to_deg(vector: Vector3) -> Vector3:
 	return Vector3(x, y, z)
 
 
-#CREDITS: Nartapok - https://www.reddit.com/r/godot/comments/4t25y1/string_to_vector2/
+## Converts a string that looks like -> (1.0, 1.0) into a vector 2
+##CREDITS: Nartapok - https://www.reddit.com/r/godot/comments/4t25y1/string_to_vector2/
 static func string_to_vector2(string := "") -> Vector2:
 	if string:
 		var new_string: String = string
 		new_string = new_string.erase(0, 1)
 		new_string = new_string.erase(new_string.length() - 1, 1)
 		var array: Array = new_string.split(", ")
-
+		
 		return Vector2(array[0], array[1])
-
+	
 	return Vector2.ZERO
+
+
+## Gets all the overlapping nodes in an Area3D
+static func get_overlapping_nodes(area: Area3D, force_transform_update: bool = false) -> Array[Node3D]:
+	var nodes: Array[Node3D] = []
+	if force_transform_update:
+		area.force_update_transform()
+	nodes.append_array(area.get_overlapping_areas())
+	nodes.append_array(area.get_overlapping_bodies())
+	return nodes

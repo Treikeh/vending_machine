@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://438mffbmqx1b"]
+[gd_scene load_steps=13 format=3 uid="uid://438mffbmqx1b"]
 
 [ext_resource type="Script" uid="uid://bb00o1p43k44i" path="res://levels/train_station/train_station.gd" id="1_b0eu5"]
 [ext_resource type="PackedScene" uid="uid://cpkqvybvj5ikj" path="res://levels/train_station/art/train_station_mock_up.glb" id="1_cn4k8"]
@@ -9,19 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://gs83e0u3lu6s" path="res://entities/player/spawner/player_spawner.tscn" id="7_f26eg"]
 [ext_resource type="PackedScene" uid="uid://dflqugmxo8c5n" path="res://entities/items/camera/camera.tscn" id="8_50y1m"]
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_50y1m"]
-size = Vector2(550, 20)
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_50y1m"]
-points = PackedVector3Array(-275, 0, -10, -275, 0, 10, 275, 0, -10, 275, 0, 10)
-
-[sub_resource type="Curve3D" id="Curve3D_sgefo"]
-bake_interval = 1.0
-_data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 270, 0, 0, 0, 0, 0, 0, 0, 0, 540, 0, 0),
-"tilts": PackedFloat32Array(0, 0, 0)
-}
-point_count = 3
+[sub_resource type="BoxShape3D" id="BoxShape3D_50y1m"]
+size = Vector3(540, 6.6, 16)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_irpxo"]
 
@@ -31,22 +20,19 @@ size = Vector3(52, 6, 16)
 [sub_resource type="BoxShape3D" id="BoxShape3D_f26eg"]
 size = Vector3(1.6, 6, 16)
 
-[node name="TrainStation" type="Node3D"]
+[node name="TrainStation" type="Node3D" node_paths=PackedStringArray("level_bounds")]
 script = ExtResource("1_b0eu5")
+level_bounds = NodePath("LevelBounds")
 metadata/_custom_type_script = "uid://bqomd2e1p3srg"
 
-[node name="SaveFloor" type="StaticBody3D" parent="."]
-collision_layer = 8388608
-collision_mask = 0
+[node name="LevelBounds" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 23
+monitorable = false
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SaveFloor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, -8)
-mesh = SubResource("PlaneMesh_50y1m")
-skeleton = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SaveFloor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, -8)
-shape = SubResource("ConvexPolygonShape3D_50y1m")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LevelBounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, -8)
+shape = SubResource("BoxShape3D_50y1m")
 
 [node name="train_station_mock_up" parent="." instance=ExtResource("1_cn4k8")]
 
@@ -54,13 +40,8 @@ shape = SubResource("ConvexPolygonShape3D_50y1m")
 process_mode = 4
 visible = false
 
-[node name="TrainTracks" type="Path3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -270, -0.7, -6)
-curve = SubResource("Curve3D_sgefo")
-
-[node name="Train" parent="TrainTracks" groups=["train"] instance=ExtResource("3_f26eg")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 200, 0, 0)
-progress = 200.0
+[node name="Train" parent="." instance=ExtResource("3_f26eg")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -69.9998, -0.7, -6)
 
 [node name="StopTrainArea" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -5.9)
@@ -72,6 +53,7 @@ monitorable = false
 shape = SubResource("BoxShape3D_irpxo")
 
 [node name="OtherLevels" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0)
 
 [node name="TrainStationTunnel" type="Node3D" parent="OtherLevels"]
 
@@ -119,6 +101,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.975, -1.9)
 
 [node name="Camera" parent="." instance=ExtResource("8_50y1m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9, 0.5, -2.6)
+collision_layer = 8388612
 
 [connection signal="body_entered" from="StopTrainArea" to="." method="_on_stop_train_area_body_entered"]
 

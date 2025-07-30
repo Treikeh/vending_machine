@@ -2,9 +2,15 @@
 
 [ext_resource type="Script" uid="uid://bqomd2e1p3srg" path="res://levels/level_3d.gd" id="1_7h236"]
 
-[node name="Level3D" type="Node3D"]
+[node name="Level3D" type="Node3D" node_paths=PackedStringArray("level_bounds")]
 script = ExtResource("1_7h236")
+level_bounds = NodePath("LevelBounds")
 metadata/_custom_type_script = "uid://bqomd2e1p3srg"
+
+[node name="LevelBounds" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 23
+monitorable = false
 
 [node name="SaveFloor" type="StaticBody3D" parent="."]
 editor_description = "The base collider that will allow nodes to be saved in this scene. Needs to have collision layer 24 active."
