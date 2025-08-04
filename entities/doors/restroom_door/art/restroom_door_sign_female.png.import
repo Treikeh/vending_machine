@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://crccykklxoigc"
-path="res://.godot/imported/restroom_door_sign_female.png-2c24dd341c9fcfb6f9e30c38343cabd2.ctex"
+path="res://.godot/imported/restroom_door_sign_female.png-7730da217d9e60cb2330ec6d9cf3e8c8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/doors/restroom_door/restroom_door_sign_female.png"
-dest_files=["res://.godot/imported/restroom_door_sign_female.png-2c24dd341c9fcfb6f9e30c38343cabd2.ctex"]
+source_file="res://entities/doors/restroom_door/art/restroom_door_sign_female.png"
+dest_files=["res://.godot/imported/restroom_door_sign_female.png-7730da217d9e60cb2330ec6d9cf3e8c8.ctex"]
 
 [params]
 

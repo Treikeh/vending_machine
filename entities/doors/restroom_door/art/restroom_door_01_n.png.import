@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dqorp6c1xb0r2"
-path.s3tc="res://.godot/imported/restroom_door_01_orm.png-16738d48ae8de04177ea4fc6c49bd03a.s3tc.ctex"
+uid="uid://dmwehg3kb7one"
+path.s3tc="res://.godot/imported/restroom_door_01_n.png-4fa15a21c4c7ae076c92221d857c14c5.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://entities/doors/restroom_door/restroom_door_01_orm.png"
-dest_files=["res://.godot/imported/restroom_door_01_orm.png-16738d48ae8de04177ea4fc6c49bd03a.s3tc.ctex"]
+source_file="res://entities/doors/restroom_door/art/restroom_door_01_n.png"
+dest_files=["res://.godot/imported/restroom_door_01_n.png-4fa15a21c4c7ae076c92221d857c14c5.s3tc.ctex"]
 
 [params]
 
@@ -20,12 +20,12 @@ compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/normal_map=0
+compress/normal_map=1
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=0
-roughness/src_normal=""
+roughness/mode=1
+roughness/src_normal="res://entities/doors/restroom_door/restroom_door_01_n.png"
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false

@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://chied2nbovh06"
-path.s3tc="res://.godot/imported/restroom_door_01_bc.png-8997ebd0c8c282ae29288279a4ac628b.s3tc.ctex"
+path.s3tc="res://.godot/imported/restroom_door_01_bc.png-6b73750e0568ee6056e71afcbbbfb49c.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://entities/doors/restroom_door/restroom_door_01_bc.png"
-dest_files=["res://.godot/imported/restroom_door_01_bc.png-8997ebd0c8c282ae29288279a4ac628b.s3tc.ctex"]
+source_file="res://entities/doors/restroom_door/art/restroom_door_01_bc.png"
+dest_files=["res://.godot/imported/restroom_door_01_bc.png-6b73750e0568ee6056e71afcbbbfb49c.s3tc.ctex"]
 
 [params]
 

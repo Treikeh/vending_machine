@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://t5bjga48mq8u" path="res://entities/doors/door.tscn" id="1_pph4r"]
 [ext_resource type="Shape3D" uid="uid://brq5qvu3kpm2l" path="res://entities/doors/door_default_collision.tres" id="2_ssl8n"]
-[ext_resource type="PackedScene" uid="uid://b66dt13sk26pc" path="res://entities/doors/restroom_door/restroom_door_01_sm.tscn" id="3_7p658"]
-[ext_resource type="Texture2D" uid="uid://csigaasfs82vb" path="res://entities/doors/restroom_door/restroom_door_sign_male.png" id="4_my8sj"]
+[ext_resource type="PackedScene" uid="uid://b66dt13sk26pc" path="res://entities/doors/restroom_door/art/restroom_door_01_sm.tscn" id="3_7p658"]
+[ext_resource type="Texture2D" uid="uid://csigaasfs82vb" path="res://entities/doors/restroom_door/art/restroom_door_sign_male.png" id="4_my8sj"]
 
 [node name="RestroomDoor" instance=ExtResource("1_pph4r")]
 

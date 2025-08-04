@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://c5vjh5bimods1" path="res://levels/train_station_tunnel/train_station_tunnel.gd" id="1_bnm24"]
 [ext_resource type="PackedScene" uid="uid://d11y7b5nss2s5" path="res://common/scenes/level_load_trigger.tscn" id="2_xj2i1"]
 [ext_resource type="PackedScene" uid="uid://pgv43adw264g" path="res://common/scenes/level_unload_trigger.tscn" id="3_jqnph"]
-[ext_resource type="PackedScene" uid="uid://copdk6dcpyiln" path="res://entities/doors/restroom_door.tscn" id="4_bnm24"]
+[ext_resource type="PackedScene" uid="uid://copdk6dcpyiln" path="res://entities/doors/restroom_door/restroom_door.tscn" id="4_bnm24"]
 [ext_resource type="MeshLibrary" uid="uid://dil5kl30j0edq" path="res://levels/train_station_tunnel/art/train_station_tunnel_01_gridmap.meshlib" id="4_kjm4n"]
 [ext_resource type="PackedScene" uid="uid://gs83e0u3lu6s" path="res://entities/player/spawner/player_spawner.tscn" id="6_g767i"]
 
