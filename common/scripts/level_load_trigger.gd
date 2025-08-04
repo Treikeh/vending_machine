@@ -9,7 +9,7 @@ extends Area3D
 ## Where the new level will spawn.
 ## If set, the new level will be added to the world along with all other currently active levels.
 ## If left empty, all currently active levels will be unloaded and replaced with the new level.
-@export var spawn_transform: Node3D
+@export var spawn_transform: Marker3D
 
 
 func _ready() -> void:

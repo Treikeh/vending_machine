@@ -1,0 +1,91 @@
+[gd_scene load_steps=10 format=3 uid="uid://saphiybos53"]
+
+[ext_resource type="PackedScene" uid="uid://cbn0lxi0a7yte" path="res://levels/level_3d.tscn" id="1_5hj6o"]
+[ext_resource type="Script" uid="uid://dpi4t8fcj6c2q" path="res://levels/office_building_exterior/office_building_exterior.gd" id="2_5jagq"]
+[ext_resource type="PackedScene" uid="uid://d11y7b5nss2s5" path="res://common/scenes/level_load_trigger.tscn" id="4_jkvoq"]
+[ext_resource type="PackedScene" uid="uid://pgv43adw264g" path="res://common/scenes/level_unload_trigger.tscn" id="5_5xvh8"]
+[ext_resource type="PackedScene" uid="uid://gs83e0u3lu6s" path="res://entities/player/spawner/player_spawner.tscn" id="6_pnhrg"]
+[ext_resource type="Material" uid="uid://meiilmj55714" path="res://common/materials/simple_dev_grid_gray_01.tres" id="7_u3qo7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u3qo7"]
+size = Vector3(460, 6, 37)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5xvh8"]
+size = Vector3(10, 5, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pnhrg"]
+size = Vector3(200, 5, 10)
+
+[node name="OfficeBuildingExterior" instance=ExtResource("1_5hj6o")]
+script = ExtResource("2_5jagq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LevelBounds" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 6.5)
+shape = SubResource("BoxShape3D_u3qo7")
+
+[node name="OtherLevels" type="Node3D" parent="." index="1"]
+
+[node name="TrainStation" type="Node3D" parent="OtherLevels" index="0"]
+
+[node name="Left" type="Node3D" parent="OtherLevels/TrainStation" index="0"]
+
+[node name="SpawnPointLeft" type="Marker3D" parent="OtherLevels/TrainStation/Left" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 500, 0, 0)
+gizmo_extents = 10.0
+
+[node name="TrainStationLoadTriggerLeft" parent="OtherLevels/TrainStation/Left" index="1" node_paths=PackedStringArray("spawn_transform") instance=ExtResource("4_jkvoq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 125, 1.5, -8)
+level_path = "uid://438mffbmqx1b"
+spawn_transform = NodePath("../SpawnPointLeft")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OtherLevels/TrainStation/Left/TrainStationLoadTriggerLeft" index="0"]
+shape = SubResource("BoxShape3D_5xvh8")
+debug_color = Color(0, 0.639353, 0.365875, 0.42)
+
+[node name="Right" type="Node3D" parent="OtherLevels/TrainStation" index="1"]
+
+[node name="SpawnPointRight" type="Marker3D" parent="OtherLevels/TrainStation/Right" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -500, 0, 0)
+gizmo_extents = 10.0
+
+[node name="TrainStationLoadTriggerRight" parent="OtherLevels/TrainStation/Right" index="1" node_paths=PackedStringArray("spawn_transform") instance=ExtResource("4_jkvoq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -125, 1.5, -8)
+level_path = "uid://438mffbmqx1b"
+spawn_transform = NodePath("../SpawnPointRight")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OtherLevels/TrainStation/Right/TrainStationLoadTriggerRight" index="0"]
+shape = SubResource("BoxShape3D_5xvh8")
+debug_color = Color(0, 0.639353, 0.365875, 0.42)
+
+[node name="TrainStationUnloadTrigger" parent="OtherLevels/TrainStation" index="2" instance=ExtResource("5_5xvh8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -8)
+level_path = "uid://438mffbmqx1b"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OtherLevels/TrainStation/TrainStationUnloadTrigger" index="0"]
+shape = SubResource("BoxShape3D_pnhrg")
+debug_color = Color(0.806939, 0.00229757, 0.992764, 0.42)
+
+[node name="OfficeBuildingInterior" type="Node3D" parent="OtherLevels" index="1"]
+
+[node name="Environment" type="Node3D" parent="." index="2"]
+
+[node name="TrainTracks" type="CSGBox3D" parent="Environment" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, -8)
+material_override = ExtResource("7_u3qo7")
+use_collision = true
+size = Vector3(460, 1, 8)
+
+[node name="Building" type="CSGBox3D" parent="Environment" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 50)
+material_override = ExtResource("7_u3qo7")
+use_collision = true
+size = Vector3(50, 100, 50)
+
+[node name="Platform" type="CSGBox3D" parent="Environment" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 10.5)
+material_override = ExtResource("7_u3qo7")
+use_collision = true
+size = Vector3(60, 1, 29)
+
+[node name="PlayerSpawner" parent="." index="3" instance=ExtResource("6_pnhrg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.475, 0)

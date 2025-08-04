@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://438mffbmqx1b"]
+[gd_scene load_steps=15 format=3 uid="uid://438mffbmqx1b"]
 
 [ext_resource type="Script" uid="uid://bb00o1p43k44i" path="res://levels/train_station/train_station.gd" id="1_b0eu5"]
 [ext_resource type="PackedScene" uid="uid://cpkqvybvj5ikj" path="res://levels/train_station/art/train_station_mock_up.glb" id="1_cn4k8"]
@@ -19,6 +19,12 @@ size = Vector3(52, 6, 16)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f26eg"]
 size = Vector3(1.6, 6, 16)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xg3uo"]
+size = Vector3(10, 5, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xywe6"]
+size = Vector3(150, 5, 10)
 
 [node name="TrainStation" type="Node3D" node_paths=PackedStringArray("level_bounds")]
 script = ExtResource("1_b0eu5")
@@ -95,6 +101,45 @@ data = {
 "cells": PackedInt32Array(1, 1, 655360, 65535, 1, 655360, 65534, 1, 1048578, 2, 1, 1048578, 131074, 1, 1048578, 196606, 1, 1048578, 262143, 1, 1048576, 196609, 1, 1048576)
 }
 metadata/_editor_floor_ = Vector3(0, 3, 0)
+
+[node name="OfficeBuildingExterior" type="Node3D" parent="OtherLevels"]
+
+[node name="Left" type="Node3D" parent="OtherLevels/OfficeBuildingExterior"]
+
+[node name="SpawnPointLeft" type="Marker3D" parent="OtherLevels/OfficeBuildingExterior/Left"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 500, 0, 0)
+gizmo_extents = 2.5
+
+[node name="OfficeBuildingExteriorLoadTriggerLeft" parent="OtherLevels/OfficeBuildingExterior/Left" node_paths=PackedStringArray("spawn_transform") instance=ExtResource("4_2rh3c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 125, 1.5, -8)
+level_path = "uid://saphiybos53"
+spawn_transform = NodePath("../SpawnPointLeft")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OtherLevels/OfficeBuildingExterior/Left/OfficeBuildingExteriorLoadTriggerLeft"]
+shape = SubResource("BoxShape3D_xg3uo")
+debug_color = Color(0, 0.639353, 0.365875, 0.42)
+
+[node name="Right" type="Node3D" parent="OtherLevels/OfficeBuildingExterior"]
+
+[node name="SpawnPointRight" type="Marker3D" parent="OtherLevels/OfficeBuildingExterior/Right"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -500, 0, 0)
+
+[node name="OfficeBuildingExteriorLoadTriggerRight" parent="OtherLevels/OfficeBuildingExterior/Right" node_paths=PackedStringArray("spawn_transform") instance=ExtResource("4_2rh3c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -125, 1.5, -8)
+level_path = "uid://saphiybos53"
+spawn_transform = NodePath("../SpawnPointRight")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OtherLevels/OfficeBuildingExterior/Right/OfficeBuildingExteriorLoadTriggerRight"]
+shape = SubResource("BoxShape3D_xg3uo")
+debug_color = Color(0, 0.639353, 0.365875, 0.42)
+
+[node name="OfficeBuildingExteriorUnloadTrigger" parent="OtherLevels/OfficeBuildingExterior" instance=ExtResource("5_irpxo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -8)
+level_path = "uid://saphiybos53"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OtherLevels/OfficeBuildingExterior/OfficeBuildingExteriorUnloadTrigger"]
+shape = SubResource("BoxShape3D_xywe6")
+debug_color = Color(0.806939, 0.00229757, 0.992764, 0.42)
 
 [node name="PlayerSpawner" parent="." instance=ExtResource("7_f26eg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.975, -1.9)
