@@ -29,21 +29,26 @@ enum Tunnel_State {HIDDEN, CAN_SPAWN, SPAWNED}
 @export var _train_station_tunnel_spawn_point: Marker3D
 @export var _tunnel_path: Node3D
 
-var _tunnel_state: Tunnel_State = Tunnel_State.HIDDEN
+var _tunnel_state: Tunnel_State = Tunnel_State.HIDDEN: set = _set_tunnel_state
+
+
+func _set_tunnel_state(value: Tunnel_State) -> void:
+	_tunnel_state = value
+	if _tunnel_state == Tunnel_State.SPAWNED:
+		_tunnel_path.hide()
+		_tunnel_path.process_mode = Node.PROCESS_MODE_DISABLED
 
 
 func _on_tunnel_path_screen_notifier_screen_exited() -> void:
 	if _tunnel_state == Tunnel_State.CAN_SPAWN:
 		_spawn_train_station_tunnel()
-		_tunnel_state = Tunnel_State.SPAWNED
 
 
 func _spawn_train_station_tunnel() -> void:
+	_tunnel_state = Tunnel_State.SPAWNED
 	var scene_path: String = "uid://gqsmdnolrjqo"
 	var spawn_transform: Transform3D = _train_station_tunnel_spawn_point.global_transform
 	LevelManager.load_level(scene_path, spawn_transform)
-	_tunnel_path.hide()
-	_tunnel_path.process_mode = Node.PROCESS_MODE_DISABLED
 
 #endregion
 
@@ -94,8 +99,6 @@ func load_save_data(data: Dictionary) -> void:
 		_set_trash_can_state(data.trash_can_visible)
 		
 		_tunnel_state = data.tunnel_state
-		if _tunnel_state == Tunnel_State.SPAWNED:
-			_spawn_train_station_tunnel()
 		
 		SaveManager.load_persistent_nodes(self, data.persistent_nodes)
 	else:

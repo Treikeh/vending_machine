@@ -53,7 +53,6 @@ func _load_data_from_file() -> void:
 func save_persistent_nodes(root: Node3D, persistent_nodes: Array[Node3D]) -> Dictionary:
 	print("%s is starting to save persistent nodes" % root.name)
 	var persistent_nodes_data: Dictionary = {}
-	var id: int = 0
 	
 	for node: Node3D in persistent_nodes:
 		# Check if node can be saved
@@ -69,19 +68,15 @@ func save_persistent_nodes(root: Node3D, persistent_nodes: Array[Node3D]) -> Dic
 		# right position even if the root node is spawned in different location.
 		var relative_transform : = root.global_transform.affine_inverse() * node.global_transform
 		
-		var node_id: String = str(id) + ":" + node.name
-		persistent_nodes_data[node_id] = {
-			"name": node.name,
+		#var node_id: String = str(id) + ":" + node.name
+		persistent_nodes_data[str(node.get_path())] = {
 			"scene_file_path": node.scene_file_path,
-			"parent_path": node.get_parent().get_path(),
 			"is_descendant": is_descendant,
 			"transform": var_to_str(node.transform if is_descendant else relative_transform),
 			"save_data": save_data,
 			#TODO: Find a way to reconnect signals on persistent nodes
 			#"connected_signals": {},
 		}
-		id += 1
-		
 		# Remove nodes from persistent group so that other levels can't save it.
 		node.remove_from_group("persistent")
 		if not is_descendant:
@@ -95,21 +90,31 @@ func load_persistent_nodes(root: Node3D, persistent_nodes_data: Dictionary) -> v
 		if root.is_ancestor_of(node):
 			node.queue_free()
 	
-	await root.get_tree().process_frame
+	await get_tree().process_frame
+	
+	# Sort persistent nodes data so that nodes higher in the scene tree are spawned first
+	# e.g. /root/level/node is spawned before /root/level/node/child
+	persistent_nodes_data.sort()
 	
 	# Spawn persistant nodes
-	for node_id: String in persistent_nodes_data:
-		var node_data: Dictionary = persistent_nodes_data[node_id]
+	for node_path: String in persistent_nodes_data:
+		var node_data: Dictionary = persistent_nodes_data[node_path]
 		var scene: PackedScene = load(node_data.scene_file_path)
 		var node: Node3D = scene.instantiate()
 		
-		node.name = node_data.name
+		# Divide the node_path into the name of the node and the path to the nodes parent
+		var path_split: PackedStringArray = node_path.split("/")
+		var node_name: String = path_split[-1]
+		var parent_path: String = node_path.left(-(node_name.length() + 1))
+		
+		node.name = node_name
+		print("%s is trying to load %s" % [root.name, node.name])
 		if node_data.is_descendant:
 			node.transform = str_to_var(node_data.transform)
 		else:
 			node.global_transform = root.global_transform * str_to_var(node_data.transform)
 		
-		var parent: Node = get_node(node_data.parent_path)
+		var parent: Node = get_node(parent_path)
 		parent.add_child(node)
 		node.load_save_data(node_data.save_data)
 

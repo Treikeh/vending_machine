@@ -1,6 +1,9 @@
 extends Node3D
 
 
+signal finished_loading_levels
+
+
 const _LOADING_SCREEN_SCENE: PackedScene = preload("uid://c54fq80lg0u1l")
 
 
@@ -16,12 +19,15 @@ var _level_loading_queue: Array[LevelLoadingData] = []
 
 
 func _ready() -> void:
-	# Make the main scene a child of this node
-	_hijack_current_scene()
-	
 	# Spawn loading screen
 	_loading_screen = _LOADING_SCREEN_SCENE.instantiate()
 	get_tree().root.add_child.call_deferred(_loading_screen)
+	
+	# Make the main scene a child of this node
+	_hijack_current_scene()
+	
+	await get_tree().process_frame
+	finished_loading_levels.emit()
 
 
 func _process(_delta: float) -> void:
@@ -139,7 +145,6 @@ func _check_level_loading_queue() -> void:
 				_add_level_to_world(level_data)
 				continue
 
-
 func _add_level_to_world(level_data: LevelLoadingData) -> void:
 	# Spawn level into the scene
 	var level_scene: PackedScene = ResourceLoader.load_threaded_get(level_data.level_path)
@@ -147,17 +152,19 @@ func _add_level_to_world(level_data: LevelLoadingData) -> void:
 	level_node.global_transform = level_data.spawn_transform
 	add_child(level_node)
 	
-	# Call spawn_callback at the end of the frame
-	level_data.spawn_callback.call_deferred()
-	
 	if level_node is Level3D:
 		# Add new level to loaded levels dict
 		_loaded_levels[level_data.level_path] = level_node
 		# Load level save data
 		level_node.load_save_data(SaveManager.get_save_data(level_node.scene_file_path))
 	
+	# Call spawn_callback at the end of the frame
+	level_data.spawn_callback.call_deferred()
+	
 	# Remove level from loading queue
 	_level_loading_queue.erase(level_data)
+	if _level_loading_queue.is_empty():
+		finished_loading_levels.emit()
 	
 	# Hide the loading screen if it's visible
 	if _loading_screen.visible:
