@@ -1,11 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://b6iud14yjg3ef"]
+[gd_scene load_steps=8 format=3 uid="uid://b6iud14yjg3ef"]
 
 [ext_resource type="Script" uid="uid://x80psvvcpak" path="res://entities/vending_machine/vending_machine.gd" id="1_qauav"]
 [ext_resource type="PackedScene" uid="uid://dickh50sq4kdu" path="res://entities/vending_machine/vending_machine_button.tscn" id="2_qauav"]
-[ext_resource type="PackedScene" uid="uid://de6f4wfar7xkg" path="res://entities/items/soda_cans/art/soda_can_01_sm.glb" id="3_rx14y"]
-[ext_resource type="PackedScene" uid="uid://ce2ep2k60an0w" path="res://entities/items/soda_cans/art/soda_can_02_sm.glb" id="4_12vco"]
-[ext_resource type="PackedScene" uid="uid://b7ar70wfnf8a7" path="res://entities/items/soda_cans/art/soda_can_03_sm.glb" id="5_goder"]
-[ext_resource type="PackedScene" uid="uid://dfeui7j0qhegj" path="res://entities/items/soda_cans/art/soda_can_04_sm.glb" id="6_npqjt"]
+[ext_resource type="PackedScene" uid="uid://ohfhsu5xuqwe" path="res://entities/items/soda_cans/art/soda_cans_01_sm.tscn" id="4_6k6ed"]
 [ext_resource type="PackedScene" uid="uid://b2h0g1n7qbgi0" path="res://entities/vending_machine/art/vending_machine_01_sm.glb" id="7_goder"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_goder"]
@@ -92,24 +89,27 @@ button_number = "N"
 
 [node name="Items" type="Node3D" parent="."]
 
-[node name="soda_can_01_sm" parent="Items" instance=ExtResource("3_rx14y")]
+[node name="RedSodaCanMesh" parent="Items" instance=ExtResource("4_6k6ed")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.73605, -0.3)
 
-[node name="soda_can_02_sm" parent="Items" instance=ExtResource("4_12vco")]
+[node name="BlueSodaCanMesh" parent="Items" instance=ExtResource("4_6k6ed")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 1.73605, -0.3)
+_colour = 2
 
-[node name="soda_can_03_sm" parent="Items" instance=ExtResource("5_goder")]
+[node name="GreenSodaCanMesh" parent="Items" instance=ExtResource("4_6k6ed")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 1.73605, -0.3)
+_colour = 3
 
-[node name="soda_can_04_sm" parent="Items" instance=ExtResource("6_npqjt")]
+[node name="YellowSodaCanMesh" parent="Items" instance=ExtResource("4_6k6ed")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 1.73605, -0.3)
+_colour = 1
 
 [node name="CameraMesh" type="MeshInstance3D" parent="Items"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.36, -0.2)
 mesh = SubResource("BoxMesh_oflmg")
 skeleton = NodePath("")
 
-[node name="CameraMesh2" type="MeshInstance3D" parent="Items"]
+[node name="BasketballMesh" type="MeshInstance3D" parent="Items"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48067, 0.7, -0.1)
 mesh = SubResource("SphereMesh_goder")
 skeleton = NodePath("")

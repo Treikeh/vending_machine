@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://de6f4wfar7xkg"
-path="res://.godot/imported/soda_can_01_sm.glb-c6f4064e4e2792d529d447b883c383b4.scn"
+uid="uid://j200uyd4agqt"
+path="res://.godot/imported/soda_cans_01_sm.glb-1578ac354b9afea163e8570f84715a6b.scn"
 
 [deps]
 
-source_file="res://entities/items/soda_cans/art/soda_can_01_sm.glb"
-dest_files=["res://.godot/imported/soda_can_01_sm.glb-c6f4064e4e2792d529d447b883c383b4.scn"]
+source_file="res://entities/items/soda_cans/art/soda_cans_01_sm.glb"
+dest_files=["res://.godot/imported/soda_cans_01_sm.glb-1578ac354b9afea163e8570f84715a6b.scn"]
 
 [params]
 
@@ -34,9 +34,9 @@ animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={
 "materials": {
-"soda_can_mat.001": {
+"soda_cans_mat.001": {
 "use_external/enabled": true,
-"use_external/path": "uid://b10eoxxwjtgk8"
+"use_external/path": "uid://ok01w866uev1"
 }
 }
 }

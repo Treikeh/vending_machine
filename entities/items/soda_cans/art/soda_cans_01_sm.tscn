@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://ohfhsu5xuqwe"]
+
+[ext_resource type="PackedScene" uid="uid://j200uyd4agqt" path="res://entities/items/soda_cans/art/soda_cans_01_sm.glb" id="1_46rod"]
+[ext_resource type="Script" uid="uid://dvjyf6ee8pvha" path="res://entities/items/soda_cans/art/soda_cans_01_sm.gd" id="2_8uaaa"]
+
+[node name="SodaCans_01_SM" instance=ExtResource("1_46rod")]
+script = ExtResource("2_8uaaa")
+
+[node name="YellowSodaCan_001" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+visible = false
+
+[node name="BlueSodaCan_001" parent="." index="2"]
+visible = false
+
+[node name="GreenSodaCan_001" parent="." index="3"]
+visible = false

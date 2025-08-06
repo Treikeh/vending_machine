@@ -90,6 +90,7 @@ func load_persistent_nodes(root: Node3D, persistent_nodes_data: Dictionary) -> v
 		if root.is_ancestor_of(node):
 			node.queue_free()
 	
+	# Wait a frame so that set the names of the new nodes
 	await get_tree().process_frame
 	
 	# Sort persistent nodes data so that nodes higher in the scene tree are spawned first

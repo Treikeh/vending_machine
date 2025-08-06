@@ -1,7 +1,0 @@
-[gd_resource type="ORMMaterial3D" load_steps=2 format=3 uid="uid://b10eoxxwjtgk8"]
-
-[ext_resource type="Texture2D" uid="uid://ctgy05rxn51mg" path="res://entities/items/soda_cans/art/soda_can_01_bc.png" id="1_ixaps"]
-
-[resource]
-albedo_texture = ExtResource("1_ixaps")
-texture_filter = 2

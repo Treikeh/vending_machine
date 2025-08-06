@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ctgy05rxn51mg"
-path.bptc="res://.godot/imported/soda_can_01_bc.png-34a0226bc18ba434297ff13bafbe522c.bptc.ctex"
+uid="uid://bb7es70272w88"
+path.bptc="res://.godot/imported/soda_cans_01_bc.png-2bc5d8cd6b3dac2a125e1f8c8f55dc5a.bptc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://entities/items/soda_cans/art/soda_can_01_bc.png"
-dest_files=["res://.godot/imported/soda_can_01_bc.png-34a0226bc18ba434297ff13bafbe522c.bptc.ctex"]
+source_file="res://entities/items/soda_cans/art/soda_cans_01_bc.png"
+dest_files=["res://.godot/imported/soda_cans_01_bc.png-2bc5d8cd6b3dac2a125e1f8c8f55dc5a.bptc.ctex"]
 
 [params]
 

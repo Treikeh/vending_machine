@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dd0kyo10f6bdp" path="res://entities/items/soda_cans/red_soda_can.gd" id="1_kkxw1"]
 [ext_resource type="Shape3D" uid="uid://ictrfw4onncu" path="res://entities/items/soda_cans/soda_cans_collision.tres" id="2_kkxw1"]
-[ext_resource type="PackedScene" uid="uid://de6f4wfar7xkg" path="res://entities/items/soda_cans/art/soda_can_01_sm.glb" id="2_oqvm0"]
 [ext_resource type="Script" uid="uid://k4r22ohcsxla" path="res://common/scripts/interact_area_3d.gd" id="3_kg4ro"]
+[ext_resource type="PackedScene" uid="uid://ohfhsu5xuqwe" path="res://entities/items/soda_cans/art/soda_cans_01_sm.tscn" id="3_kkxw1"]
 [ext_resource type="Shape3D" uid="uid://d1ycbhtwgtq72" path="res://entities/items/soda_cans/soda_cans_collision_interact.tres" id="4_l6wyn"]
 
 [node name="RedSodaCan" type="RigidBody3D" groups=["item", "persistent"]]
@@ -14,7 +14,7 @@ script = ExtResource("1_kkxw1")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = ExtResource("2_kkxw1")
 
-[node name="soda_can_01_sm" parent="." instance=ExtResource("2_oqvm0")]
+[node name="SodaCans_01_SM" parent="." instance=ExtResource("3_kkxw1")]
 
 [node name="PickUpArea" type="Area3D" parent="."]
 collision_layer = 16

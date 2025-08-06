@@ -6,9 +6,6 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_2uk6l"]
 size = Vector3(0.2, 0.1, 0.1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_yl246"]
-size = Vector3(0.2, 0.1, 0.1)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_evswr"]
 size = Vector3(0.21, 0.11, 0.11)
 
@@ -20,6 +17,9 @@ rings = 0
 cap_top = false
 cap_bottom = false
 
+[sub_resource type="BoxMesh" id="BoxMesh_yl246"]
+size = Vector3(0.2, 0.1, 0.1)
+
 [sub_resource type="ViewportTexture" id="ViewportTexture_gblom"]
 viewport_path = NodePath("CameraProjection/ProjectionSprite/SubViewport")
 
@@ -28,11 +28,8 @@ script = ExtResource("2_w4nqt")
 _sub_viewport = NodePath("CameraProjection/ProjectionSprite/SubViewport")
 _flash = NodePath("ActiveWhileHeld/Flash")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="0"]
+[node name="CollisionShape3D" parent="." index="0"]
 shape = SubResource("BoxShape3D_2uk6l")
-
-[node name="CameraMesh" type="MeshInstance3D" parent="." index="1"]
-mesh = SubResource("BoxMesh_yl246")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractArea3D" index="0"]
 shape = SubResource("BoxShape3D_evswr")
@@ -44,6 +41,9 @@ debug_color = Color(0.652233, 0.518714, 3.85046e-07, 0.42)
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.54)
 mesh = SubResource("CylinderMesh_gh0hb")
 skeleton = NodePath("../../../CameraMesh")
+
+[node name="CameraMesh" type="MeshInstance3D" parent="." index="3"]
+mesh = SubResource("BoxMesh_yl246")
 
 [node name="CameraProjection" type="Node3D" parent="." index="4"]
 

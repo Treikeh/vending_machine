@@ -8,6 +8,8 @@ collision_layer = 4
 script = ExtResource("1_wpgql")
 metadata/_custom_type_script = "uid://bmq7avs8vtf6a"
 
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+
 [node name="InteractArea3D" parent="." instance=ExtResource("2_wpgql")]
 
 [node name="ActiveWhileHeld" type="Node3D" parent="."]
