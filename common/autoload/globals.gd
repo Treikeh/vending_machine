@@ -14,3 +14,36 @@ const CREDITS_PATH: String = "uid://dkyrn54813ilp"
 signal interact_icon_updated(prompt: int)
 signal throw_charge_updated(value: float)
 signal throw_charge_stopped
+
+
+#region Achivements
+
+
+var achievements: Dictionary[String, Dictionary] = {
+	"lebron_james": {
+		"requirement": "Throw the basketball into the hoop",
+		"complted": false,
+	},
+	"magical_trash_can": {
+		"requirement": "Buy enough items for the trash can to appear",
+		"completed": false,
+		"items_bought": 0,
+	},
+	"no_hell_like_this_hell": {
+		"requirement": "Wait in hell until the doors opens",
+		"completed": false,
+	},
+	"product_placement": {
+		"requirement": "Picked up the Godot plush",
+		"completed": false,
+	},
+	"out_for_a_walk": {
+		"requirement": "Bring the location board with you to the office",
+		"completed": false,
+	},
+}
+
+func _complete_achievement(achievement: String) -> void:
+	achievements[achievement].completed = true
+
+#endregion

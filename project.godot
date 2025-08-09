@@ -20,9 +20,9 @@ config/icon="uid://bulusrtjutify"
 
 [autoload]
 
-Globals="*res://common/autoload/globals.gd"
 SaveManager="*res://common/autoload/save_manager.gd"
 SettingsManager="*res://common/autoload/settings_manager.gd"
+Globals="*res://common/autoload/globals.gd"
 LevelManager="*res://common/autoload/level_manager.gd"
 GuiManager="*res://common/autoload/gui_manager.gd"
 
