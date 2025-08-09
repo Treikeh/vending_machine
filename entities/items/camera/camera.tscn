@@ -23,10 +23,11 @@ size = Vector3(0.2, 0.1, 0.1)
 [sub_resource type="ViewportTexture" id="ViewportTexture_gblom"]
 viewport_path = NodePath("CameraProjection/ProjectionSprite/SubViewport")
 
-[node name="Camera" node_paths=PackedStringArray("_sub_viewport", "_flash") groups=["persistent"] instance=ExtResource("1_lemjp")]
+[node name="Camera" node_paths=PackedStringArray("_sub_viewport", "_flash", "_picture_spawn_point") instance=ExtResource("1_lemjp")]
 script = ExtResource("2_w4nqt")
 _sub_viewport = NodePath("CameraProjection/ProjectionSprite/SubViewport")
 _flash = NodePath("ActiveWhileHeld/Flash")
+_picture_spawn_point = NodePath("PictureSpawnPoint")
 
 [node name="CollisionShape3D" parent="." index="0"]
 shape = SubResource("BoxShape3D_2uk6l")
@@ -51,9 +52,13 @@ mesh = SubResource("BoxMesh_yl246")
 remote_path = NodePath("../ProjectionSprite/SubViewport/Camera3D")
 
 [node name="ProjectionSprite" type="Sprite3D" parent="CameraProjection" index="1"]
-transform = Transform3D(0.015, 0, 0, 0, 0.015, 0, 0, 0, 0.015, 0, 0, 0.06)
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0.06)
 texture = SubResource("ViewportTexture_gblom")
 
 [node name="SubViewport" type="SubViewport" parent="CameraProjection/ProjectionSprite" index="0"]
+size = Vector2i(128, 128)
 
 [node name="Camera3D" type="Camera3D" parent="CameraProjection/ProjectionSprite/SubViewport" index="0"]
+
+[node name="PictureSpawnPoint" type="Marker3D" parent="." index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.1)

@@ -5,10 +5,12 @@ extends Node
 
 const USER_PATH: String = "user://savegame.save"
 const DEBUG_PATH: String = "res://debug/savegame.ini"
+const IMAGE_SAVE_PATH: String = "res://debug/pictures/"
 
 
 var _file_access: FileAccess
 var _save_data: Dictionary
+var images_to_save: Dictionary[String, Image] = {}
 
 @onready var _save_path: String = DEBUG_PATH if OS.is_debug_build() else USER_PATH
 
@@ -36,6 +38,13 @@ func _save_data_to_file() -> void:
 	# Turn _save_data dict into a string and save it on the save file
 	_file_access.store_string(JSON.stringify(_save_data, "\t"))
 	_file_access.close()
+	
+	_save_images()
+
+
+func _save_images() -> void:
+	for img: String in images_to_save:
+		images_to_save[img].save_png(IMAGE_SAVE_PATH + img)
 
 
 func _load_data_from_file() -> void:
@@ -46,7 +55,6 @@ func _load_data_from_file() -> void:
 		# Parse the save file and set the _save_dict to the result
 		_save_data = JSON.parse_string(_file_access.get_as_text())
 		_file_access.close()
-
 
 #region Persistent Nodes
 

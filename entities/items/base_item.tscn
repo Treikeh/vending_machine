@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bmq7avs8vtf6a" path="res://entities/items/base_item.gd" id="1_wpgql"]
 [ext_resource type="PackedScene" uid="uid://okem3oya16no" path="res://common/scenes/interact_area_3d.tscn" id="2_wpgql"]
 
-[node name="BaseItem" type="RigidBody3D"]
+[node name="BaseItem" type="RigidBody3D" groups=["item"]]
 collision_layer = 4
 script = ExtResource("1_wpgql")
 metadata/_custom_type_script = "uid://bmq7avs8vtf6a"
