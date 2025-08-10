@@ -206,6 +206,7 @@ func _update_ui_throw_bar(sample_offset: float) -> void:
 func get_save_data() -> Dictionary:
 	var data: Dictionary = {
 		"item": _held_item.scene_file_path if _held_item != null else "",
+		"item_data": _held_item.get_save_data() if _held_item != null else {},
 	}
 	return data
 
@@ -213,8 +214,12 @@ func get_save_data() -> Dictionary:
 func load_save_data(data: Dictionary) -> void:
 	if not data.is_empty():
 		if data.item != "":
+			# Spawn item
 			var item: BaseItem = load(data.item).instantiate()
 			add_child(item)
+			# Load item data
+			if not data.item_data.is_empty():
+				item.load_save_data(data.item_data)
 			pick_up_item(item)
 
 #endregion
