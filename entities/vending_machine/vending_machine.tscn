@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://b6iud14yjg3ef"]
+[gd_scene load_steps=9 format=3 uid="uid://b6iud14yjg3ef"]
 
 [ext_resource type="Script" uid="uid://x80psvvcpak" path="res://entities/vending_machine/vending_machine.gd" id="1_qauav"]
+[ext_resource type="Resource" uid="uid://bnk78nq5t4hpx" path="res://entities/vending_machine/buy_everything_achievement_data.tres" id="2_7gte8"]
 [ext_resource type="PackedScene" uid="uid://dickh50sq4kdu" path="res://entities/vending_machine/vending_machine_button.tscn" id="2_qauav"]
 [ext_resource type="PackedScene" uid="uid://ohfhsu5xuqwe" path="res://entities/items/soda_cans/art/soda_cans_01_sm.tscn" id="4_6k6ed"]
 [ext_resource type="PackedScene" uid="uid://b2h0g1n7qbgi0" path="res://entities/vending_machine/art/vending_machine_01_sm.glb" id="7_goder"]
@@ -20,6 +21,7 @@ script = ExtResource("1_qauav")
 display_label = NodePath("DisplayLabel")
 reset_label_timer = NodePath("DisplayLabel/ResetLabelTimer")
 item_spawn_point = NodePath("ItemSpawnPoint")
+_achievement = ExtResource("2_7gte8")
 
 [node name="VendingMachine_01_SM" parent="." instance=ExtResource("7_goder")]
 

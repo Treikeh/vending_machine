@@ -17,10 +17,14 @@ signal code_submitted(code: String, is_valid: bool)
 	"21": preload("res://entities/items/camera/camera.tscn"),
 	"41": preload("res://entities/items/basketball/basketball.tscn"),
 }
+@export var _achievement: BuyEverythingAchievementData
 
 
 func _ready() -> void:
 	_reset_display_label()
+	# Set achievement data
+	_achievement.max_points = items.size()
+	_achievement.load_save_data(SaveManager.get_save_data(_achievement.resource_path))
 
 
 func _reset_display_label() -> void:
@@ -42,6 +46,7 @@ func _on_vending_machine_confirm_button_presssed(_button_number: String) -> void
 		_spawn_item(items[code])
 		display_label.text = "OK"
 		code_submitted.emit(code, true)
+		_achievement.item_bought(code)
 	else:
 		display_label.text = "ERR"
 		code_submitted.emit(code, false)
