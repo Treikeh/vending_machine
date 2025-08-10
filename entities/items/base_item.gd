@@ -20,10 +20,11 @@ func use_item(instigator: Node3D) -> void:
 	used.emit()
 
 
-func pick_up_item(instigator: Node3D) -> void:
+func pick_up_item(instigator: Node3D, new_transform: Node3D) -> void:
 	_item_picked_up(instigator)
 	picked_up.emit()
 	linear_velocity = Vector3.ZERO
+	reparent(new_transform, false)
 	remove_from_group("persistent")
 	process_mode = Node.PROCESS_MODE_DISABLED
 
@@ -31,6 +32,7 @@ func pick_up_item(instigator: Node3D) -> void:
 func drop_item(instigator: Node3D) -> void:
 	_item_dropped(instigator)
 	dropped.emit()
+	reparent(LevelManager)
 	add_to_group("persistent")
 	process_mode = Node.PROCESS_MODE_INHERIT
 

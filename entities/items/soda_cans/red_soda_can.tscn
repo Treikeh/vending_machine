@@ -1,31 +1,20 @@
 [gd_scene load_steps=6 format=3 uid="uid://bf0rlxkbac70"]
 
+[ext_resource type="PackedScene" uid="uid://ddiakxh5cwpsj" path="res://entities/items/base_item.tscn" id="1_7bi0d"]
 [ext_resource type="Script" uid="uid://dd0kyo10f6bdp" path="res://entities/items/soda_cans/red_soda_can.gd" id="1_kkxw1"]
 [ext_resource type="Shape3D" uid="uid://ictrfw4onncu" path="res://entities/items/soda_cans/soda_cans_collision.tres" id="2_kkxw1"]
-[ext_resource type="Script" uid="uid://k4r22ohcsxla" path="res://common/scripts/interact_area_3d.gd" id="3_kg4ro"]
 [ext_resource type="PackedScene" uid="uid://ohfhsu5xuqwe" path="res://entities/items/soda_cans/art/soda_cans_01_sm.tscn" id="3_kkxw1"]
 [ext_resource type="Shape3D" uid="uid://d1ycbhtwgtq72" path="res://entities/items/soda_cans/soda_cans_collision_interact.tres" id="4_l6wyn"]
 
-[node name="RedSodaCan" type="RigidBody3D" groups=["item", "persistent"]]
-collision_layer = 4
+[node name="RedSodaCan" instance=ExtResource("1_7bi0d")]
 mass = 0.1
 script = ExtResource("1_kkxw1")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" parent="." index="0"]
 shape = ExtResource("2_kkxw1")
 
-[node name="SodaCans_01_SM" parent="." instance=ExtResource("3_kkxw1")]
-
-[node name="PickUpArea" type="Area3D" parent="."]
-collision_layer = 16
-collision_mask = 0
-monitoring = false
-script = ExtResource("3_kg4ro")
-prompt = 2
-metadata/_custom_type_script = "uid://k4r22ohcsxla"
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PickUpArea"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractArea3D" index="0"]
 shape = ExtResource("4_l6wyn")
 debug_color = Color(0.652233, 0.518714, 3.85046e-07, 0.42)
 
-[connection signal="interacted" from="PickUpArea" to="." method="_on_interacted"]
+[node name="SodaCans_01_SM" parent="ActiveWhileHeld" index="0" instance=ExtResource("3_kkxw1")]

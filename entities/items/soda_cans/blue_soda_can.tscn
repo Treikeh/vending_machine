@@ -1,42 +1,31 @@
 [gd_scene load_steps=7 format=3 uid="uid://bwmdyqpxrhydh"]
 
 [ext_resource type="Script" uid="uid://3g3bc2n312tr" path="res://entities/items/soda_cans/blue_soda_can.gd" id="1_74b1s"]
+[ext_resource type="PackedScene" uid="uid://ddiakxh5cwpsj" path="res://entities/items/base_item.tscn" id="1_j5nfj"]
 [ext_resource type="Shape3D" uid="uid://ictrfw4onncu" path="res://entities/items/soda_cans/soda_cans_collision.tres" id="2_j5nfj"]
 [ext_resource type="PackedScene" uid="uid://ohfhsu5xuqwe" path="res://entities/items/soda_cans/art/soda_cans_01_sm.tscn" id="3_eglqr"]
-[ext_resource type="Script" uid="uid://k4r22ohcsxla" path="res://common/scripts/interact_area_3d.gd" id="3_oenbu"]
 [ext_resource type="Shape3D" uid="uid://d1ycbhtwgtq72" path="res://entities/items/soda_cans/soda_cans_collision_interact.tres" id="4_vgnn0"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_74b1s"]
+[sub_resource type="BoxMesh" id="BoxMesh_eglqr"]
 size = Vector3(0.1, 0.2, 0.1)
 
-[node name="BlueSodaCan" type="RigidBody3D" node_paths=PackedStringArray("normal_mesh", "empty_mesh") groups=["item", "persistent"]]
-collision_layer = 4
+[node name="BlueSodaCan" node_paths=PackedStringArray("normal_mesh", "empty_mesh") instance=ExtResource("1_j5nfj")]
 mass = 0.1
 script = ExtResource("1_74b1s")
-normal_mesh = NodePath("SodaCans_01_SM")
-empty_mesh = NodePath("EmptyMesh")
+normal_mesh = NodePath("ActiveWhileHeld/SodaCans_01_SM")
+empty_mesh = NodePath("ActiveWhileHeld/EmptyMesh")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" parent="." index="0"]
 shape = ExtResource("2_j5nfj")
 
-[node name="SodaCans_01_SM" parent="." instance=ExtResource("3_eglqr")]
-_colour = 2
-
-[node name="EmptyMesh" type="MeshInstance3D" parent="."]
-visible = false
-mesh = SubResource("BoxMesh_74b1s")
-skeleton = NodePath("")
-
-[node name="PickUpArea" type="Area3D" parent="."]
-collision_layer = 16
-collision_mask = 0
-monitoring = false
-script = ExtResource("3_oenbu")
-prompt = 2
-metadata/_custom_type_script = "uid://k4r22ohcsxla"
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PickUpArea"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractArea3D" index="0"]
 shape = ExtResource("4_vgnn0")
 debug_color = Color(0.652233, 0.518714, 3.85046e-07, 0.42)
 
-[connection signal="interacted" from="PickUpArea" to="." method="_on_interacted"]
+[node name="SodaCans_01_SM" parent="ActiveWhileHeld" index="0" instance=ExtResource("3_eglqr")]
+_colour = 2
+
+[node name="EmptyMesh" type="MeshInstance3D" parent="ActiveWhileHeld" index="1"]
+visible = false
+mesh = SubResource("BoxMesh_eglqr")
+skeleton = NodePath("")

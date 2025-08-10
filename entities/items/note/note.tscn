@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://gkdkiaeobysh"]
+[gd_scene load_steps=6 format=3 uid="uid://gkdkiaeobysh"]
 
-[ext_resource type="Script" uid="uid://bmq7avs8vtf6a" path="res://entities/items/base_item.gd" id="1_6a7b3"]
-[ext_resource type="Script" uid="uid://k4r22ohcsxla" path="res://common/scripts/interact_area_3d.gd" id="2_cm3uc"]
+[ext_resource type="PackedScene" uid="uid://ddiakxh5cwpsj" path="res://entities/items/base_item.tscn" id="1_6a7b3"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_6a7b3"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_uo1gf"]
 size = Vector3(0.25, 0.25, 0.03)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cm3uc"]
+size = Vector3(0.26, 0.26, 0.04)
 
 [sub_resource type="BoxMesh" id="BoxMesh_cm3uc"]
 size = Vector3(0.2, 0.2, 0.005)
@@ -12,40 +14,24 @@ size = Vector3(0.2, 0.2, 0.005)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cm3uc"]
 albedo_color = Color(0.532756, 0.484156, 0.32407, 1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_cm3uc"]
-size = Vector3(0.26, 0.26, 0.04)
-
-[node name="Note" type="RigidBody3D" groups=["item"]]
-collision_layer = 4
+[node name="Note" groups=["persistent"] instance=ExtResource("1_6a7b3")]
 mass = 0.1
-linear_damp = 2.5
-script = ExtResource("1_6a7b3")
-metadata/_custom_type_script = "uid://bmq7avs8vtf6a"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_6a7b3")
+[node name="CollisionShape3D" parent="." index="0"]
+shape = SubResource("BoxShape3D_uo1gf")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_cm3uc")
-surface_material_override/0 = SubResource("StandardMaterial3D_cm3uc")
-
-[node name="PickupArea" type="Area3D" parent="."]
-collision_layer = 16
-collision_mask = 0
-monitoring = false
-script = ExtResource("2_cm3uc")
-prompt = 2
-metadata/_custom_type_script = "uid://k4r22ohcsxla"
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PickupArea"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractArea3D" index="0"]
 shape = SubResource("BoxShape3D_cm3uc")
 debug_color = Color(0.652233, 0.518714, 3.85046e-07, 0.42)
 
-[node name="Label3D" type="Label3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ActiveWhileHeld" index="0"]
+mesh = SubResource("BoxMesh_cm3uc")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_cm3uc")
+
+[node name="Label3D" type="Label3D" parent="ActiveWhileHeld" index="1"]
 transform = Transform3D(0.878742, 0.477297, 0, -0.477297, 0.878742, 0, 0, 0, 1, -0.00446621, 0.0204723, 0.00425263)
 modulate = Color(0.222295, 0.222295, 0.222295, 1)
 text = "1996"
 font_size = 12
 outline_size = 1
-
-[connection signal="interacted" from="PickupArea" to="." method="pick_up_item"]

@@ -157,7 +157,7 @@ func _jumping_enter() -> void:
 
 @export_group("Item")
 @export var _throw_force_curve: Curve
-@export var _held_item_transform: Node3D
+@export var _held_item_transform: Marker3D
 
 var _throw_charge: float = 0.0
 var _held_item: BaseItem
@@ -169,8 +169,7 @@ func pick_up_item(item: BaseItem) -> void:
 		_held_item.drop_item(self)
 	
 	_held_item = item
-	_held_item.pick_up_item(self)
-	_held_item.reparent(_held_item_transform, false)
+	_held_item.pick_up_item(self,_held_item_transform)
 	_held_item.global_transform = _held_item_transform.global_transform
 
 
@@ -183,7 +182,6 @@ func _throw_held_item() -> void:
 	var force: float = _throw_force_curve.sample(_throw_charge)
 	if _held_item:
 		_held_item.drop_item(self)
-		_held_item.reparent(LevelManager)
 		_held_item.global_transform = _head.global_transform
 		_held_item.apply_central_impulse(-_head.global_basis.z * force * _held_item.mass)
 		_held_item = null

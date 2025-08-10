@@ -26,8 +26,8 @@ var achievements: Dictionary[String, Dictionary] = {
 	},
 	"magical_trash_can": {
 		"requirement": "Buy enough items for the trash can to appear",
-		"completed": false,
 		"items_bought": 0,
+		"completed": false,
 	},
 	"no_hell_like_this_hell": {
 		"requirement": "Wait in hell until the doors opens",
