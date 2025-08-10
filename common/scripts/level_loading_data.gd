@@ -1,4 +1,4 @@
-extends Resource
+extends RefCounted
 class_name LevelLoadingData
 ## Data that is needed when loading the levels
 
