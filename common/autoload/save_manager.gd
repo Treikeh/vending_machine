@@ -3,25 +3,23 @@ extends Node
 ## other scenes can use it.
 
 
-const USER_PATH: String = "user://savegame.save"
-const DEBUG_PATH: String = "res://debug/savegame.ini"
-const IMAGE_SAVE_PATH: String = "res://debug/pictures/"
+const SAVE_FILE_NAME: String = "savegame.ini"
+const IMAGES_SAVE_DIR: String = "/pictures/"
 
+var _save_data: Dictionary = {}
+var _images_to_save: Dictionary[String, Image] = {}
 
-var _file_access: FileAccess
-var _save_data: Dictionary
-var images_to_save: Dictionary[String, Image] = {}
-
-@onready var _save_path: String = DEBUG_PATH if OS.is_debug_build() else USER_PATH
+@onready var _save_file_path: String = Utility.get_data_dir_path() + SAVE_FILE_NAME
+@onready var _img_save_path: String = Utility.get_data_dir_path() + IMAGES_SAVE_DIR
 
 
 func _ready() -> void:
-	_load_data_from_file()
+	_save_data = Utility.load_data_from_file(_save_file_path)
 
 
 func _exit_tree() -> void:
-	#_save_data_to_file()
-	pass
+	_save_all_new_images()
+	Utility.save_data_to_file(_save_file_path, _save_data)
 
 
 func add_save_data(key:String, data: Dictionary) -> void:
@@ -32,29 +30,25 @@ func get_save_data(key: String) -> Dictionary:
 	return _save_data[key] if _save_data.has(key) else {}
 
 
-func _save_data_to_file() -> void:
-	# Create/open a file to write to
-	_file_access = FileAccess.open(_save_path, FileAccess.WRITE)
-	# Turn _save_data dict into a string and save it on the save file
-	_file_access.store_string(JSON.stringify(_save_data, "\t"))
-	_file_access.close()
+func save_image(img_name: String, img: Image) -> void:
+	_images_to_save[img_name] = img
+
+
+func get_image(img_name: String) -> Image:
+	if _images_to_save.has(img_name):
+		return _images_to_save[img_name]
+	elif FileAccess.file_exists(_img_save_path + img_name):
+		return Image.load_from_file(_img_save_path + img_name)
+	return null
+
+
+func _save_all_new_images() -> void:
+	if not DirAccess.dir_exists_absolute(_img_save_path):
+		DirAccess.make_dir_absolute(_img_save_path)
 	
-	_save_images()
+	for img: String in _images_to_save:
+		_images_to_save[img].save_png(_img_save_path + img)
 
-
-func _save_images() -> void:
-	for img: String in images_to_save:
-		images_to_save[img].save_png(IMAGE_SAVE_PATH + img)
-
-
-func _load_data_from_file() -> void:
-	# Check if save file exists
-	if FileAccess.file_exists(_save_path):
-		# Open save file so that data can be read from it
-		_file_access = FileAccess.open(_save_path, FileAccess.READ)
-		# Parse the save file and set the _save_dict to the result
-		_save_data = JSON.parse_string(_file_access.get_as_text())
-		_file_access.close()
 
 #region Persistent Nodes
 
