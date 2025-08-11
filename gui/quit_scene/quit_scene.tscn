@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cd8dmofo47nsb"]
-
-[ext_resource type="Script" uid="uid://bn87ralq0y5wc" path="res://gui/quit_scene/quit_scene.gd" id="1_yaf8j"]
-
-[node name="QuitLevel" type="Node3D"]
-script = ExtResource("1_yaf8j")

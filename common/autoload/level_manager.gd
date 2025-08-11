@@ -110,14 +110,22 @@ func unload_level(level_path: String) -> void:
 		print("NOTE!: Level %s is not active in the scene tree" % level_path)
 
 
+func save_active_levels() -> void:
+	var active_levels: Dictionary = {}
+	for level_id: String in _loaded_levels:
+		var level: Level3D = _loaded_levels[level_id]
+		var level_transform: Transform3D = level.global_transform
+		active_levels[level_id] = var_to_str(level_transform)
+		SaveManager.add_save_data(level.scene_file_path, level.get_save_data())
+	# Only save active levels if there are any
+	if not active_levels.is_empty():
+		SaveManager.add_save_data("active_levels", active_levels)
+
+
 ## Unload all child nodes of World3D.
 ## Only used when fully changing levels
 func _unload_all_levels() -> void:
-	for level_id: String in _loaded_levels:
-		var level: Level3D = _loaded_levels[level_id]
-		SaveManager.add_save_data(level.scene_file_path, level.get_save_data())
-		level.queue_free()
-	
+	save_active_levels()
 	_loaded_levels.clear()
 	
 	# Remove all that don't need to save aything
@@ -169,14 +177,6 @@ func _add_level_to_world(level_data: LevelLoadingData) -> void:
 	# Hide the loading screen if it's visible
 	if _loading_screen.visible:
 		_loading_screen.fade_out()
-
-
-func get_active_levels() -> Dictionary:
-	var active_levels: Dictionary = {}
-	for level_id: String in _loaded_levels:
-		var level_transform: Transform3D = _loaded_levels[level_id].global_transform
-		active_levels[level_id] = var_to_str(level_transform)
-	return active_levels
 
 
 ## Data that is needed when loading the levels

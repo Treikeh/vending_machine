@@ -62,6 +62,6 @@ func _on_credits_button_pressed() -> void:
 
 
 func _on_quit_button_pressed() -> void:
-	LevelManager.load_level(Globals.QUIT_SCENE_PATH)
+	get_tree().quit()
 
 #endregion
