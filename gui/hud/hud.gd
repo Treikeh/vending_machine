@@ -2,13 +2,14 @@ extends Control
 
 
 const PAUSE_MENU_PATH: String = "uid://ca47ihv0ka8al"
+const ACHIEVEMENT_COMPLETED_PANEL_SCENE: PackedScene = preload("uid://b5524po3f1vt1")
 
 @export var _interact_icon_sprite_frames: SpriteFrames
+@export var _fps_label: Label
+@export var _crosshair_texture: TextureRect
 
 var _pause_menu: Control
 
-@onready var _fps_label: Label = %FpsLabel
-@onready var _crosshair_texture: TextureRect = %CrosshairTexture
 
 
 func _ready() -> void:
@@ -18,6 +19,8 @@ func _ready() -> void:
 	_throw_charge_bar_fade_delay.timeout.connect(_on_throw_charge_bar_fade_delay_timeout)
 	Globals.throw_charge_updated.connect(_on_throw_charge_updated)
 	Globals.throw_charge_stopped.connect(_on_throw_charge_stopped)
+	
+	AchievementsManager.achievement_completed.connect(_on_achievement_completed)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -43,19 +46,18 @@ func _on_interact_icon_updated(prompt: int) -> void:
 	_crosshair_texture.texture = _interact_icon_sprite_frames.get_frame_texture("default", prompt)
 
 
+func _on_achievement_completed(achievement: Achievement) -> void:
+	add_child(ACHIEVEMENT_COMPLETED_PANEL_SCENE.instantiate().with_data(achievement))
+
 
 #region Throw charge bar
 
 @export_group("Throw charge bar")
 @export var _throw_charge_bar_fade_duration: float = 0.75
-#@export var throw_charge_bar: TextureProgressBar
-#@export var throw_charge_bar_fade_delay: Timer
+@export var _throw_charge_bar: TextureProgressBar
+@export var _throw_charge_bar_fade_delay: Timer
 
 var _throw_bar_fade_tween: Tween
-
-@onready var _throw_charge_bar: TextureProgressBar = %ThrowChargeBar
-@onready var _throw_charge_bar_fade_delay: Timer = %ThrowChargeBarFadeDelay
-
 
 
 func _on_throw_charge_updated(value: float) -> void:
