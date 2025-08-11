@@ -34,6 +34,12 @@ func _on_main_menu_button_pressed() -> void:
 
 
 func _on_quit_button_pressed() -> void:
+	%QuitFadeColor.modulate = Color.TRANSPARENT
+	%QuitFadeColor.show()
+	var fade_tween: Tween = create_tween()
+	fade_tween.tween_property(%QuitFadeColor, "modulate", Color.WHITE, 0.25)
+	await fade_tween.finished
+	# Save and quit game
 	get_tree().paused = false
 	LevelManager.save_active_levels()
 	get_tree().quit()
