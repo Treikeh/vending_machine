@@ -1,5 +1,5 @@
-extends AchievementData
-class_name BuyEverythingAchievementData
+extends Achievement
+class_name BuyEverythingAchievement
 
 
 var items_bought: Dictionary = {
@@ -21,7 +21,7 @@ func item_bought(item_code: String) -> void:
 func get_save_data() -> Dictionary:
 	var data: Dictionary = {
 		"points": current_points,
-		"completed": completed,
+		"completed": _completed,
 		"items_bought": items_bought,
 	}
 	return data
@@ -30,5 +30,5 @@ func get_save_data() -> Dictionary:
 func load_save_data(data: Dictionary) -> void:
 	if not data.is_empty():
 		current_points = data.points
-		completed = data.completed
+		_completed = data.completed
 		items_bought = data.items_bought

@@ -22,6 +22,7 @@ config/icon="uid://bulusrtjutify"
 
 SaveManager="*res://common/autoload/save_manager.gd"
 SettingsManager="*res://common/autoload/settings_manager.gd"
+AchievementsManager="*res://common/autoload/achievements_manager.gd"
 Globals="*res://common/autoload/globals.gd"
 LevelManager="*res://common/autoload/level_manager.gd"
 GuiManager="*res://common/autoload/gui_manager.gd"

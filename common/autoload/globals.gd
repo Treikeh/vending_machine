@@ -14,4 +14,3 @@ const CREDITS_PATH: String = "uid://dkyrn54813ilp"
 signal interact_icon_updated(prompt: int)
 signal throw_charge_updated(value: float)
 signal throw_charge_stopped
-signal achievement_completed(achievement_data: AchievementData)

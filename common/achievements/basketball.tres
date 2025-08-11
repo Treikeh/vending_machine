@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Achievement" load_steps=3 format=3 uid="uid://cw8em4x3l2gxj"]
+
+[ext_resource type="Script" uid="uid://0aedbhmu84r1" path="res://common/achievements/achievement.gd" id="1_2e4bn"]
+[ext_resource type="Texture2D" uid="uid://bulusrtjutify" path="res://icon.png" id="1_gucsx"]
+
+[resource]
+script = ExtResource("1_2e4bn")
+name = "Just like LeBron James"
+description = "Thorw the basketball into the hoop"
+max_points = 1
+icon = ExtResource("1_gucsx")
+metadata/_custom_type_script = "uid://0aedbhmu84r1"
