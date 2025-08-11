@@ -60,3 +60,25 @@ static func get_overlapping_nodes(area: Area3D, force_transform_update: bool = f
 	nodes.append_array(area.get_overlapping_areas())
 	nodes.append_array(area.get_overlapping_bodies())
 	return nodes
+
+
+static func save_data_to_file(path: String, data: Dictionary) -> void:
+	var file_access: FileAccess
+	# Create/open a file to write to
+	file_access = FileAccess.open(path, FileAccess.WRITE)
+	# Turn data dict into a string and save it on the save file
+	file_access.store_string(JSON.stringify(data, "\t"))
+	file_access.close()
+
+
+static func load_data_from_file(path: String) -> Dictionary:
+	var data: Dictionary = {}
+	# Check if file exists
+	if FileAccess.file_exists(path):
+		var file_access: FileAccess
+		# Open file so that data can be read from it
+		file_access = FileAccess.open(path, FileAccess.READ)
+		# Parse the file and set the data dict to the result
+		data = JSON.parse_string(file_access.get_as_text())
+		file_access.close()
+	return data
