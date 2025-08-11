@@ -16,8 +16,7 @@ enum DISPLAY_MODE {
 }
 
 
-const USER_PATH: String = "user://settings.ini"
-const DEBUG_PATH: String = "res://debug/settings.ini"
+const FILE_NAME: String = "settings.ini"
 const DEFAULTS: Dictionary = {
 	"AUDIO": {
 		"MASTER_VOLUME": 0.75,
@@ -37,7 +36,7 @@ const DEFAULTS: Dictionary = {
 
 var _config_file: ConfigFile = ConfigFile.new()
 
-@onready var _config_path: String = DEBUG_PATH if OS.is_debug_build() else USER_PATH
+@onready var _config_path: String = Utility.get_data_dir_path() + FILE_NAME
 
 
 func _ready() -> void:
