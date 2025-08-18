@@ -1,9 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://5w8eyuur2wg4"]
 
 [ext_resource type="PackedScene" uid="uid://ddiakxh5cwpsj" path="res://entities/items/base_item.tscn" id="1_x0jpn"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_x0jpn"]
-bounce = 0.6
+[ext_resource type="PackedScene" uid="uid://ckg0lr5w4kd0c" path="res://entities/items/basketball/art/basketball_01_sm.glb" id="2_7lf4r"]
+[ext_resource type="PhysicsMaterial" uid="uid://bnbfahxtojov" path="res://entities/items/basketball/basketball_pm.tres" id="2_82p1i"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_7lf4r"]
 radius = 0.15
@@ -11,12 +10,9 @@ radius = 0.15
 [sub_resource type="SphereShape3D" id="SphereShape3D_ygj6c"]
 radius = 0.175
 
-[sub_resource type="SphereMesh" id="SphereMesh_82p1i"]
-radius = 0.15
-height = 0.3
-
 [node name="Basketball" instance=ExtResource("1_x0jpn")]
-physics_material_override = SubResource("PhysicsMaterial_x0jpn")
+physics_material_override = ExtResource("2_82p1i")
+angular_damp = 0.1
 
 [node name="CollisionShape3D" parent="." index="0"]
 shape = SubResource("SphereShape3D_7lf4r")
@@ -25,6 +21,4 @@ shape = SubResource("SphereShape3D_7lf4r")
 shape = SubResource("SphereShape3D_ygj6c")
 debug_color = Color(0.652233, 0.518714, 3.85046e-07, 0.42)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ActiveWhileHeld" index="0"]
-mesh = SubResource("SphereMesh_82p1i")
-skeleton = NodePath("")
+[node name="Basketball_01_SM" parent="ActiveWhileHeld" index="0" instance=ExtResource("2_7lf4r")]

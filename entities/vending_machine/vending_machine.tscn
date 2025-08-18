@@ -4,14 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://dickh50sq4kdu" path="res://entities/vending_machine/vending_machine_button.tscn" id="2_qauav"]
 [ext_resource type="PackedScene" uid="uid://ohfhsu5xuqwe" path="res://entities/items/soda_cans/art/soda_cans_01_sm.tscn" id="4_6k6ed"]
 [ext_resource type="PackedScene" uid="uid://c4mexlnbffxnd" path="res://entities/items/camera/art/camera_01_sm.glb" id="5_7gte8"]
+[ext_resource type="PackedScene" uid="uid://ckg0lr5w4kd0c" path="res://entities/items/basketball/art/basketball_01_sm.glb" id="6_12vco"]
 [ext_resource type="PackedScene" uid="uid://b2h0g1n7qbgi0" path="res://entities/vending_machine/art/vending_machine_01_sm.glb" id="7_goder"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_goder"]
 size = Vector3(1.5, 1.9, 0.9)
-
-[sub_resource type="SphereMesh" id="SphereMesh_goder"]
-radius = 0.15
-height = 0.3
 
 [node name="VendingMachine" type="Node3D" node_paths=PackedStringArray("display_label", "reset_label_timer", "item_spawn_point")]
 script = ExtResource("1_qauav")
@@ -105,10 +102,8 @@ _colour = 1
 [node name="Camera_01_sm" parent="Items" instance=ExtResource("5_7gte8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49, 1.4, -0.12)
 
-[node name="BasketballMesh" type="MeshInstance3D" parent="Items"]
+[node name="Basketball_01_SM" parent="Items" instance=ExtResource("6_12vco")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48067, 0.7, -0.1)
-mesh = SubResource("SphereMesh_goder")
-skeleton = NodePath("")
 
 [node name="ItemSpawnPoint" type="Marker3D" parent="."]
 transform = Transform3D(-4.24407e-08, 1, -1.04629e-08, -0.97093, -4.37114e-08, -0.239364, -0.239364, 0, 0.97093, 0.176314, 0.336996, -0.544939)
