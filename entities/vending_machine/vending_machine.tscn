@@ -3,13 +3,11 @@
 [ext_resource type="Script" uid="uid://x80psvvcpak" path="res://entities/vending_machine/vending_machine.gd" id="1_qauav"]
 [ext_resource type="PackedScene" uid="uid://dickh50sq4kdu" path="res://entities/vending_machine/vending_machine_button.tscn" id="2_qauav"]
 [ext_resource type="PackedScene" uid="uid://ohfhsu5xuqwe" path="res://entities/items/soda_cans/art/soda_cans_01_sm.tscn" id="4_6k6ed"]
+[ext_resource type="PackedScene" uid="uid://c4mexlnbffxnd" path="res://entities/items/camera/art/camera_01_sm.glb" id="5_7gte8"]
 [ext_resource type="PackedScene" uid="uid://b2h0g1n7qbgi0" path="res://entities/vending_machine/art/vending_machine_01_sm.glb" id="7_goder"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_goder"]
 size = Vector3(1.5, 1.9, 0.9)
-
-[sub_resource type="BoxMesh" id="BoxMesh_oflmg"]
-size = Vector3(0.2, 0.1, 0.1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_goder"]
 radius = 0.15
@@ -104,10 +102,8 @@ _colour = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 1.73605, -0.3)
 _colour = 1
 
-[node name="CameraMesh" type="MeshInstance3D" parent="Items"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.36, -0.2)
-mesh = SubResource("BoxMesh_oflmg")
-skeleton = NodePath("")
+[node name="Camera_01_sm" parent="Items" instance=ExtResource("5_7gte8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49, 1.4, -0.12)
 
 [node name="BasketballMesh" type="MeshInstance3D" parent="Items"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48067, 0.7, -0.1)
