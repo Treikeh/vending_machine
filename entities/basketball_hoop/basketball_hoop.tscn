@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbv1lw8hkiq0v"]
+
+[ext_resource type="PackedScene" uid="uid://d4a4fy7t4ovgc" path="res://entities/basketball_hoop/art/basketball_hoop_01_sm.glb" id="1_8pymh"]
+
+[node name="BasketballHoop" type="Node3D"]
+
+[node name="BasketballHoop_01_SM" parent="." instance=ExtResource("1_8pymh")]
