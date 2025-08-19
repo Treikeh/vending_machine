@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b64kpf3puwh5f"]
+[gd_scene load_steps=9 format=3 uid="uid://b64kpf3puwh5f"]
 
 [ext_resource type="Script" uid="uid://bqvoejsdvjmuv" path="res://levels/level_01/level_01.gd" id="1_2fp4v"]
 [ext_resource type="PackedScene" uid="uid://b6iud14yjg3ef" path="res://entities/vending_machine/vending_machine.tscn" id="2_mckh2"]
@@ -6,15 +6,17 @@
 [ext_resource type="PackedScene" uid="uid://i3qwnmsysi7n" path="res://levels/level_01/art/level_01_sm.glb" id="3_aqob7"]
 [ext_resource type="PackedScene" uid="uid://gs83e0u3lu6s" path="res://entities/player/spawner/player_spawner.tscn" id="5_71kry"]
 [ext_resource type="PackedScene" uid="uid://gkdkiaeobysh" path="res://entities/items/note/note.tscn" id="5_dm0pi"]
+[ext_resource type="PackedScene" uid="uid://dbv1lw8hkiq0v" path="res://entities/basketball_hoop/basketball_hoop.tscn" id="7_aqob7"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_71kry"]
 size = Vector3(100, 5, 100)
 
-[node name="Level01" type="Node3D" node_paths=PackedStringArray("_train_station_tunnel_spawn_point", "_tunnel_path", "_trash_can", "level_bounds")]
+[node name="Level01" type="Node3D" node_paths=PackedStringArray("_train_station_tunnel_spawn_point", "_tunnel_path", "_trash_can", "_basketball_hoop", "level_bounds")]
 script = ExtResource("1_2fp4v")
 _train_station_tunnel_spawn_point = NodePath("OtherLevels/TrainStationTunnel/TrainStationTunnelSpawnPoint")
 _tunnel_path = NodePath("level_01_sm/Level01TunnelPath_001")
 _trash_can = NodePath("TrashCanScreenNotifier/TrashCan")
+_basketball_hoop = NodePath("BasketballHioopScreenNotifier/BasketballHoop")
 level_bounds = NodePath("LevelBounds")
 metadata/_custom_type_script = "uid://bqomd2e1p3srg"
 
@@ -60,8 +62,14 @@ aabb = AABB(-0.4, -0.5, -0.4, 0.8, 1, 0.8)
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -1.19209e-07)
 
+[node name="BasketballHioopScreenNotifier" type="VisibleOnScreenNotifier3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4.4, 0, 6.8)
+
+[node name="BasketballHoop" parent="BasketballHioopScreenNotifier" instance=ExtResource("7_aqob7")]
+
 [connection signal="screen_exited" from="level_01_sm/Level01TunnelPath_001/TunnelPathScreenNotifier" to="." method="_on_tunnel_path_screen_notifier_screen_exited"]
 [connection signal="code_submitted" from="VendingMachine" to="." method="_on_vending_machine_code_submitted"]
 [connection signal="screen_exited" from="TrashCanScreenNotifier" to="." method="_on_trash_can_screen_notifier_screen_exited"]
+[connection signal="screen_exited" from="BasketballHioopScreenNotifier" to="." method="_on_basketball_hioop_screen_notifier_screen_exited"]
 
 [editable path="level_01_sm"]

@@ -17,8 +17,7 @@ func _on_vending_machine_code_submitted(code: String, valid: bool) -> void:
 		pass
 	
 	if code == "41":
-		# Spawn basketball hoop
-		pass
+		_basketball_bought = true
 
 
 #region Train station tunnel
@@ -79,6 +78,31 @@ func _set_trash_can_state(active: bool) -> void:
 
 
 
+#region Basketball hoop
+
+@export_group("Basketball hoop")
+@export var _basketball_hoop: Node3D
+
+var _basketball_bought: bool = false
+
+
+func _on_basketball_hioop_screen_notifier_screen_exited() -> void:
+	if _basketball_bought and not _basketball_hoop.visible:
+		_set_basketball_hoop_state(true)
+
+
+func _set_basketball_hoop_state(active: bool) -> void:
+	if active:
+		_basketball_hoop.show()
+		_basketball_hoop.process_mode = Node.PROCESS_MODE_INHERIT
+	else:
+		_basketball_hoop.hide()
+		_basketball_hoop.process_mode = Node.PROCESS_MODE_DISABLED
+
+#endregion
+
+
+
 #region Save/Load
 
 func get_save_data() -> Dictionary:
@@ -86,6 +110,7 @@ func get_save_data() -> Dictionary:
 	var data: Dictionary = {
 		"buy_count": _buy_count,
 		"trash_can_visible": _trash_can.visible,
+		"basketball_hoop_visible": _basketball_hoop.visible,
 		"tunnel_state": _tunnel_state,
 		"persistent_nodes": SaveManager.save_persistent_nodes(self, overlapping_nodes),
 	}
@@ -97,11 +122,13 @@ func load_save_data(data: Dictionary) -> void:
 		_buy_count = data.buy_count
 		
 		_set_trash_can_state(data.trash_can_visible)
+		_set_basketball_hoop_state(data.basketball_hoop_visible)
 		
 		_tunnel_state = data.tunnel_state
 		
 		SaveManager.load_persistent_nodes(self, data.persistent_nodes)
 	else:
 		_set_trash_can_state(false)
+		_set_basketball_hoop_state(false)
 
 #endregion
