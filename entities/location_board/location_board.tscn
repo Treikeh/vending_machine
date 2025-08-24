@@ -1,0 +1,72 @@
+[gd_scene load_steps=7 format=3 uid="uid://dqkkjuha8locp"]
+
+[ext_resource type="PhysicsMaterial" uid="uid://c4548k6ddf7a0" path="res://entities/location_board/location_board_pm.tres" id="1_hhd5e"]
+[ext_resource type="PackedScene" uid="uid://dapnncdbnssxj" path="res://entities/location_board/art/location_board_01_sm.glb" id="1_wu8lo"]
+[ext_resource type="Script" uid="uid://cf3hd4sntpyy8" path="res://entities/location_board/location_board.gd" id="2_it8g0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hhd5e"]
+size = Vector3(2, 1.9, 0.3)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_opd0f"]
+viewport_path = NodePath("LocationsProjection/LocatoinsSubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_it8g0"]
+viewport_path = NodePath("AchievementsProjection/AchievementsSubViewport")
+
+[node name="LocationBoard" type="RigidBody3D" node_paths=PackedStringArray("_locations_viewport", "_achievements_viewport", "_achievements_container") groups=["persistent"]]
+collision_mask = 7
+mass = 5.0
+physics_material_override = ExtResource("1_hhd5e")
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, 0.1, 0)
+continuous_cd = true
+script = ExtResource("2_it8g0")
+_locations_viewport = NodePath("LocationsProjection/LocatoinsSubViewport")
+_achievements_viewport = NodePath("AchievementsProjection/AchievementsSubViewport")
+_achievements_container = NodePath("AchievementsProjection/AchievementsSubViewport/AchievementsContainer")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.95, 0)
+shape = SubResource("BoxShape3D_hhd5e")
+
+[node name="LocationBoard_01_SM" parent="." instance=ExtResource("1_wu8lo")]
+
+[node name="LocationsProjection" type="Sprite3D" parent="."]
+transform = Transform3D(-0.25, 0, 2.18557e-08, 0, 0.25, 0, -2.18557e-08, 0, -0.25, 0, 1.38, -0.03)
+double_sided = false
+texture = SubResource("ViewportTexture_opd0f")
+
+[node name="LocatoinsSubViewport" type="SubViewport" parent="LocationsProjection"]
+transparent_bg = true
+size = Vector2i(690, 385)
+
+[node name="GridContainer" type="GridContainer" parent="LocationsProjection/LocatoinsSubViewport"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AchievementsProjection" type="Sprite3D" parent="."]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 1.38, 0.03)
+double_sided = false
+texture = SubResource("ViewportTexture_it8g0")
+
+[node name="AchievementsSubViewport" type="SubViewport" parent="AchievementsProjection"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(690, 385)
+render_target_update_mode = 4
+
+[node name="AchievementsContainer" type="GridContainer" parent="AchievementsProjection/AchievementsSubViewport"]
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 685.0
+offset_bottom = 380.0
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
+columns = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0

@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://d08couw14yxhv"]
+
+[ext_resource type="Texture2D" uid="uid://vm668svmltcl" path="res://common/achievements/basketball_icon.png" id="1_nfpkd"]
+[ext_resource type="Script" uid="uid://c7rayb8ynuffw" path="res://entities/location_board/gui/achievements_showcase.gd" id="1_phs0v"]
+
+[node name="AchievementsShowcase" type="PanelContainer" node_paths=PackedStringArray("_icon_rect", "_name_label", "_description_label")]
+script = ExtResource("1_phs0v")
+_icon_rect = NodePath("MarginContainer/HBoxContainer/IconRect")
+_name_label = NodePath("MarginContainer/HBoxContainer/VBoxContainer/NameLabel")
+_description_label = NodePath("MarginContainer/HBoxContainer/VBoxContainer/DescriptionLabel")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="IconRect" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_nfpkd")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NameLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+text = "Just like LeBron James"
+
+[node name="DescriptionLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+size_flags_vertical = 3
+text = "Thorw the basketball into the hoop"
+autowrap_mode = 2
