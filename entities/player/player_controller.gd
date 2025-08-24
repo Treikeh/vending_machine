@@ -203,6 +203,8 @@ func _update_ui_throw_bar(sample_offset: float) -> void:
 
 func get_save_data() -> Dictionary:
 	var data: Dictionary = {
+		"orientation": var_to_str(_orientation.rotation_degrees),
+		"head_rotation": var_to_str(_head.rotation_degrees),
 		"item": _held_item.scene_file_path if _held_item != null else "",
 		"item_data": _held_item.get_save_data() if _held_item != null else {},
 	}
@@ -211,6 +213,9 @@ func get_save_data() -> Dictionary:
 
 func load_save_data(data: Dictionary) -> void:
 	if not data.is_empty():
+		_orientation.rotation_degrees = str_to_var(data.orientation)
+		_head.rotation_degrees = str_to_var(data.head_rotation)
+		# Spawn and set data on item
 		if data.item != "":
 			# Spawn item
 			var item: BaseItem = load(data.item).instantiate()

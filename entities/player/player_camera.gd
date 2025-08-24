@@ -5,6 +5,10 @@ func _ready() -> void:
 	_load_video_settings()
 	SettingsManager.fov_updated.connect(_on_fov_updated)
 	SettingsManager.video_settings_changed.connect(_load_video_settings)
+	
+	var horizontal: float = cos(hb_time * hb_frequency * 0.5) * hb_amplitude
+	#var horizontal: float = sin(hb_time * hb_frequency * 0.5) * hb_amplitude
+	var vertical: float = sin(hb_time * hb_frequency) * hb_amplitude
 
 
 func _load_video_settings() -> void:
@@ -26,7 +30,7 @@ var hb_time: float = 0.0
 
 func apply_head_bobbing(velocity: Vector3, delta: float) -> void:
 	hb_time += delta * velocity.length()
-	var horizontal: float = cos(hb_time * hb_frequency * 0.5) * hb_amplitude
+	var horizontal: float = sin(hb_time * hb_frequency * 0.5) * hb_amplitude
 	var vertical: float = sin(hb_time * hb_frequency) * hb_amplitude
 	transform.origin = Vector3(horizontal, vertical, 0.0)
 
