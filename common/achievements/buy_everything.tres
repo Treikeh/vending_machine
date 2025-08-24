@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="BuyEverythingAchievement" load_steps=3 format=3 uid="uid://bnk78nq5t4hpx"]
 
-[ext_resource type="Texture2D" uid="uid://bulusrtjutify" path="res://icon.png" id="1_wanc5"]
+[ext_resource type="Texture2D" uid="uid://bmoa1nqr0e3ip" path="res://common/achievements/buy_everything_icon.png" id="1_wanc5"]
 [ext_resource type="Script" uid="uid://b1qfjstl2but2" path="res://common/achievements/buy_everything_achievement.gd" id="2_06cgg"]
 
 [resource]

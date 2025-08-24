@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Achievement" load_steps=3 format=3 uid="uid://cw8em4x3l2gxj"]
 
 [ext_resource type="Script" uid="uid://0aedbhmu84r1" path="res://common/achievements/achievement.gd" id="1_2e4bn"]
-[ext_resource type="Texture2D" uid="uid://bulusrtjutify" path="res://icon.png" id="1_gucsx"]
+[ext_resource type="Texture2D" uid="uid://vm668svmltcl" path="res://common/achievements/basketball_icon.png" id="1_gucsx"]
 
 [resource]
 script = ExtResource("1_2e4bn")
