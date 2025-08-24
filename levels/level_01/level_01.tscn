@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b64kpf3puwh5f"]
+[gd_scene load_steps=11 format=3 uid="uid://b64kpf3puwh5f"]
 
 [ext_resource type="Script" uid="uid://bqvoejsdvjmuv" path="res://levels/level_01/level_01.gd" id="1_2fp4v"]
 [ext_resource type="PackedScene" uid="uid://b6iud14yjg3ef" path="res://entities/vending_machine/vending_machine.tscn" id="2_mckh2"]
@@ -7,15 +7,23 @@
 [ext_resource type="PackedScene" uid="uid://gs83e0u3lu6s" path="res://entities/player/spawner/player_spawner.tscn" id="5_71kry"]
 [ext_resource type="PackedScene" uid="uid://gkdkiaeobysh" path="res://entities/items/note/note.tscn" id="5_dm0pi"]
 [ext_resource type="PackedScene" uid="uid://dbv1lw8hkiq0v" path="res://entities/basketball_hoop/basketball_hoop.tscn" id="7_aqob7"]
+[ext_resource type="PackedScene" uid="uid://dqkkjuha8locp" path="res://entities/location_board/location_board.tscn" id="8_thp0t"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_71kry"]
 size = Vector3(100, 5, 100)
 
-[node name="Level01" type="Node3D" node_paths=PackedStringArray("_train_station_tunnel_spawn_point", "_tunnel_path", "_trash_can", "_basketball_hoop", "level_bounds")]
+[sub_resource type="BoxMesh" id="BoxMesh_thp0t"]
+size = Vector3(3, 3, 3)
+
+[node name="Level01" type="Node3D" node_paths=PackedStringArray("_train_station_tunnel_spawn_point", "_tunnel_path", "_tunnel_path_screen_notifier", "_hellevator", "_trash_can_screen_notifier", "_trash_can", "_basketball_hoop_screen_notifier", "_basketball_hoop", "level_bounds")]
 script = ExtResource("1_2fp4v")
 _train_station_tunnel_spawn_point = NodePath("OtherLevels/TrainStationTunnel/TrainStationTunnelSpawnPoint")
 _tunnel_path = NodePath("level_01_sm/Level01TunnelPath_001")
+_tunnel_path_screen_notifier = NodePath("level_01_sm/Level01TunnelPath_001/TunnelPathScreenNotifier")
+_hellevator = NodePath("OtherLevels/Hell/Hellevator")
+_trash_can_screen_notifier = NodePath("TrashCanScreenNotifier")
 _trash_can = NodePath("TrashCanScreenNotifier/TrashCan")
+_basketball_hoop_screen_notifier = NodePath("BasketballHioopScreenNotifier")
 _basketball_hoop = NodePath("BasketballHioopScreenNotifier/BasketballHoop")
 level_bounds = NodePath("LevelBounds")
 metadata/_custom_type_script = "uid://bqomd2e1p3srg"
@@ -53,6 +61,15 @@ transform = Transform3D(-0.982375, -0.186918, 3.94743e-08, 5.54921e-08, -8.04615
 [node name="TrainStationTunnelSpawnPoint" type="Marker3D" parent="OtherLevels/TrainStationTunnel"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.3)
 
+[node name="Hell" type="Node3D" parent="OtherLevels"]
+
+[node name="Hellevator" type="Node3D" parent="OtherLevels/Hell"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 18.5)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="OtherLevels/Hell/Hellevator"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+mesh = SubResource("BoxMesh_thp0t")
+
 [node name="TrashCanScreenNotifier" type="VisibleOnScreenNotifier3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.5, 1.9)
@@ -63,9 +80,15 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -1.19209e-07)
 
 [node name="BasketballHioopScreenNotifier" type="VisibleOnScreenNotifier3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4.4, 0, 6.8)
+unique_name_in_owner = true
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 2.2, 7)
+aabb = AABB(-1, -2.2, -1.2, 2, 4.4, 2.4)
 
 [node name="BasketballHoop" parent="BasketballHioopScreenNotifier" instance=ExtResource("7_aqob7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.76837e-07, -2.2, 1)
+
+[node name="LocationBoard" parent="." instance=ExtResource("8_thp0t")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3.9, 78.6, 5.9)
 
 [connection signal="screen_exited" from="level_01_sm/Level01TunnelPath_001/TunnelPathScreenNotifier" to="." method="_on_tunnel_path_screen_notifier_screen_exited"]
 [connection signal="code_submitted" from="VendingMachine" to="." method="_on_vending_machine_code_submitted"]
