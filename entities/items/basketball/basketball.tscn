@@ -10,7 +10,7 @@ radius = 0.15
 [sub_resource type="SphereShape3D" id="SphereShape3D_ygj6c"]
 radius = 0.175
 
-[node name="Basketball" instance=ExtResource("1_x0jpn")]
+[node name="Basketball" groups=["basketball"] instance=ExtResource("1_x0jpn")]
 physics_material_override = ExtResource("2_82p1i")
 angular_damp = 0.1
 

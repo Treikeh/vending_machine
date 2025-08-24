@@ -1,7 +1,24 @@
-[gd_scene load_steps=2 format=3 uid="uid://dbv1lw8hkiq0v"]
+[gd_scene load_steps=4 format=3 uid="uid://dbv1lw8hkiq0v"]
 
 [ext_resource type="PackedScene" uid="uid://d4a4fy7t4ovgc" path="res://entities/basketball_hoop/art/basketball_hoop_01_sm.glb" id="1_8pymh"]
+[ext_resource type="Script" uid="uid://c4hybjoma8jv5" path="res://entities/basketball_hoop/basketball_hoop.gd" id="1_fyjcc"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_8pymh"]
+radius = 0.1
 
 [node name="BasketballHoop" type="Node3D"]
+script = ExtResource("1_fyjcc")
 
 [node name="BasketballHoop_01_SM" parent="." instance=ExtResource("1_8pymh")]
+
+[node name="PointArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -1.76)
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PointArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0799999, 0)
+shape = SubResource("SphereShape3D_8pymh")
+
+[connection signal="body_entered" from="PointArea" to="." method="_on_point_area_body_entered"]

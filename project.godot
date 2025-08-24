@@ -62,6 +62,7 @@ import/blender/enabled=false
 player=""
 item=""
 persistent=""
+basketball=""
 
 [input]
 
