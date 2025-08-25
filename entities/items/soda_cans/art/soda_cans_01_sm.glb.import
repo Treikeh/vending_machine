@@ -34,9 +34,21 @@ animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={
 "materials": {
-"soda_cans_mat.001": {
+"blue_soda_can_mat.001": {
 "use_external/enabled": true,
-"use_external/path": "uid://ok01w866uev1"
+"use_external/path": "uid://1wycp7q37q3a"
+},
+"green_soda_can_mat.001": {
+"use_external/enabled": true,
+"use_external/path": "uid://bj75mum4a142a"
+},
+"red_soda_can_mat.001": {
+"use_external/enabled": true,
+"use_external/path": "uid://japsla2u65ed"
+},
+"yellow_soda_can_mat.001": {
+"use_external/enabled": true,
+"use_external/path": "uid://dr3hddke0of7u"
 }
 }
 }

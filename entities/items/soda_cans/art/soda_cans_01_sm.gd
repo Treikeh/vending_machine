@@ -2,7 +2,7 @@
 extends Node3D
 
 
-@export_enum("Red", "Yellow", "Blue", "Green") var _colour: int = 0:
+@export_enum("Red", "Blue", "Yellow", "Green") var _colour: int = 0:
 	set = _set_visible_soda_can
 
 func _set_visible_soda_can(value: int) -> void:

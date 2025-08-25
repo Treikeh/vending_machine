@@ -19,4 +19,4 @@ shape = SubResource("CylinderShape3D_35isc")
 debug_color = Color(0.652233, 0.518714, 3.85046e-07, 0.42)
 
 [node name="SodaCans_01_SM" parent="ActiveWhileHeld" index="0" instance=ExtResource("3_s0qt2")]
-_colour = 1
+_colour = 2

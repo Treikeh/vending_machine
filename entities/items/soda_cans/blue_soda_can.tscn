@@ -23,7 +23,7 @@ shape = ExtResource("4_vgnn0")
 debug_color = Color(0.652233, 0.518714, 3.85046e-07, 0.42)
 
 [node name="SodaCans_01_SM" parent="ActiveWhileHeld" index="0" instance=ExtResource("3_eglqr")]
-_colour = 2
+_colour = 1
 
 [node name="EmptyMesh" type="MeshInstance3D" parent="ActiveWhileHeld" index="1"]
 visible = false
