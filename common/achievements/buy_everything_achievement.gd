@@ -8,7 +8,7 @@ var items_bought: Dictionary = {
 	"13": false,
 	"14": false,
 	"21": false,
-	"41": false,
+	"31": false,
 }
 
 

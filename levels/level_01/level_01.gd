@@ -15,7 +15,7 @@ func _on_vending_machine_code_submitted(code: String, valid: bool) -> void:
 	
 	# Do stuff when typing in the right codes
 	match code:
-		"41": # Basketball
+		"31": # Basketball
 			_basketball_bought = true
 			if not _basketball_hoop_screen_notifier.is_on_screen():
 				_set_node_active(_basketball_hoop, true)

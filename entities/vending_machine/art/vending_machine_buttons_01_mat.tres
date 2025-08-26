@@ -1,0 +1,12 @@
+[gd_resource type="ORMMaterial3D" load_steps=3 format=3 uid="uid://bnp83mteclxdh"]
+
+[ext_resource type="Texture2D" uid="uid://bmj8bylubeskm" path="res://entities/vending_machine/art/vending_machine_buttons_01_bc.png" id="1_ktg84"]
+[ext_resource type="Texture2D" uid="uid://bllancascp7c2" path="res://entities/vending_machine/art/vending_machine_buttons_01_orm.png" id="2_gwf8m"]
+
+[resource]
+transparency = 2
+alpha_scissor_threshold = 0.25
+alpha_antialiasing_mode = 0
+albedo_texture = ExtResource("1_ktg84")
+orm_texture = ExtResource("2_gwf8m")
+texture_filter = 2
