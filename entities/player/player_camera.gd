@@ -5,10 +5,6 @@ func _ready() -> void:
 	_load_video_settings()
 	SettingsManager.fov_updated.connect(_on_fov_updated)
 	SettingsManager.video_settings_changed.connect(_load_video_settings)
-	
-	var horizontal: float = cos(hb_time * hb_frequency * 0.5) * hb_amplitude
-	#var horizontal: float = sin(hb_time * hb_frequency * 0.5) * hb_amplitude
-	var vertical: float = sin(hb_time * hb_frequency) * hb_amplitude
 
 
 func _load_video_settings() -> void:

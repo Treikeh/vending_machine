@@ -15,7 +15,6 @@ func _ready() -> void:
 #region Locations
 
 @export_group("Locations")
-@export var _locations_viewport: SubViewport
 
 #endregion
 
@@ -26,7 +25,6 @@ func _ready() -> void:
 const ACHIEVEMENTS_SHOWCASE_SCENE: PackedScene = preload("uid://d08couw14yxhv")
 
 @export_group("Achievements")
-@export var _achievements_viewport: SubViewport
 @export var _achievements_container: Container
 
 
@@ -46,6 +44,7 @@ func get_save_data() -> Dictionary:
 
 
 func load_save_data(data: Dictionary) -> void:
-	pass
+	if not data.is_empty():
+		pass
 
 #endregion

@@ -30,8 +30,8 @@ skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_cm3uc")
 
 [node name="Label3D" type="Label3D" parent="ActiveWhileHeld" index="1"]
-transform = Transform3D(0.878742, 0.477297, 0, -0.477297, 0.878742, 0, 0, 0, 1, -0.00446621, 0.0204723, 0.00425263)
-modulate = Color(0.222295, 0.222295, 0.222295, 1)
+transform = Transform3D(0.275925, 0.149871, 0, -0.149871, 0.275925, 0, 0, 0, 0.314, -0.00446621, 0.0004723, 0.00425263)
+modulate = Color(0.118581, 0.118581, 0.118581, 1)
 text = "1996"
-font_size = 12
+font_size = 50
 outline_size = 1

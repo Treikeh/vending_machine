@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://saphiybos53"]
+[gd_scene load_steps=11 format=3 uid="uid://saphiybos53"]
 
 [ext_resource type="PackedScene" uid="uid://cbn0lxi0a7yte" path="res://levels/level_3d.tscn" id="1_5hj6o"]
 [ext_resource type="Script" uid="uid://dpi4t8fcj6c2q" path="res://levels/office_building_exterior/office_building_exterior.gd" id="2_5jagq"]
@@ -8,7 +8,10 @@
 [ext_resource type="Material" uid="uid://meiilmj55714" path="res://common/materials/simple_dev_grid_gray_01.tres" id="7_u3qo7"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_u3qo7"]
-size = Vector3(460, 6, 37)
+size = Vector3(460, 6, 8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jt7fl"]
+size = Vector3(60, 5, 84)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5xvh8"]
 size = Vector3(10, 5, 10)
@@ -20,8 +23,12 @@ size = Vector3(200, 5, 10)
 script = ExtResource("2_5jagq")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LevelBounds" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 6.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -8)
 shape = SubResource("BoxShape3D_u3qo7")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="LevelBounds" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 38)
+shape = SubResource("BoxShape3D_jt7fl")
 
 [node name="OtherLevels" type="Node3D" parent="." index="1"]
 
@@ -82,10 +89,10 @@ use_collision = true
 size = Vector3(50, 100, 50)
 
 [node name="Platform" type="CSGBox3D" parent="Environment" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 10.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 38)
 material_override = ExtResource("7_u3qo7")
 use_collision = true
-size = Vector3(60, 1, 29)
+size = Vector3(60, 1, 84)
 
 [node name="PlayerSpawner" parent="." index="3" instance=ExtResource("6_pnhrg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.475, 0)
