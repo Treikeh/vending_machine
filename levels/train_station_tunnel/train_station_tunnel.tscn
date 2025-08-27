@@ -75,6 +75,7 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -5.75,
 
 [node name="RestroomDoor" parent="Restrooms/Left" instance=ExtResource("4_bnm24")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.25, -4, -14)
+_gender = 1
 _open_rotation = Vector3(0, -90, 0)
 
 [node name="OtherLevels" type="Node3D" parent="."]
