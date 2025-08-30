@@ -40,6 +40,9 @@ _subresources={
 }
 },
 "nodes": {
+"PATH:CornerSmall_001": {
+"generate/physics": true
+},
 "PATH:Corner_001": {
 "generate/physics": true
 },
