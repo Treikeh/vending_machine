@@ -8,13 +8,13 @@
 [ext_resource type="PackedScene" uid="uid://gs83e0u3lu6s" path="res://entities/player/spawner/player_spawner.tscn" id="6_g767i"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g767i"]
-size = Vector3(4, 4, 18)
+size = Vector3(4, 4, 10.1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5vu2g"]
-size = Vector3(8, 3, 8)
+size = Vector3(15.9, 3, 15.9)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kcsps"]
-size = Vector3(4, 7, 20)
+size = Vector3(4, 7, 12.1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gfadk"]
 size = Vector3(4, 2, 1)
@@ -39,15 +39,15 @@ collision_mask = 23
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LevelBounds"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -9)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -5.05)
 shape = SubResource("BoxShape3D_g767i")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="LevelBounds"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -2.5, -14)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -2.5, -18.05)
 shape = SubResource("BoxShape3D_5vu2g")
 
 [node name="CollisionShape3D3" type="CollisionShape3D" parent="LevelBounds"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, -4.5, -8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, -4.5, -4.05)
 shape = SubResource("BoxShape3D_kcsps")
 
 [node name="GridMap" type="GridMap" parent="."]
