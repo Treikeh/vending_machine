@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cyep31y55rxae"
-path="res://.godot/imported/restroom_door_01_sm.glb-a961bb03e6617c55312bb86a3602a3c6.scn"
+uid="uid://by503b7swp5de"
+path="res://.godot/imported/restroom_stall_door_01_sm.glb-b2a43d96e869fed8be2504e2611a64ae.scn"
 
 [deps]
 
-source_file="res://entities/doors/restroom_door/art/restroom_door_01_sm.glb"
-dest_files=["res://.godot/imported/restroom_door_01_sm.glb-a961bb03e6617c55312bb86a3602a3c6.scn"]
+source_file="res://environment/restroom/stall_door/art/restroom_stall_door_01_sm.glb"
+dest_files=["res://.godot/imported/restroom_stall_door_01_sm.glb-b2a43d96e869fed8be2504e2611a64ae.scn"]
 
 [params]
 
@@ -32,18 +32,6 @@ animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
-_subresources={
-"materials": {
-"restroom_door_mat.001": {
-"use_external/enabled": true,
-"use_external/path": "uid://dkoney38og3ul"
-}
-},
-"nodes": {
-"PATH:RestroomDoor_001": {
-"physics/shape_type": 1
-}
-}
-}
+_subresources={}
 gltf/naming_version=1
 gltf/embedded_image_handling=1

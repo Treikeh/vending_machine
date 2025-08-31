@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dickh50sq4kdu"]
 
 [ext_resource type="Script" uid="uid://dq2uj4dypqc6v" path="res://entities/vending_machine/vending_machine_button.gd" id="1_4f7i2"]
-[ext_resource type="Script" uid="uid://k4r22ohcsxla" path="res://common/scripts/interact_area_3d.gd" id="2_8mcap"]
+[ext_resource type="Script" uid="uid://k4r22ohcsxla" path="res://common/scenes/interactable/interact_area_3d.gd" id="2_8mcap"]
 [ext_resource type="PackedScene" uid="uid://11n75ps8u5ir" path="res://entities/vending_machine/art/vending_machine_buttons_01_sm.glb" id="2_bfmrt"]
 [ext_resource type="AudioStream" uid="uid://sar5yfh2cmiy" path="res://entities/vending_machine/audio/click-buttons-ui-menu-sounds-effects-button-13-205396.mp3" id="3_masv5"]
 

@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://copdk6dcpyiln"]
 
-[ext_resource type="PackedScene" uid="uid://t5bjga48mq8u" path="res://entities/doors/door.tscn" id="1_pph4r"]
-[ext_resource type="Script" uid="uid://chjiiakvxg6rf" path="res://entities/doors/restroom_door/restroom_door.gd" id="2_ioijk"]
-[ext_resource type="Shape3D" uid="uid://brq5qvu3kpm2l" path="res://entities/doors/door_default_collision.tres" id="2_ssl8n"]
-[ext_resource type="PackedScene" uid="uid://b66dt13sk26pc" path="res://entities/doors/restroom_door/art/restroom_door_01_sm.tscn" id="3_7p658"]
-[ext_resource type="Texture2D" uid="uid://csigaasfs82vb" path="res://entities/doors/restroom_door/art/restroom_door_sign_male.png" id="4_my8sj"]
-[ext_resource type="Texture2D" uid="uid://crccykklxoigc" path="res://entities/doors/restroom_door/art/restroom_door_sign_female.png" id="5_hf83v"]
+[ext_resource type="PackedScene" uid="uid://t5bjga48mq8u" path="res://common/scenes/interactable/door/door.tscn" id="1_pph4r"]
+[ext_resource type="Script" uid="uid://chjiiakvxg6rf" path="res://environment/restroom/door/restroom_door.gd" id="2_ioijk"]
+[ext_resource type="Shape3D" uid="uid://brq5qvu3kpm2l" path="res://common/scenes/interactable/door/door_default_collision.tres" id="2_ssl8n"]
+[ext_resource type="PackedScene" uid="uid://b66dt13sk26pc" path="res://environment/restroom/door/art/restroom_door_01_sm.tscn" id="3_7p658"]
+[ext_resource type="Texture2D" uid="uid://csigaasfs82vb" path="res://environment/restroom/door/art/restroom_door_sign_male.png" id="4_my8sj"]
+[ext_resource type="Texture2D" uid="uid://crccykklxoigc" path="res://environment/restroom/door/art/restroom_door_sign_female.png" id="5_hf83v"]
 
 [node name="RestroomDoor" node_paths=PackedStringArray("_male_decal", "_female_decal") instance=ExtResource("1_pph4r")]
 script = ExtResource("2_ioijk")

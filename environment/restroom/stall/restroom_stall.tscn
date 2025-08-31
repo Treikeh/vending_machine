@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfwif73ucoe2r"]
+
+[ext_resource type="PackedScene" uid="uid://dj1tv0xp4dhq2" path="res://environment/restroom/stall/art/restroom_stall_01_sm.glb" id="1_3x6ir"]
+[ext_resource type="PackedScene" uid="uid://cl8iqkk8kegtu" path="res://environment/restroom/stall_door/restroom_stall_door.tscn" id="2_uoxmx"]
+
+[node name="RestroomStall" type="Node3D"]
+
+[node name="RestroomStall_01_SM" parent="." instance=ExtResource("1_3x6ir")]
+
+[node name="RestroomStallDoor" parent="." instance=ExtResource("2_uoxmx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.65, 0, -0.975)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b66dt13sk26pc"]
 
-[ext_resource type="PackedScene" uid="uid://cyep31y55rxae" path="res://entities/doors/restroom_door/art/restroom_door_01_sm.glb" id="1_ssi6x"]
+[ext_resource type="PackedScene" uid="uid://cyep31y55rxae" path="res://environment/restroom/door/art/restroom_door_01_sm.glb" id="1_ssi6x"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kiksb"]
 size = Vector3(1.5, 2.25, 0.1)

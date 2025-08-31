@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://t5bjga48mq8u"]
 
-[ext_resource type="Script" uid="uid://cc4vycgh58wr8" path="res://entities/doors/door.gd" id="1_v6xrn"]
+[ext_resource type="Script" uid="uid://cc4vycgh58wr8" path="res://common/scenes/interactable/door/door.gd" id="1_v6xrn"]
 
 [node name="Door" type="Area3D" groups=["persistent"]]
 collision_layer = 16
