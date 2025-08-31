@@ -30,13 +30,13 @@ func _physics_process(delta: float) -> void:
 #region Input
 
 @export_group("Input")
+@export var _orientation: Node3D
+@export var _head: Node3D
+@export var _camera: Camera3D
+@export var _interact_ray: RayCast3D
 
 var _rmb_pressed: bool = false
 
-@onready var _orientation: Node3D = %Orientation
-@onready var _head: Node3D = %Head
-@onready var _camera: Camera3D = %Camera
-@onready var _interact_ray: RayCast3D = %InteractRay
 
 
 func _on_looked(vector: Vector2) -> void:
@@ -82,13 +82,12 @@ enum {WALKING, FALLING, JUMPING}
 @export var _ground_accel: float = 500.0
 @export var _air_accel: float = 200.0
 @export var _jump_force: float = 5.0
+@export var _ground_check: ShapeCast3D
 
 var _is_jumping: bool = false
-#var gravity_force: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 var gravity_direction: Vector3 = Vector3.DOWN
 var _move_direction: Vector3 = Vector3.ZERO
 
-@onready var _ground_check: ShapeCast3D = %GroundCheck
 @onready var _state_machine := SM.new({
 	WALKING: {SM.ENTER: _walking_enter, SM.PHYSICS: _walking_physics},
 	FALLING: {SM.ENTER: _falling_enter, SM.PHYSICS: _falling_physics},

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b62jt4e6safbv"]
+[gd_scene load_steps=13 format=3 uid="uid://b62jt4e6safbv"]
 
 [ext_resource type="PhysicsMaterial" uid="uid://yejgfo3avahu" path="res://entities/player/player_pm.tres" id="1_0fegy"]
 [ext_resource type="Script" uid="uid://bofm6404reau4" path="res://entities/player/player_input.gd" id="1_6imlu"]
@@ -7,17 +7,32 @@
 [ext_resource type="Curve" uid="uid://c8xc2npflemcs" path="res://entities/player/player_throw_force_curve.tres" id="3_tpcj3"]
 [ext_resource type="Script" uid="uid://crgkv5i0iatqk" path="res://entities/player/player_camera.gd" id="4_1tq3d"]
 [ext_resource type="PackedScene" uid="uid://dptnrir1vmq1j" path="res://entities/player/player_ground_check.tscn" id="6_1tq3d"]
+[ext_resource type="AudioStream" uid="uid://vrxku3iom77s" path="res://entities/player/audio/Bare Step Wood Hard A.wav" id="8_eg50i"]
+[ext_resource type="AudioStream" uid="uid://cln5434irjipm" path="res://entities/player/audio/Bare Step Wood Hard B.wav" id="9_qpkgk"]
+[ext_resource type="AudioStream" uid="uid://b87wok2i317o6" path="res://entities/player/audio/Bare Step Wood Hard C.wav" id="10_qpkgk"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6tidu"]
 radius = 0.4
 height = 1.5
 
-[node name="PlayerController" type="RigidBody3D" node_paths=PackedStringArray("_held_item_transform") groups=["persistent", "player"]]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_t3d2v"]
+random_pitch = 1.2
+streams_count = 3
+stream_0/stream = ExtResource("8_eg50i")
+stream_1/stream = ExtResource("9_qpkgk")
+stream_2/stream = ExtResource("10_qpkgk")
+
+[node name="PlayerController" type="RigidBody3D" node_paths=PackedStringArray("_orientation", "_head", "_camera", "_interact_ray", "_ground_check", "_held_item_transform") groups=["persistent", "player"]]
 collision_layer = 2
 collision_mask = 3
 physics_material_override = ExtResource("1_0fegy")
 lock_rotation = true
 script = ExtResource("1_y5f1h")
+_orientation = NodePath("Orientation")
+_head = NodePath("Orientation/Head")
+_camera = NodePath("Orientation/Head/Camera")
+_interact_ray = NodePath("Orientation/Head/Camera/InteractRay")
+_ground_check = NodePath("GroundCheck")
 _throw_force_curve = ExtResource("3_tpcj3")
 _held_item_transform = NodePath("Orientation/Head/HeldItemTransform")
 
@@ -25,19 +40,16 @@ _held_item_transform = NodePath("Orientation/Head/HeldItemTransform")
 shape = SubResource("CapsuleShape3D_6tidu")
 
 [node name="Orientation" type="Node3D" parent="."]
-unique_name_in_owner = true
 
 [node name="Head" type="Node3D" parent="Orientation"]
-unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
-[node name="Camera" type="Camera3D" parent="Orientation/Head"]
-unique_name_in_owner = true
+[node name="Camera" type="Camera3D" parent="Orientation/Head" node_paths=PackedStringArray("_footsteps_sounds")]
 fov = 90.0
 script = ExtResource("4_1tq3d")
+_footsteps_sounds = NodePath("../../../FootstepsSounds")
 
 [node name="InteractRay" type="RayCast3D" parent="Orientation/Head/Camera"]
-unique_name_in_owner = true
 target_position = Vector3(0, 0, -1.75)
 collision_mask = 17
 collide_with_areas = true
@@ -46,11 +58,15 @@ script = ExtResource("3_rs2e6")
 [node name="HeldItemTransform" type="Marker3D" parent="Orientation/Head"]
 transform = Transform3D(0.85957, 0.121869, -0.496273, 0.0408115, 0.951673, 0.304389, 0.509386, -0.281898, 0.813056, 0.345, -0.185, -0.31)
 
-[node name="GroundCheck" parent="Orientation" instance=ExtResource("6_1tq3d")]
-unique_name_in_owner = true
+[node name="GroundCheck" parent="." instance=ExtResource("6_1tq3d")]
 
 [node name="Input" type="Node" parent="."]
 script = ExtResource("1_6imlu")
+
+[node name="FootstepsSounds" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+stream = SubResource("AudioStreamRandomizer_t3d2v")
+bus = &"SFX"
 
 [connection signal="interacted" from="Input" to="." method="_on_interacted"]
 [connection signal="item_thrown" from="Input" to="." method="_on_item_thrown"]

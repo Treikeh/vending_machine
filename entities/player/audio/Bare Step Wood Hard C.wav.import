@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b87wok2i317o6"
+path="res://.godot/imported/Bare Step Wood Hard C.wav-4a40160acffe92511492e8fad6622569.sample"
+
+[deps]
+
+source_file="res://entities/player/audio/Bare Step Wood Hard C.wav"
+dest_files=["res://.godot/imported/Bare Step Wood Hard C.wav-4a40160acffe92511492e8fad6622569.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

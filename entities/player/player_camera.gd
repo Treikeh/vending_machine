@@ -1,6 +1,10 @@
 extends Camera3D
 
 
+@export var _footsteps_sounds: AudioStreamPlayer3D
+var _left_step: bool = false
+
+
 func _ready() -> void:
 	_load_video_settings()
 	SettingsManager.fov_updated.connect(_on_fov_updated)
@@ -29,6 +33,15 @@ func apply_head_bobbing(velocity: Vector3, delta: float) -> void:
 	var horizontal: float = sin(hb_time * hb_frequency * 0.5) * hb_amplitude
 	var vertical: float = sin(hb_time * hb_frequency) * hb_amplitude
 	transform.origin = Vector3(horizontal, vertical, 0.0)
+	# Play footstep sounds
+	if _left_step:
+		if horizontal > 0.02:
+			_footsteps_sounds.play()
+			_left_step = false
+	else:
+		if horizontal < -0.02:
+			_footsteps_sounds.play()
+			_left_step = true
 
 #endregion
 
