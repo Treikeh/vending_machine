@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://cyk7e0ys847eu"]
+
+[ext_resource type="PackedScene" uid="uid://dskqjqsceawnr" path="res://environment/restroom/toilet/art/restroom_toilet_01_sm.tscn" id="1_bhlt4"]
+[ext_resource type="Script" uid="uid://dh4x8dfq8we43" path="res://environment/restroom/toilet/restroom_toilet.gd" id="1_crpee"]
+[ext_resource type="PackedScene" uid="uid://okem3oya16no" path="res://common/scenes/interactable/interact_area_3d.tscn" id="3_vyr04"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6lk7b"]
+size = Vector3(0.6, 0.1, 0.72)
+
+[node name="RestroomToilet" type="Node3D" node_paths=PackedStringArray("_lid")]
+script = ExtResource("1_crpee")
+_lid = NodePath("RestroomToilet_01_SM/RestroomToiletLid_001")
+
+[node name="RestroomToilet_01_SM" parent="." instance=ExtResource("1_bhlt4")]
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="RestroomToilet_01_SM/RestroomToiletLid_001" index="1"]
+remote_path = NodePath("../../../LidInteractArea")
+
+[node name="LidInteractArea" parent="." instance=ExtResource("3_vyr04")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.628233, 0.109996)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LidInteractArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, -0.36)
+shape = SubResource("BoxShape3D_6lk7b")
+debug_color = Color(0.652233, 0.518714, 3.85046e-07, 0.42)
+
+[connection signal="interacted" from="LidInteractArea" to="." method="_on_lid_interact_area_interacted"]
+
+[editable path="RestroomToilet_01_SM"]

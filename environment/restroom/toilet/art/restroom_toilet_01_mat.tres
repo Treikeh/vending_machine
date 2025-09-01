@@ -1,0 +1,9 @@
+[gd_resource type="ORMMaterial3D" load_steps=3 format=3 uid="uid://b0ko0riasmjs6"]
+
+[ext_resource type="Texture2D" uid="uid://c38lu05wqowne" path="res://environment/restroom/toilet/art/restroom_toilet_01_bc.png" id="1_mvl25"]
+[ext_resource type="Texture2D" uid="uid://d01g0qt2nd0u" path="res://environment/restroom/toilet/art/restroom_toilet_01_orm.png" id="2_ew84e"]
+
+[resource]
+albedo_texture = ExtResource("1_mvl25")
+orm_texture = ExtResource("2_ew84e")
+texture_filter = 2

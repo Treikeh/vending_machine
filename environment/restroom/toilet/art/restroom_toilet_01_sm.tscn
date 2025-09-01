@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://dskqjqsceawnr"]
+
+[ext_resource type="PackedScene" uid="uid://2oleuiq4gdx0" path="res://environment/restroom/toilet/art/restroom_toilet_01_sm.glb" id="1_xuhs5"]
+
+[node name="RestroomToilet_01_SM" instance=ExtResource("1_xuhs5")]
