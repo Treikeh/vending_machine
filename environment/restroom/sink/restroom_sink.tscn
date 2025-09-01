@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bokl3n0ixclk1"]
+
+[ext_resource type="PackedScene" uid="uid://dgfji4tgh0301" path="res://environment/restroom/sink/art/restroom_sink_01_sm.tscn" id="1_dby1n"]
+
+[node name="RestroomSink" type="Node3D"]
+
+[node name="RestroomSink_01_SM" parent="." instance=ExtResource("1_dby1n")]

@@ -1,0 +1,9 @@
+[gd_resource type="ORMMaterial3D" load_steps=3 format=3 uid="uid://dv8fw0vsh2hc1"]
+
+[ext_resource type="Texture2D" uid="uid://b8sock08eitmv" path="res://environment/restroom/sink/art/restroom_sink_01_bc.png" id="1_6frsn"]
+[ext_resource type="Texture2D" uid="uid://sohsnbbj3832" path="res://environment/restroom/sink/art/restroom_sink_01_orm.png" id="2_pmelc"]
+
+[resource]
+albedo_texture = ExtResource("1_6frsn")
+orm_texture = ExtResource("2_pmelc")
+texture_filter = 2

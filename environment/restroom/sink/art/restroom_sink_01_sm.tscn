@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgfji4tgh0301"]
+
+[ext_resource type="PackedScene" uid="uid://cwb8sc1tp4y0u" path="res://environment/restroom/sink/art/restroom_sink_01_sm.glb" id="1_y4b0o"]
+
+[node name="RestroomSink_01_SM" instance=ExtResource("1_y4b0o")]
