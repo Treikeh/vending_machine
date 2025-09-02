@@ -62,4 +62,4 @@ func _spawn_item(scene: PackedScene) -> void:
 	var item: RigidBody3D = scene.instantiate()
 	add_child(item)
 	item.transform = item_spawn_point.transform
-	item.apply_central_impulse(-item.global_basis.z * 2.0)
+	item.apply_central_impulse(-item.global_basis.z * item.mass * 2.0)
