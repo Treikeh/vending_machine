@@ -21,12 +21,12 @@ func use_item(instigator: Node3D) -> void:
 
 
 func pick_up_item(instigator: Node3D, new_transform: Node3D) -> void:
+	process_mode = Node.PROCESS_MODE_DISABLED
 	_item_picked_up(instigator)
 	picked_up.emit()
 	linear_velocity = Vector3.ZERO
 	reparent(new_transform, false)
 	remove_from_group("persistent")
-	process_mode = Node.PROCESS_MODE_DISABLED
 
 
 func drop_item(instigator: Node3D) -> void:

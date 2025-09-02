@@ -21,7 +21,7 @@ cap_bottom = false
 [sub_resource type="ViewportTexture" id="ViewportTexture_gblom"]
 viewport_path = NodePath("CameraProjection/ProjectionSprite/SubViewport")
 
-[node name="Camera" node_paths=PackedStringArray("_sub_viewport", "_flash", "_picture_spawn_point") instance=ExtResource("1_lemjp")]
+[node name="Camera" node_paths=PackedStringArray("_sub_viewport", "_flash", "_picture_spawn_point") groups=["persistent"] instance=ExtResource("1_lemjp")]
 script = ExtResource("2_w4nqt")
 _sub_viewport = NodePath("CameraProjection/ProjectionSprite/SubViewport")
 _flash = NodePath("ActiveWhileHeld/Flash")

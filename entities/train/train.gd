@@ -6,6 +6,7 @@ extends CharacterBody3D
 @export var _accel_duration: float = 5.0
 @export var _station_wait_timer: Timer
 
+var _reparent_nodes: Array[Node] = []
 var _speed: float = _max_speed
 
 @onready var reparent_area: Area3D = $ReparentArea
@@ -17,12 +18,31 @@ func _physics_process(_delta: float) -> void:
 
 
 func _on_reparent_area_body_entered(body: Node3D) -> void:
-	if not is_ancestor_of(body) and body.process_mode != ProcessMode.PROCESS_MODE_DISABLED:
+	if (
+			not is_ancestor_of(body)
+			and body.process_mode != ProcessMode.PROCESS_MODE_DISABLED
+			and not _reparent_nodes.has(body)
+	):
 		body.reparent.call_deferred(self)
+		if body is RigidBody3D:
+			body.apply_central_impulse(-velocity)
+		# Add body to array of nodes that are being reparented, then wait 2 frames before removing it
+		# This is only necessarry when using Jolt physics. And it's done to avoid the looping 
+		# enter/exit area singals when reparenting the node. 
+		#INFO: The first await is for the call_deffered. The second is to make sure the node is
+		# actually inside the tree so that the exit signal isn't triggered during the entering frame
+		_reparent_nodes.append(body)
+		await get_tree().physics_frame
+		await get_tree().physics_frame
+		_reparent_nodes.erase(body)
 
 
 func _on_reparent_area_body_exited(body: Node3D) -> void:
-	if is_ancestor_of(body) and body.process_mode != ProcessMode.PROCESS_MODE_DISABLED:
+	if (
+			is_ancestor_of(body)
+			and body.process_mode != ProcessMode.PROCESS_MODE_DISABLED
+			and not _reparent_nodes.has(body)
+	):
 		body.reparent.call_deferred(LevelManager)
 		if body is RigidBody3D:
 			body.apply_central_impulse(velocity)
