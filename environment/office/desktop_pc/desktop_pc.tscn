@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://h5pg35wri6yk"]
+
+[ext_resource type="PackedScene" uid="uid://31aecfl8tg7k" path="res://environment/office/desktop_pc/art/desktop_pc_01_sm.glb" id="1_ffxpr"]
+
+[node name="DesktopPc" type="Node3D"]
+
+[node name="DesktopPc_01_SM" parent="." instance=ExtResource("1_ffxpr")]

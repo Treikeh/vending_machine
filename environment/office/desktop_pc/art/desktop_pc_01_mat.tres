@@ -1,0 +1,9 @@
+[gd_resource type="ORMMaterial3D" load_steps=3 format=3 uid="uid://c7qe11rxcq56m"]
+
+[ext_resource type="Texture2D" uid="uid://cylsjay2loxg8" path="res://environment/office/desktop_pc/art/desktop_pc_01_bc.png" id="1_li1c7"]
+[ext_resource type="Texture2D" uid="uid://doico5m6k4c53" path="res://environment/office/desktop_pc/art/desktop_pc_01_orm.png" id="2_yn4cy"]
+
+[resource]
+albedo_texture = ExtResource("1_li1c7")
+orm_texture = ExtResource("2_yn4cy")
+texture_filter = 2
