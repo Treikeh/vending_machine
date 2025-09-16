@@ -18,6 +18,7 @@ func _ready() -> void:
 
 
 func _exit_tree() -> void:
+	return
 	_save_all_new_images()
 	Utility.save_data_to_file(_save_file_path, _save_data)
 

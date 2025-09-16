@@ -16,6 +16,7 @@ func _ready() -> void:
 
 
 func _spawn_player() -> void:
+	print("Spawning player")
 	await get_tree().process_frame
 	# Spawn player if there is no player in the scene
 	if get_tree().get_first_node_in_group("player") == null:

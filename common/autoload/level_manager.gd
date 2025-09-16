@@ -57,7 +57,7 @@ func _hijack_current_scene() -> void:
 func load_level(
 		level_path: String,
 		spawn_transform: Transform3D = Transform3D.FLIP_Y,
-		spawn_callback: Callable = func():,
+		spawn_callback: Callable = Callable(),
 ) -> void:
 	# Check if level exits
 	if not ResourceLoader.exists(level_path):
@@ -88,6 +88,7 @@ func load_level(
 	
 	# Add the level to the loading queue and start loading it
 	_level_loading_queue.append(level_data)
+	print(str(_level_loading_queue.size()) + "Add " + level_path)
 	ResourceLoader.load_threaded_request(level_path)
 
 
@@ -170,8 +171,12 @@ func _add_level_to_world(level_data: LevelLoadingData) -> void:
 	level_data.spawn_callback.call_deferred()
 	
 	# Remove level from loading queue
+	#print(str(_level_loading_queue.size()) + "Delete " + level_data.level_path)
 	_level_loading_queue.erase(level_data)
+	# Check if all the levels have finished loading
 	if _level_loading_queue.is_empty():
+		await get_tree().process_frame
+		print("Level Loading Finished")
 		finished_loading_levels.emit()
 	
 	# Hide the loading screen if it's visible

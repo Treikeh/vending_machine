@@ -24,8 +24,7 @@ func _on_reparent_area_body_entered(body: Node3D) -> void:
 			and not _reparent_nodes.has(body)
 	):
 		body.reparent.call_deferred(self)
-		if body is RigidBody3D:
-			body.apply_central_impulse(-velocity)
+		print.call_deferred("Node reparented")
 		# Add body to array of nodes that are being reparented, then wait 2 frames before removing it
 		# This is only necessarry when using Jolt physics. And it's done to avoid the looping 
 		# enter/exit area singals when reparenting the node. 

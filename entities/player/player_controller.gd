@@ -11,6 +11,8 @@ func _ready() -> void:
 	
 	# Spawn hud
 	GuiManager.load_menu(HUD_SCENE)
+	
+	print(name + " " + get_parent().name + " Ready")
 
 
 func _process(delta: float) -> void:

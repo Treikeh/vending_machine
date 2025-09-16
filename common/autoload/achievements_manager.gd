@@ -19,6 +19,7 @@ func _ready() -> void:
 
 
 func _exit_tree() -> void:
+	return
 	Utility.save_data_to_file(_file_path, _get_achievements_data())
 
 

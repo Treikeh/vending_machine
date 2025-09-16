@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://gqsmdnolrjqo"]
+[gd_scene load_steps=18 format=3 uid="uid://gqsmdnolrjqo"]
 
 [ext_resource type="Script" uid="uid://c5vjh5bimods1" path="res://levels/train_station_tunnel/train_station_tunnel.gd" id="1_bnm24"]
 [ext_resource type="PackedScene" uid="uid://d11y7b5nss2s5" path="res://common/scenes/level_load_trigger.tscn" id="2_xj2i1"]
@@ -6,9 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://copdk6dcpyiln" path="res://environment/restroom/door/restroom_door.tscn" id="4_bnm24"]
 [ext_resource type="MeshLibrary" uid="uid://dil5kl30j0edq" path="res://levels/train_station_tunnel/art/train_station_tunnel_01_gridmap.meshlib" id="4_kjm4n"]
 [ext_resource type="PackedScene" uid="uid://cfwif73ucoe2r" path="res://environment/restroom/stall/restroom_stall.tscn" id="5_5vu2g"]
+[ext_resource type="PackedScene" uid="uid://bokl3n0ixclk1" path="res://environment/restroom/sink/restroom_sink.tscn" id="6_bnm24"]
 [ext_resource type="PackedScene" uid="uid://gs83e0u3lu6s" path="res://entities/player/spawner/player_spawner.tscn" id="6_g767i"]
-[ext_resource type="PackedScene" uid="uid://cwb8sc1tp4y0u" path="res://environment/restroom/sink/restroom_sink_01_sm.glb" id="6_kcsps"]
 [ext_resource type="PackedScene" uid="uid://dn8fbqjnlj0qw" path="res://entities/trash_can/trash_can.tscn" id="7_gfadk"]
+[ext_resource type="PackedScene" uid="uid://dqos45x4xxaig" path="res://environment/restroom/urinal/art/restroom_urinal_01_sm.glb" id="8_bnm24"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g767i"]
 size = Vector3(4, 4, 10.1)
@@ -74,32 +75,41 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -2.9)
 [node name="RestroomDoor" parent="Restrooms/Right" instance=ExtResource("4_bnm24")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4, -4, -15.75)
 
+[node name="TrashCan" parent="Restrooms/Right" instance=ExtResource("7_gfadk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4, -3.99, -16.6)
+
 [node name="RestroomStall" parent="Restrooms/Right" instance=ExtResource("5_5vu2g")]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -4, -3.965, -21.1)
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -4, -3.965, -21)
 
 [node name="RestroomStall2" parent="Restrooms/Right" instance=ExtResource("5_5vu2g")]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -4, -3.965, -23.1)
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -4, -3.965, -23)
 
 [node name="RestroomStall3" parent="Restrooms/Right" instance=ExtResource("5_5vu2g")]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -4, -3.965, -25.1)
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -4, -3.965, -25)
 
-[node name="RestroomSink_01_SM" parent="Restrooms/Right" instance=ExtResource("6_kcsps")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.9, -3.965, -19)
+[node name="RestroomSink" parent="Restrooms/Right" instance=ExtResource("6_bnm24")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.9, -3.99, -19)
 
-[node name="RestroomSink_01_SM2" parent="Restrooms/Right" instance=ExtResource("6_kcsps")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.9, -3.965, -20.5)
+[node name="RestroomSink2" parent="Restrooms/Right" instance=ExtResource("6_bnm24")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.9, -3.99, -20.5)
 
-[node name="RestroomSink_01_SM3" parent="Restrooms/Right" instance=ExtResource("6_kcsps")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.9, -3.965, -22)
+[node name="RestroomSink3" parent="Restrooms/Right" instance=ExtResource("6_bnm24")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.9, -3.99, -22)
 
-[node name="RestroomSink_01_SM4" parent="Restrooms/Right" instance=ExtResource("6_kcsps")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.9, -3.965, -23.5)
+[node name="RestroomSink4" parent="Restrooms/Right" instance=ExtResource("6_bnm24")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.9, -3.99, -23.5)
 
-[node name="RestroomSink_01_SM5" parent="Restrooms/Right" instance=ExtResource("6_kcsps")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.9, -3.965, -25)
+[node name="RestroomSink5" parent="Restrooms/Right" instance=ExtResource("6_bnm24")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.9, -3.99, -25)
 
-[node name="TrashCan" parent="Restrooms/Right" instance=ExtResource("7_gfadk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4, -4, -16.6)
+[node name="RestroomUrinal_01_SM" parent="Restrooms/Right" instance=ExtResource("8_bnm24")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5.9, -4, -19.2)
+
+[node name="RestroomUrinal_01_SM3" parent="Restrooms/Right" instance=ExtResource("8_bnm24")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5.9, -4, -18)
+
+[node name="RestroomUrinal_01_SM2" parent="Restrooms/Right" instance=ExtResource("8_bnm24")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5.9, -4, -16.8)
 
 [node name="Left" type="Node3D" parent="Restrooms"]
 
@@ -123,23 +133,23 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -8, -3
 [node name="RestroomStall5" parent="Restrooms/Left" instance=ExtResource("5_5vu2g")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -8, -3.965, -25)
 
-[node name="RestroomSink_01_SM" parent="Restrooms/Left" instance=ExtResource("6_kcsps")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -13.9, -3.965, -19)
+[node name="RestroomSink" parent="Restrooms/Left" instance=ExtResource("6_bnm24")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -13.9, -3.99, -19)
 
-[node name="RestroomSink_01_SM2" parent="Restrooms/Left" instance=ExtResource("6_kcsps")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -13.9, -3.965, -20.5)
+[node name="RestroomSink2" parent="Restrooms/Left" instance=ExtResource("6_bnm24")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -13.9, -3.99, -20.5)
 
-[node name="RestroomSink_01_SM3" parent="Restrooms/Left" instance=ExtResource("6_kcsps")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -13.9, -3.965, -22)
+[node name="RestroomSink3" parent="Restrooms/Left" instance=ExtResource("6_bnm24")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -13.9, -3.99, -22)
 
-[node name="RestroomSink_01_SM4" parent="Restrooms/Left" instance=ExtResource("6_kcsps")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -13.9, -3.965, -23.5)
+[node name="RestroomSink4" parent="Restrooms/Left" instance=ExtResource("6_bnm24")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -13.9, -3.99, -23.5)
 
-[node name="RestroomSink_01_SM5" parent="Restrooms/Left" instance=ExtResource("6_kcsps")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -13.9, -3.965, -25)
+[node name="RestroomSink5" parent="Restrooms/Left" instance=ExtResource("6_bnm24")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -13.9, -3.99, -25)
 
 [node name="TrashCan" parent="Restrooms/Left" instance=ExtResource("7_gfadk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.4, -4, -16.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.4, -3.99, -16.6)
 
 [node name="OtherLevels" type="Node3D" parent="."]
 
@@ -193,7 +203,6 @@ debug_color = Color(0.806939, 0.00229757, 0.992764, 0.42)
 
 [node name="StopLightLeakPlane" type="MeshInstance3D" parent="Lighting"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -0.2, -19.75)
-visible = false
 mesh = SubResource("PlaneMesh_g767i")
 skeleton = NodePath("../..")
 

@@ -10,10 +10,10 @@ config_version=5
 
 [application]
 
-config/name="Vending machine"
+config/name="Vending machine 4.5"
 config/version="dev 4"
 run/main_scene="uid://dol476noyi00q"
-config/features=PackedStringArray("4.4", "GL Compatibility")
+config/features=PackedStringArray("4.5", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/show_image=false
 config/icon="uid://bulusrtjutify"
