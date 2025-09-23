@@ -91,10 +91,9 @@ func load_persistent_nodes(root: Node3D, persistent_nodes_data: Dictionary) -> v
 	# Remove all old persistent nodes under the root node
 	for node: Node in get_tree().get_nodes_in_group("persistent"):
 		if root.is_ancestor_of(node):
+			# Rename nodes that are being removed so that new nodes can have their names if they overlap
+			node.name = str(randi())
 			node.queue_free()
-	
-	# Wait a frame so that set the names of the new nodes
-	await get_tree().process_frame
 	
 	# Sort persistent nodes data so that nodes higher in the scene tree are spawned first
 	# e.g. /root/level/node is spawned before /root/level/node/child

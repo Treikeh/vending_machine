@@ -1,8 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://438mffbmqx1b"]
+[gd_scene load_steps=14 format=3 uid="uid://438mffbmqx1b"]
 
 [ext_resource type="Script" uid="uid://bb00o1p43k44i" path="res://levels/train_station/train_station.gd" id="1_b0eu5"]
 [ext_resource type="PackedScene" uid="uid://cpkqvybvj5ikj" path="res://levels/train_station/art/train_station_mock_up.glb" id="1_cn4k8"]
-[ext_resource type="PackedScene" uid="uid://puva7m3d5vds" path="res://entities/train/train.tscn" id="3_f26eg"]
 [ext_resource type="PackedScene" uid="uid://d11y7b5nss2s5" path="res://common/scenes/level_load_trigger.tscn" id="4_2rh3c"]
 [ext_resource type="PackedScene" uid="uid://pgv43adw264g" path="res://common/scenes/level_unload_trigger.tscn" id="5_irpxo"]
 [ext_resource type="MeshLibrary" uid="uid://dil5kl30j0edq" path="res://levels/train_station_tunnel/art/train_station_tunnel_01_gridmap.meshlib" id="6_7vjbl"]
@@ -13,6 +12,7 @@
 size = Vector3(540, 6.6, 16)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_irpxo"]
+size = Vector3(40, 1, 6)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7vjbl"]
 size = Vector3(52, 6, 16)
@@ -26,8 +26,10 @@ size = Vector3(10, 5, 10)
 [sub_resource type="BoxShape3D" id="BoxShape3D_xywe6"]
 size = Vector3(150, 5, 10)
 
-[node name="TrainStation" type="Node3D" node_paths=PackedStringArray("level_bounds")]
+[node name="TrainStation" type="Node3D" node_paths=PackedStringArray("_train_spawn_point_left", "_train_spawn_point_right", "level_bounds")]
 script = ExtResource("1_b0eu5")
+_train_spawn_point_left = NodePath("TrainStuff/TrainSpawnPointLeft")
+_train_spawn_point_right = NodePath("TrainStuff/TrainSpawnPointRight")
 level_bounds = NodePath("LevelBounds")
 metadata/_custom_type_script = "uid://bqomd2e1p3srg"
 
@@ -46,20 +48,28 @@ shape = SubResource("BoxShape3D_50y1m")
 process_mode = 4
 visible = false
 
-[node name="Train" parent="." instance=ExtResource("3_f26eg")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -69.9998, -0.7, -6)
+[node name="TrainStuff" type="Node3D" parent="."]
 
-[node name="StopTrainArea" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -5.9)
+[node name="StopTrainArea" type="Area3D" parent="TrainStuff"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
 collision_layer = 0
 collision_mask = 3
 monitorable = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StopTrainArea"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrainStuff/StopTrainArea"]
 shape = SubResource("BoxShape3D_irpxo")
 
+[node name="TrainSpawnPointLeft" type="Marker3D" parent="TrainStuff"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -200, -0.7, -6)
+
+[node name="TrainSpawnPointRight" type="Marker3D" parent="TrainStuff"]
+transform = Transform3D(1.3113417e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113417e-07, 200, -0.7, -10)
+
+[node name="SpawnTrainTimer" type="Timer" parent="TrainStuff"]
+wait_time = 5.0
+autostart = true
+
 [node name="OtherLevels" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0)
 
 [node name="TrainStationTunnel" type="Node3D" parent="OtherLevels"]
 
@@ -148,6 +158,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.975, -1.9)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9, 0.5, -2.6)
 collision_layer = 8388612
 
-[connection signal="body_entered" from="StopTrainArea" to="." method="_on_stop_train_area_body_entered"]
+[connection signal="body_entered" from="TrainStuff/StopTrainArea" to="." method="_on_stop_train_area_body_entered"]
+[connection signal="timeout" from="TrainStuff/SpawnTrainTimer" to="." method="_spawn_train"]
 
 [editable path="train_station_mock_up"]

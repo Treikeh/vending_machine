@@ -17,7 +17,6 @@ func _ready() -> void:
 
 func _spawn_player() -> void:
 	print("Spawning player")
-	await get_tree().process_frame
 	# Spawn player if there is no player in the scene
 	if get_tree().get_first_node_in_group("player") == null:
 		LevelManager.load_level(PLAYER_SCENE, global_transform, _player_spawn_callback)
@@ -25,3 +24,4 @@ func _spawn_player() -> void:
 
 func _player_spawn_callback() -> void:
 	player_spawned.emit()
+	print("player spawned")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://saphiybos53"]
+[gd_scene load_steps=12 format=3 uid="uid://saphiybos53"]
 
 [ext_resource type="PackedScene" uid="uid://cbn0lxi0a7yte" path="res://levels/level_3d.tscn" id="1_5hj6o"]
 [ext_resource type="Script" uid="uid://dpi4t8fcj6c2q" path="res://levels/office_building_exterior/office_building_exterior.gd" id="2_5jagq"]
@@ -19,8 +19,13 @@ size = Vector3(10, 5, 10)
 [sub_resource type="BoxShape3D" id="BoxShape3D_pnhrg"]
 size = Vector3(200, 5, 10)
 
-[node name="OfficeBuildingExterior" instance=ExtResource("1_5hj6o")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_ja3ct"]
+size = Vector3(40, 1, 6)
+
+[node name="OfficeBuildingExterior" node_paths=PackedStringArray("_train_spawn_point_left", "_train_spawn_point_right") instance=ExtResource("1_5hj6o")]
 script = ExtResource("2_5jagq")
+_train_spawn_point_left = NodePath("TrainStuff/TrainSpawnPointLeft")
+_train_spawn_point_right = NodePath("TrainStuff/TrainSpawnPointRight")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LevelBounds" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -8)
@@ -96,3 +101,27 @@ size = Vector3(60, 1, 84)
 
 [node name="PlayerSpawner" parent="." index="3" instance=ExtResource("6_pnhrg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.475, 0)
+
+[node name="TrainStuff" type="Node3D" parent="." index="4"]
+
+[node name="StopTrainArea" type="Area3D" parent="TrainStuff" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
+collision_layer = 0
+collision_mask = 3
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrainStuff/StopTrainArea" index="0"]
+shape = SubResource("BoxShape3D_ja3ct")
+
+[node name="TrainSpawnPointLeft" type="Marker3D" parent="TrainStuff" index="1"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -200, -0.7, -6)
+
+[node name="TrainSpawnPointRight" type="Marker3D" parent="TrainStuff" index="2"]
+transform = Transform3D(1.3113417e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113417e-07, 200, -0.7, -10)
+
+[node name="SpawnTrainTimer" type="Timer" parent="TrainStuff" index="3"]
+wait_time = 5.0
+autostart = true
+
+[connection signal="body_entered" from="TrainStuff/StopTrainArea" to="." method="_on_stop_train_area_body_entered"]
+[connection signal="timeout" from="TrainStuff/SpawnTrainTimer" to="." method="_spawn_train"]

@@ -35,6 +35,11 @@ shape = SubResource("BoxShape3D_b0eu5")
 wait_time = 5.0
 one_shot = true
 
+[node name="DespawnTimer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
 [connection signal="body_entered" from="ReparentArea" to="." method="_on_reparent_area_body_entered"]
 [connection signal="body_exited" from="ReparentArea" to="." method="_on_reparent_area_body_exited"]
 [connection signal="timeout" from="StationWaitTimer" to="." method="start"]
+[connection signal="timeout" from="DespawnTimer" to="." method="_on_despawn_timer_timeout"]

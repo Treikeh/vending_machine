@@ -58,6 +58,13 @@ func stop() -> void:
 	deaccel_tween.tween_callback(_station_wait_timer.start)
 
 
+
+func _on_despawn_timer_timeout() -> void:
+	var player: Node3D = get_tree().get_first_node_in_group("player")
+	if global_position.distance_to(player.global_position) > 200.0:
+		queue_free()
+
+
 #region Save/Load
 
 
