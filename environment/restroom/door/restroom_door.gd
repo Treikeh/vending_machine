@@ -1,4 +1,4 @@
-extends "res://entities/doors/door.gd"
+extends "res://common/scenes/interactable/door/door.gd"
 
 
 enum Gender {MALE, FEMALE}

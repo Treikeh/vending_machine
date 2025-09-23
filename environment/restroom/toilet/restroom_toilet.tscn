@@ -17,7 +17,7 @@ _lid = NodePath("RestroomToilet_01_SM/RestroomToiletLid_001")
 remote_path = NodePath("../../../LidInteractArea")
 
 [node name="LidInteractArea" parent="." instance=ExtResource("3_vyr04")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.628233, 0.109996)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.62823343, 0.10999576)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LidInteractArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, -0.36)
