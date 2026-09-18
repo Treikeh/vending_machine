@@ -1,4 +1,4 @@
-A seamless level loadig prototype with saving & loading using JSON and a simple achievements system.
+A seamless level loadig prototype with saving & loading using JSON, and a simple achievements system.
 
 Made with Godot version 4.5
 
